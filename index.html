@@ -39,7 +39,6 @@
         padding-bottom: 20px;
     }
 
-    /* === ШАПКА === */
     .topbar {
         display: flex;
         align-items: center;
@@ -108,7 +107,6 @@
         75% { transform: translateX(4px); }
     }
 
-    /* === ВКЛАДКИ === */
     .tabs {
         display: flex;
         gap: 6px;
@@ -120,13 +118,13 @@
 
     .tab {
         flex: 1;
-        padding: 10px;
+        padding: 10px 6px;
         background: var(--bg-2);
         border: 1px solid var(--line);
         border-radius: 10px;
         color: var(--muted);
         font-weight: 700;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         cursor: pointer;
@@ -141,7 +139,6 @@
         box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35);
     }
 
-    /* === ОСНОВНОЙ ЭКРАН === */
     .main {
         flex: 1;
         display: flex;
@@ -176,7 +173,7 @@
     /* === ВЫБОР КЕЙСА === */
     .case-picker {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 10px;
         margin-bottom: 16px;
     }
@@ -451,6 +448,15 @@
     }
 
     .btn-secondary:hover { background: #252a38; }
+
+    .btn-green {
+        background: linear-gradient(135deg, var(--green), #2e7d32);
+        color: white;
+        box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35);
+    }
+
+    .btn-green:hover { box-shadow: 0 10px 30px rgba(76, 175, 80, 0.55); }
+    .btn-green:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
     /* === ИСТОРИЯ === */
     .history { width: 100%; margin-top: 8px; }
@@ -734,6 +740,218 @@
 
     .drop-card .drop-btn.sell:hover { box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4); }
 
+    /* === ИГРЫ === */
+    .games-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .game-card {
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+    }
+
+    .game-card h3 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .game-card .game-desc {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-bottom: 14px;
+    }
+
+    .bet-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .bet-input {
+        flex: 1;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.95rem;
+        font-weight: 700;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .bet-input:focus { border-color: var(--accent); }
+
+    .bet-quick {
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .bet-quick:hover { background: #252a38; border-color: var(--accent); }
+
+    /* === САПЁР === */
+    .sapper-info {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .sapper-info .info-box {
+        flex: 1;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .sapper-info .info-label {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .sapper-info .info-value {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--accent-2);
+    }
+
+    .sapper-board {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .sapper-cell {
+        aspect-ratio: 1;
+        background: linear-gradient(145deg, #232838, #1a1e28);
+        border: 2px solid var(--line);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        user-select: none;
+    }
+
+    .sapper-cell:hover:not(.opened):not(.mine) {
+        border-color: var(--accent);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(245, 166, 35, 0.3);
+    }
+
+    .sapper-cell.opened {
+        background: linear-gradient(145deg, #1a3a1f, #143018);
+        border-color: var(--green);
+        cursor: default;
+        animation: cellOpen 0.3s ease;
+    }
+
+    .sapper-cell.mine {
+        background: linear-gradient(145deg, #3a1a1a, #301414);
+        border-color: var(--red);
+        cursor: default;
+    }
+
+    .sapper-cell.disabled { cursor: not-allowed; opacity: 0.6; }
+
+    @keyframes cellOpen {
+        from { transform: scale(0.8); opacity: 0.5; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    /* === МИНЫ === */
+    .mines-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .mine-cell {
+        aspect-ratio: 1;
+        background: linear-gradient(145deg, #232838, #1a1e28);
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        user-select: none;
+    }
+
+    .mine-cell:hover:not(.opened):not(.exploded) {
+        border-color: var(--accent);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(245, 166, 35, 0.3);
+    }
+
+    .mine-cell.opened {
+        background: linear-gradient(145deg, #1a3a1f, #143018);
+        border-color: var(--green);
+        cursor: default;
+        animation: cellOpen 0.3s ease;
+    }
+
+    .mine-cell.exploded {
+        background: linear-gradient(145deg, #3a1a1a, #301414);
+        border-color: var(--red);
+        cursor: default;
+        animation: explode 0.4s ease;
+    }
+
+    @keyframes explode {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); box-shadow: 0 0 30px rgba(239, 68, 68, 0.8); }
+        100% { transform: scale(1); }
+    }
+
+    .game-result {
+        text-align: center;
+        font-size: 0.95rem;
+        font-weight: 700;
+        min-height: 24px;
+        margin-bottom: 10px;
+    }
+
+    .game-result.win { color: var(--green); }
+    .game-result.lose { color: var(--red); }
+
+    .game-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .game-actions .btn {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+
     /* === ФУТЕР === */
     .footer-note {
         text-align: center;
@@ -743,19 +961,18 @@
         opacity: 0.6;
     }
 
-    /* === АДАПТИВ === */
     @media (max-width: 420px) {
         .case-title h1 { font-size: 1.3rem; }
         .roulette .item { flex: 0 0 84px; height: 100px; }
         .roulette .item .emoji { font-size: 1.9rem; }
         .btn { font-size: 0.85rem; padding: 14px 10px; }
         .case-picker { grid-template-columns: repeat(2, 1fr); }
+        .tab { font-size: 0.65rem; padding: 10px 4px; }
     }
 </style>
 </head>
 <body>
 
-    <!-- ШАПКА -->
     <div class="topbar">
         <div class="logo">
             <div class="logo-icon">🎁</div>
@@ -763,69 +980,139 @@
         </div>
         <div class="balance" id="balanceBox">
             <span class="coin">🪙</span>
-            <span class="amount" id="balanceAmount">1000</span>
+            <span class="amount" id="balanceAmount">1 000</span>
         </div>
     </div>
 
-    <!-- ВКЛАДКИ -->
     <div class="tabs">
         <div class="tab active" data-view="cases" onclick="switchTab('cases')">Кейсы</div>
         <div class="tab" data-view="inventory" onclick="switchTab('inventory')">Инвентарь</div>
         <div class="tab" data-view="history" onclick="switchTab('history')">История</div>
+        <div class="tab" data-view="games" onclick="switchTab('games')">Игры</div>
     </div>
 
-    <!-- ОСНОВНОЙ ЭКРАН -->
     <div class="main">
 
         <!-- ВКЛАДКА: КЕЙСЫ -->
         <div class="view active" id="view-cases">
-
             <div class="case-title">
                 <h1>Открой кейс</h1>
                 <p>Испытай удачу — получи редкий предмет</p>
             </div>
 
-            <!-- ВЫБОР КЕЙСА -->
             <div class="case-picker" id="casePicker"></div>
 
-            <!-- ВИЗУАЛ КЕЙСА -->
             <div class="case-visual">
                 <div class="glow"></div>
                 <div class="case-box" id="caseBox">🎁</div>
             </div>
 
-            <!-- РУЛЕТКА -->
             <div class="roulette-wrap">
                 <div class="roulette-marker"></div>
                 <div class="roulette" id="roulette"></div>
             </div>
 
-            <!-- КНОПКИ -->
             <div class="actions">
                 <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть</button>
-                <button class="btn btn-secondary" id="resetBtn" onclick="resetDemo()">↺</button>
+                <button class="btn btn-secondary" onclick="resetDemo()">↺</button>
             </div>
-
         </div>
 
         <!-- ВКЛАДКА: ИНВЕНТАРЬ -->
         <div class="view" id="view-inventory">
             <div class="inventory-summary">
                 <span class="inv-label">Предметов: <span id="invCount">0</span></span>
-                <span class="inv-value">Общая стоимость: <span id="invTotal">0</span> 🪙</span>
+                <span class="inv-value">Итого: <span id="invTotal">0</span> 🪙</span>
             </div>
-            <div class="inventory-grid" id="inventoryGrid">
-                <div class="empty-history" style="grid-column: 1/-1;">Инвентарь пуст — открой кейс</div>
-            </div>
+            <div class="inventory-grid" id="inventoryGrid"></div>
         </div>
 
         <!-- ВКЛАДКА: ИСТОРИЯ -->
         <div class="view" id="view-history">
             <div class="history">
                 <h3>Последние открытия</h3>
-                <div class="history-list" id="historyList">
-                    <div class="empty-history">Пока пусто — открой первый кейс</div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА: ИГРЫ -->
+        <div class="view" id="view-games">
+            <div class="games-grid">
+
+                <!-- САПЁР -->
+                <div class="game-card">
+                    <h3>💣 Сапёр</h3>
+                    <div class="game-desc">Поле 5×5, спрятано 5 мин. Открывай клетки — каждая безопасная повышает множитель. Чем больше открыл, тем больше выигрыш. Нарвёшься на мину — потеряешь ставку.</div>
+
+                    <div class="bet-row">
+                        <input type="number" class="bet-input" id="sapperBet" value="100" min="10" step="10">
+                        <button class="bet-quick" onclick="setBet('sapperBet', 100)">100</button>
+                        <button class="bet-quick" onclick="setBet('sapperBet', 500)">500</button>
+                        <button class="bet-quick" onclick="setBet('sapperBet', 'all')">MAX</button>
+                    </div>
+
+                    <div class="sapper-info">
+                        <div class="info-box">
+                            <div class="info-label">Множитель</div>
+                            <div class="info-value" id="sapperMult">×1.00</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">Выигрыш</div>
+                            <div class="info-value" id="sapperWin">0 🪙</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">Открыто</div>
+                            <div class="info-value" id="sapperOpened">0/20</div>
+                        </div>
+                    </div>
+
+                    <div class="sapper-board" id="sapperBoard"></div>
+
+                    <div class="game-result" id="sapperResult"></div>
+
+                    <div class="game-actions">
+                        <button class="btn btn-green" id="sapperStart" onclick="startSapper()">Начать</button>
+                        <button class="btn btn-primary" id="sapperCashout" onclick="cashoutSapper()" disabled>Забрать</button>
+                    </div>
                 </div>
+
+                <!-- МИНЫ -->
+                <div class="game-card">
+                    <h3>🎯 Мины</h3>
+                    <div class="game-desc">Поле 3×3, спрятано 3 мины. Открывай клетки — каждая безопасная повышает множитель. Можно забрать в любой момент. Нарвёшься на мину — потеряешь ставку.</div>
+
+                    <div class="bet-row">
+                        <input type="number" class="bet-input" id="minesBet" value="100" min="10" step="10">
+                        <button class="bet-quick" onclick="setBet('minesBet', 100)">100</button>
+                        <button class="bet-quick" onclick="setBet('minesBet', 500)">500</button>
+                        <button class="bet-quick" onclick="setBet('minesBet', 'all')">MAX</button>
+                    </div>
+
+                    <div class="sapper-info">
+                        <div class="info-box">
+                            <div class="info-label">Множитель</div>
+                            <div class="info-value" id="minesMult">×1.00</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">Выигрыш</div>
+                            <div class="info-value" id="minesWin">0 🪙</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-label">Открыто</div>
+                            <div class="info-value" id="minesOpened">0/6</div>
+                        </div>
+                    </div>
+
+                    <div class="mines-board" id="minesBoard"></div>
+
+                    <div class="game-result" id="minesResult"></div>
+
+                    <div class="game-actions">
+                        <button class="btn btn-green" id="minesStart" onclick="startMines()">Начать</button>
+                        <button class="btn btn-primary" id="minesCashout" onclick="cashoutMines()" disabled>Забрать</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -858,7 +1145,7 @@
         legend: 'Легендарный'
     };
 
-    // === КЕЙСЫ ===
+    // === КЕЙСЫ (цены переписаны: кейсы выгодные) ===
     const CASES = [
         {
             id: 'starter',
@@ -866,14 +1153,14 @@
             name: 'Стартовый',
             price: 100,
             items: [
-                { emoji: '🪙', name: 'Монета', rarity: 'common', price: 30, weight: 30 },
-                { emoji: '🧦', name: 'Носок', rarity: 'common', price: 20, weight: 20 },
-                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 25, weight: 20 },
-                { emoji: '📎', name: 'Скрепка', rarity: 'common', price: 15, weight: 15 },
-                { emoji: '🎈', name: 'Шарик', rarity: 'rare', price: 80, weight: 8 },
-                { emoji: '💎', name: 'Кристалл', rarity: 'rare', price: 120, weight: 5 },
-                { emoji: '🏆', name: 'Кубок', rarity: 'epic', price: 300, weight: 1.5 },
-                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 800, weight: 0.5 }
+                { emoji: '🪙', name: 'Монета', rarity: 'common', price: 70, weight: 30 },
+                { emoji: '🧦', name: 'Носок', rarity: 'common', price: 60, weight: 20 },
+                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 80, weight: 20 },
+                { emoji: '📎', name: 'Скрепка', rarity: 'common', price: 50, weight: 15 },
+                { emoji: '🎈', name: 'Шарик', rarity: 'rare', price: 200, weight: 8 },
+                { emoji: '💎', name: 'Кристалл', rarity: 'rare', price: 300, weight: 5 },
+                { emoji: '🏆', name: 'Кубок', rarity: 'epic', price: 600, weight: 1.5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 2500, weight: 0.5 }
             ]
         },
         {
@@ -882,14 +1169,14 @@
             name: 'Серебряный',
             price: 500,
             items: [
-                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 25, weight: 20 },
-                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 60, weight: 15 },
-                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 90, weight: 15 },
-                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 15 },
-                { emoji: '🎮', name: 'Геймпад', rarity: 'rare', price: 320, weight: 15 },
-                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 700, weight: 10 },
-                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 900, weight: 7 },
-                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 2500, weight: 3 }
+                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 350, weight: 20 },
+                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 400, weight: 15 },
+                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 450, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 900, weight: 15 },
+                { emoji: '🎮', name: 'Геймпад', rarity: 'rare', price: 1100, weight: 15 },
+                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 2500, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 3500, weight: 7 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 10000, weight: 3 }
             ]
         },
         {
@@ -898,15 +1185,15 @@
             name: 'Золотой',
             price: 1500,
             items: [
-                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 60, weight: 20 },
-                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 90, weight: 15 },
-                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 150, weight: 15 },
-                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 12 },
-                { emoji: '💻', name: 'Ноутбук', rarity: 'rare', price: 500, weight: 10 },
-                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 700, weight: 10 },
-                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 1500, weight: 10 },
-                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 5000, weight: 5 },
-                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 8000, weight: 3 }
+                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 1100, weight: 20 },
+                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 1200, weight: 15 },
+                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 1300, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 2500, weight: 12 },
+                { emoji: '💻', name: 'Ноутбук', rarity: 'rare', price: 3500, weight: 10 },
+                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 6000, weight: 10 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 8000, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 25000, weight: 5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 40000, weight: 3 }
             ]
         },
         {
@@ -915,15 +1202,15 @@
             name: 'Алмазный',
             price: 5000,
             items: [
-                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 150, weight: 20 },
-                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 500, weight: 15 },
-                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 12 },
-                { emoji: '📱', name: 'Телефон', rarity: 'rare', price: 700, weight: 12 },
-                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 1500, weight: 15 },
-                { emoji: '🏎', name: 'Болид', rarity: 'epic', price: 3000, weight: 10 },
-                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 5000, weight: 8 },
-                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 12000, weight: 5 },
-                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 20000, weight: 3 }
+                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 3500, weight: 20 },
+                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 4000, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 7000, weight: 12 },
+                { emoji: '📱', name: 'Телефон', rarity: 'rare', price: 9000, weight: 12 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 18000, weight: 15 },
+                { emoji: '🏎', name: 'Болид', rarity: 'epic', price: 25000, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 60000, weight: 8 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 120000, weight: 5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 200000, weight: 3 }
             ]
         },
         {
@@ -932,15 +1219,15 @@
             name: 'Легендарный',
             price: 15000,
             items: [
-                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 500, weight: 20 },
-                { emoji: '📱', name: 'Телефон', rarity: 'common', price: 700, weight: 15 },
-                { emoji: '💎', name: 'Алмаз', rarity: 'rare', price: 1500, weight: 15 },
-                { emoji: '🏎', name: 'Болид', rarity: 'rare', price: 3000, weight: 12 },
-                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 5000, weight: 12 },
-                { emoji: '🚀', name: 'Ракета', rarity: 'epic', price: 12000, weight: 10 },
-                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 20000, weight: 8 },
-                { emoji: '🌟', name: 'Суперзвезда', rarity: 'legend', price: 50000, weight: 5 },
-                { emoji: '👽', name: 'Пришелец', rarity: 'legend', price: 100000, weight: 3 }
+                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 10000, weight: 20 },
+                { emoji: '📱', name: 'Телефон', rarity: 'common', price: 12000, weight: 15 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'rare', price: 25000, weight: 15 },
+                { emoji: '🏎', name: 'Болид', rarity: 'rare', price: 35000, weight: 12 },
+                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 80000, weight: 12 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'epic', price: 150000, weight: 10 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 400000, weight: 8 },
+                { emoji: '🌟', name: 'Суперзвезда', rarity: 'legend', price: 700000, weight: 5 },
+                { emoji: '👽', name: 'Пришелец', rarity: 'legend', price: 1500000, weight: 3 }
             ]
         }
     ];
@@ -972,7 +1259,7 @@
     }
 
     function formatPrice(n) {
-        return n.toLocaleString('ru-RU');
+        return Math.round(n).toLocaleString('ru-RU');
     }
 
     // === ВКЛАДКИ ===
@@ -1089,7 +1376,8 @@
                 const itemWidth = 96 + 10;
                 const containerWidth = roulette.parentElement.offsetWidth;
                 const centerOffset = containerWidth / 2 - itemWidth / 2;
-                const targetX = -(winIndex * itemWidth) + centerOffset + (Math.random() * 40 - 20);
+                // ТОЧНОЕ попадание, без случайного смещения
+                const targetX = -(winIndex * itemWidth) + centerOffset;
 
                 roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
                 roulette.style.transform = `translateX(${targetX}px)`;
@@ -1240,6 +1528,285 @@
         resetRoulette();
     }
 
+    // ============================================================
+    // === ИГРА 1: САПЁР ===
+    // ============================================================
+    const SAPPER_SIZE = 5;
+    const SAPPER_MINES = 5;
+    const SAPPER_SAFE = SAPPER_SIZE * SAPPER_SIZE - SAPPER_MINES; // 20
+
+    let sapperActive = false;
+    let sapperBet = 0;
+    let sapperMines = [];
+    let sapperOpened = [];
+    let sapperMult = 1;
+
+    function setBet(inputId, value) {
+        const input = document.getElementById(inputId);
+        if (value === 'all') {
+            input.value = Math.floor(balance);
+        } else {
+            input.value = value;
+        }
+    }
+
+    // Множитель сапёра: чем больше открыто, тем выше
+    function calcSapperMult(openedCount) {
+        if (openedCount === 0) return 1;
+        // Прогрессивная формула: от 1.1 до ~5
+        const ratio = openedCount / SAPPER_SAFE;
+        return 1 + ratio * ratio * 4;
+    }
+
+    function startSapper() {
+        if (sapperActive) return;
+        const bet = parseInt(document.getElementById('sapperBet').value) || 0;
+        if (bet < 10) {
+            setSapperResult('Минимальная ставка — 10 🪙', 'lose');
+            return;
+        }
+        if (bet > balance) {
+            setSapperResult('Недостаточно монет', 'lose');
+            shakeBalance();
+            return;
+        }
+
+        balance -= bet;
+        updateBalance('minus');
+
+        sapperActive = true;
+        sapperBet = bet;
+        sapperOpened = [];
+        sapperMult = 1;
+
+        // Генерация мин
+        sapperMines = [];
+        const allCells = Array.from({ length: SAPPER_SIZE * SAPPER_SIZE }, (_, i) => i);
+        for (let i = 0; i < SAPPER_MINES; i++) {
+            const idx = Math.floor(Math.random() * allCells.length);
+            sapperMines.push(allCells.splice(idx, 1)[0]);
+        }
+
+        document.getElementById('sapperStart').disabled = true;
+        document.getElementById('sapperCashout').disabled = true;
+        setSapperResult('', '');
+        renderSapperBoard();
+        updateSapperInfo();
+    }
+
+    function renderSapperBoard() {
+        const board = document.getElementById('sapperBoard');
+        board.innerHTML = '';
+        for (let i = 0; i < SAPPER_SIZE * SAPPER_SIZE; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'sapper-cell';
+            cell.dataset.index = i;
+            cell.onclick = () => clickSapperCell(i);
+            board.appendChild(cell);
+        }
+    }
+
+    function clickSapperCell(index) {
+        if (!sapperActive) return;
+        if (sapperOpened.includes(index)) return;
+        const cell = document.querySelector(`.sapper-cell[data-index="${index}"]`);
+        if (!cell) return;
+
+        if (sapperMines.includes(index)) {
+            // Мина
+            cell.classList.add('mine');
+            cell.textContent = '💣';
+            endSapper(false);
+        } else {
+            cell.classList.add('opened');
+            cell.textContent = '💎';
+            sapperOpened.push(index);
+            sapperMult = calcSapperMult(sapperOpened.length);
+            updateSapperInfo();
+
+            if (sapperOpened.length === SAPPER_SAFE) {
+                // Все безопасные открыты — авто-выигрыш
+                endSapper(true);
+                return;
+            }
+            document.getElementById('sapperCashout').disabled = false;
+        }
+    }
+
+    function updateSapperInfo() {
+        document.getElementById('sapperMult').textContent = '×' + sapperMult.toFixed(2);
+        document.getElementById('sapperWin').textContent = formatPrice(sapperBet * sapperMult) + ' 🪙';
+        document.getElementById('sapperOpened').textContent = sapperOpened.length + '/' + SAPPER_SAFE;
+    }
+
+    function cashoutSapper() {
+        if (!sapperActive) return;
+        endSapper(true);
+    }
+
+    function endSapper(win) {
+        sapperActive = false;
+        document.getElementById('sapperStart').disabled = false;
+        document.getElementById('sapperCashout').disabled = true;
+
+        // Показать все мины
+        sapperMines.forEach(idx => {
+            const cell = document.querySelector(`.sapper-cell[data-index="${idx}"]`);
+            if (cell && !cell.classList.contains('mine')) {
+                cell.classList.add('mine');
+                cell.textContent = '💣';
+            }
+        });
+
+        if (win) {
+            const winAmount = Math.round(sapperBet * sapperMult);
+            balance += winAmount;
+            updateBalance('plus');
+            setSapperResult(`✅ Выигрыш: ${formatPrice(winAmount)} 🪙 (×${sapperMult.toFixed(2)})`, 'win');
+            addToHistory({ emoji: '💣', name: 'Сапёр', rarity: 'rare', price: winAmount });
+        } else {
+            setSapperResult(`❌ Мина! Потеряно ${formatPrice(sapperBet)} 🪙`, 'lose');
+        }
+    }
+
+    function setSapperResult(text, type) {
+        const el = document.getElementById('sapperResult');
+        el.textContent = text;
+        el.className = 'game-result' + (type ? ' ' + type : '');
+    }
+
+    // ============================================================
+    // === ИГРА 2: МИНЫ ===
+    // ============================================================
+    const MINES_SIZE = 9;
+    const MINES_COUNT = 3;
+    const MINES_SAFE = MINES_SIZE - MINES_COUNT; // 6
+
+    let minesActive = false;
+    let minesBet = 0;
+    let minesMines = [];
+    let minesOpened = [];
+    let minesMult = 1;
+
+    function calcMinesMult(openedCount) {
+        if (openedCount === 0) return 1;
+        const ratio = openedCount / MINES_SAFE;
+        return 1 + ratio * ratio * 3;
+    }
+
+    function startMines() {
+        if (minesActive) return;
+        const bet = parseInt(document.getElementById('minesBet').value) || 0;
+        if (bet < 10) {
+            setMinesResult('Минимальная ставка — 10 🪙', 'lose');
+            return;
+        }
+        if (bet > balance) {
+            setMinesResult('Недостаточно монет', 'lose');
+            shakeBalance();
+            return;
+        }
+
+        balance -= bet;
+        updateBalance('minus');
+
+        minesActive = true;
+        minesBet = bet;
+        minesOpened = [];
+        minesMult = 1;
+
+        minesMines = [];
+        const allCells = Array.from({ length: MINES_SIZE }, (_, i) => i);
+        for (let i = 0; i < MINES_COUNT; i++) {
+            const idx = Math.floor(Math.random() * allCells.length);
+            minesMines.push(allCells.splice(idx, 1)[0]);
+        }
+
+        document.getElementById('minesStart').disabled = true;
+        document.getElementById('minesCashout').disabled = true;
+        setMinesResult('', '');
+        renderMinesBoard();
+        updateMinesInfo();
+    }
+
+    function renderMinesBoard() {
+        const board = document.getElementById('minesBoard');
+        board.innerHTML = '';
+        for (let i = 0; i < MINES_SIZE; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'mine-cell';
+            cell.dataset.index = i;
+            cell.onclick = () => clickMineCell(i);
+            board.appendChild(cell);
+        }
+    }
+
+    function clickMineCell(index) {
+        if (!minesActive) return;
+        if (minesOpened.includes(index)) return;
+        const cell = document.querySelector(`.mine-cell[data-index="${index}"]`);
+        if (!cell) return;
+
+        if (minesMines.includes(index)) {
+            cell.classList.add('exploded');
+            cell.textContent = '💥';
+            endMines(false);
+        } else {
+            cell.classList.add('opened');
+            cell.textContent = '💎';
+            minesOpened.push(index);
+            minesMult = calcMinesMult(minesOpened.length);
+            updateMinesInfo();
+
+            if (minesOpened.length === MINES_SAFE) {
+                endMines(true);
+                return;
+            }
+            document.getElementById('minesCashout').disabled = false;
+        }
+    }
+
+    function updateMinesInfo() {
+        document.getElementById('minesMult').textContent = '×' + minesMult.toFixed(2);
+        document.getElementById('minesWin').textContent = formatPrice(minesBet * minesMult) + ' 🪙';
+        document.getElementById('minesOpened').textContent = minesOpened.length + '/' + MINES_SAFE;
+    }
+
+    function cashoutMines() {
+        if (!minesActive) return;
+        endMines(true);
+    }
+
+    function endMines(win) {
+        minesActive = false;
+        document.getElementById('minesStart').disabled = false;
+        document.getElementById('minesCashout').disabled = true;
+
+        minesMines.forEach(idx => {
+            const cell = document.querySelector(`.mine-cell[data-index="${idx}"]`);
+            if (cell && !cell.classList.contains('exploded')) {
+                cell.classList.add('exploded');
+                cell.textContent = '💣';
+            }
+        });
+
+        if (win) {
+            const winAmount = Math.round(minesBet * minesMult);
+            balance += winAmount;
+            updateBalance('plus');
+            setMinesResult(`✅ Выигрыш: ${formatPrice(winAmount)} 🪙 (×${minesMult.toFixed(2)})`, 'win');
+            addToHistory({ emoji: '🎯', name: 'Мины', rarity: 'rare', price: winAmount });
+        } else {
+            setMinesResult(`❌ Мина! Потеряно ${formatPrice(minesBet)} 🪙`, 'lose');
+        }
+    }
+
+    function setMinesResult(text, type) {
+        const el = document.getElementById('minesResult');
+        el.textContent = text;
+        el.className = 'game-result' + (type ? ' ' + type : '');
+    }
+
     // === ИНИЦИАЛИЗАЦИЯ ===
     updateBalance();
     renderCasePicker();
@@ -1247,7 +1814,6 @@
     renderInventory();
     resetRoulette();
 
-    // Закрытие по фону
     document.getElementById('dropModal').addEventListener('click', (e) => {
         if (e.target.id === 'dropModal') keepDrop();
     });
