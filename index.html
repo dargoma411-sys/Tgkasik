@@ -325,275 +325,274 @@ body{background:radial-gradient(circle at 50% 0%,#1a1f2e 0%,#0f1117 60%);color:v
 const RARITY_LABELS={common:'Обычный',uncommon:'Необычный',rare:'Редкий',epic:'Эпический',mythic:'Мифический',legend:'Легендарный'};
 const RARITY_STARS={common:1,uncommon:2,rare:3,epic:4,mythic:5,legend:6};
 
-// === КЕЙСЫ (отсортированы по цене: от 10 до 100 000 000) ===
-// Шансы средние: суммарный вес ~1000, обычные ~600-700, редкие ~150-200, эпики ~50, мифики ~15, легендарки ~1
+// === КЕЙСЫ (отсортированы по цене, шансы средние — годное выпадает чаще) ===
 const CASES=[
 {id:'farm',emoji:'🌾',name:'Фарм',price:10,items:[
-{e:'❌',n:'Ничего',r:'common',p:0,w:700},
+{e:'❌',n:'Ничего',r:'common',p:0,w:600},
 {e:'🪙',n:'Монетка-Пустышка',r:'common',p:5,w:200},
 {e:'🧦',n:'Носок-Дырка',r:'common',p:8,w:80},
-{e:'💩',n:'Какашка-Легенда',r:'epic',p:5000,w:15},
-{e:'🐉',n:'Дракон-Китаец',r:'mythic',p:250000,w:4},
-{e:'🕳',n:'Чёрная дыра-Пылесосик',r:'legend',p:300000000,w:1}
+{e:'💩',n:'Какашка-Легенда',r:'epic',p:5000,w:40},
+{e:'🐉',n:'Дракон-Китаец',r:'mythic',p:250000,w:12},
+{e:'🕳',n:'Чёрная дыра-Пылесосик',r:'legend',p:300000000,w:3}
 ]},
 {id:'starter',emoji:'📦',name:'Стартовый',price:100,items:[
-{e:'🪙',n:'Монетка-Столешница',r:'common',p:50,w:400},
-{e:'🧦',n:'Носок-Кирпич',r:'common',p:45,w:300},
-{e:'🍪',n:'Печенье-Пятка',r:'common',p:60,w:250},
-{e:'🎈',n:'Шарик-Эпоха',r:'uncommon',p:150,w:150},
-{e:'🥒',n:'Огурец-Вселенная',r:'rare',p:350,w:50},
-{e:'🧅',n:'Луковица-Молния',r:'epic',p:900,w:20},
-{e:'🥔',n:'Картошка-Мечта',r:'legend',p:4000,w:1}
+{e:'🪙',n:'Монетка-Столешница',r:'common',p:50,w:350},
+{e:'🧦',n:'Носок-Кирпич',r:'common',p:45,w:280},
+{e:'🍪',n:'Печенье-Пятка',r:'common',p:60,w:220},
+{e:'🎈',n:'Шарик-Эпоха',r:'uncommon',p:150,w:180},
+{e:'🥒',n:'Огурец-Вселенная',r:'rare',p:350,w:80},
+{e:'🧅',n:'Луковица-Молния',r:'epic',p:900,w:35},
+{e:'🥔',n:'Картошка-Мечта',r:'legend',p:4000,w:3}
 ]},
 {id:'trash',emoji:'🗑',name:'Мусорный',price:400,items:[
-{e:'🗑',n:'Ведро-Мусорное',r:'common',p:250,w:400},
-{e:'📦',n:'Коробка-Пустая',r:'common',p:280,w:300},
+{e:'🗑',n:'Ведро-Мусорное',r:'common',p:250,w:350},
+{e:'📦',n:'Коробка-Пустая',r:'common',p:280,w:280},
 {e:'🥫',n:'Банка-Консервная',r:'common',p:300,w:200},
-{e:'🧃',n:'Сок-Недопитый',r:'uncommon',p:800,w:120},
-{e:'🍌',n:'Банановая-Кожура',r:'rare',p:1500,w:60},
-{e:'🥚',n:'Скорлупа-Яичная',r:'epic',p:3500,w:25},
-{e:'💩',n:'Какашка-Легенда',r:'mythic',p:9000,w:5},
-{e:'🧟',n:'Зомби-Мусорный',r:'legend',p:35000,w:1}
+{e:'🧃',n:'Сок-Недопитый',r:'uncommon',p:800,w:150},
+{e:'🍌',n:'Банановая-Кожура',r:'rare',p:1500,w:80},
+{e:'🥚',n:'Скорлупа-Яичная',r:'epic',p:3500,w:40},
+{e:'💩',n:'Какашка-Легенда',r:'mythic',p:9000,w:12},
+{e:'🧟',n:'Зомби-Мусорный',r:'legend',p:35000,w:3}
 ]},
 {id:'silver',emoji:'🎁',name:'Серебряный',price:500,items:[
-{e:'🍩',n:'Пончик-Швага',r:'common',p:280,w:400},
-{e:'🧁',n:'Кексик-Вайб',r:'common',p:320,w:300},
+{e:'🍩',n:'Пончик-Швага',r:'common',p:280,w:350},
+{e:'🧁',n:'Кексик-Вайб',r:'common',p:320,w:280},
 {e:'🍕',n:'Пицца-Краш',r:'common',p:400,w:200},
-{e:'🌮',n:'Тако-Изи',r:'uncommon',p:800,w:130},
-{e:'🥨',n:'Крендель-Хайп',r:'rare',p:1600,w:60},
-{e:'🧊',n:'Льдышка-Чилл',r:'rare',p:1900,w:40},
-{e:'🪀',n:'Йо-йо-Топчик',r:'epic',p:4500,w:20},
-{e:'🎯',n:'Дартс-Агонь',r:'epic',p:5500,w:15},
-{e:'🧩',n:'Пазл-Пушка',r:'mythic',p:16000,w:5},
-{e:'🎺',n:'Труба-Улёт',r:'legend',p:65000,w:1}
+{e:'🌮',n:'Тако-Изи',r:'uncommon',p:800,w:150},
+{e:'🥨',n:'Крендель-Хайп',r:'rare',p:1600,w:80},
+{e:'🧊',n:'Льдышка-Чилл',r:'rare',p:1900,w:60},
+{e:'🪀',n:'Йо-йо-Топчик',r:'epic',p:4500,w:35},
+{e:'🎯',n:'Дартс-Агонь',r:'epic',p:5500,w:25},
+{e:'🧩',n:'Пазл-Пушка',r:'mythic',p:16000,w:10},
+{e:'🎺',n:'Труба-Улёт',r:'legend',p:65000,w:3}
 ]},
 {id:'school',emoji:'🎒',name:'Школьный',price:600,items:[
-{e:'📏',n:'Линейка-Изи',r:'common',p:400,w:400},
-{e:'✏️',n:'Карандаш-Вайб',r:'common',p:450,w:300},
+{e:'📏',n:'Линейка-Изи',r:'common',p:400,w:350},
+{e:'✏️',n:'Карандаш-Вайб',r:'common',p:450,w:280},
 {e:'🖊',n:'Ручка-Краш',r:'common',p:500,w:200},
-{e:'📐',n:'Треугольник-Хайп',r:'uncommon',p:1100,w:130},
-{e:'📚',n:'Учебник-Кирпич',r:'rare',p:2500,w:60},
-{e:'🎒',n:'Рюкзак-Спиногрыз',r:'rare',p:3000,w:40},
-{e:'📓',n:'Тетрадь-Смерти',r:'epic',p:9000,w:20},
-{e:'🖇',n:'Скрепки-Пакет',r:'epic',p:11000,w:15},
-{e:'🎓',n:'Шапка-Выпускника',r:'mythic',p:35000,w:5},
-{e:'🏫',n:'Школа-Целиком',r:'legend',p:120000,w:1}
+{e:'📐',n:'Треугольник-Хайп',r:'uncommon',p:1100,w:150},
+{e:'📚',n:'Учебник-Кирпич',r:'rare',p:2500,w:80},
+{e:'🎒',n:'Рюкзак-Спиногрыз',r:'rare',p:3000,w:60},
+{e:'📓',n:'Тетрадь-Смерти',r:'epic',p:9000,w:35},
+{e:'🖇',n:'Скрепки-Пакет',r:'epic',p:11000,w:25},
+{e:'🎓',n:'Шапка-Выпускника',r:'mythic',p:35000,w:10},
+{e:'🏫',n:'Школа-Целиком',r:'legend',p:120000,w:3}
 ]},
 {id:'kitchen',emoji:'🍳',name:'Кухонный',price:800,items:[
-{e:'🥄',n:'Ложка-Свага',r:'common',p:500,w:400},
-{e:'🍴',n:'Вилка-Изи',r:'common',p:600,w:300},
+{e:'🥄',n:'Ложка-Свага',r:'common',p:500,w:350},
+{e:'🍴',n:'Вилка-Изи',r:'common',p:600,w:280},
 {e:'🔪',n:'Нож-Краш',r:'common',p:700,w:200},
-{e:'🥢',n:'Палочки-Вайб',r:'uncommon',p:1500,w:130},
-{e:'🍽',n:'Тарелка-Хайп',r:'rare',p:3500,w:60},
-{e:'🥛',n:'Стакан-Топчик',r:'rare',p:4500,w:40},
-{e:'🧂',n:'Соль-Агонь',r:'epic',p:11000,w:20},
-{e:'🍯',n:'Мёд-Пушка',r:'epic',p:13000,w:15},
-{e:'🍲',n:'Кастрюля-Улёт',r:'mythic',p:40000,w:5},
-{e:'🍳',n:'Сковорода-Космос',r:'legend',p:150000,w:1}
+{e:'🥢',n:'Палочки-Вайб',r:'uncommon',p:1500,w:150},
+{e:'🍽',n:'Тарелка-Хайп',r:'rare',p:3500,w:80},
+{e:'🥛',n:'Стакан-Топчик',r:'rare',p:4500,w:60},
+{e:'🧂',n:'Соль-Агонь',r:'epic',p:11000,w:35},
+{e:'🍯',n:'Мёд-Пушка',r:'epic',p:13000,w:25},
+{e:'🍲',n:'Кастрюля-Улёт',r:'mythic',p:40000,w:10},
+{e:'🍳',n:'Сковорода-Космос',r:'legend',p:150000,w:3}
 ]},
 {id:'street',emoji:'🚧',name:'Уличный',price:1200,items:[
-{e:'🧱',n:'Кирпич-Свага',r:'common',p:800,w:400},
-{e:'🪨',n:'Камень-Вайб',r:'common',p:900,w:300},
+{e:'🧱',n:'Кирпич-Свага',r:'common',p:800,w:350},
+{e:'🪨',n:'Камень-Вайб',r:'common',p:900,w:280},
 {e:'🪵',n:'Бревно-Изи',r:'common',p:1000,w:200},
-{e:'🧹',n:'Метла-Краш',r:'uncommon',p:2200,w:130},
-{e:'🪣',n:'Ведро-Топчик',r:'rare',p:5000,w:60},
-{e:'🔨',n:'Молоток-Агонь',r:'rare',p:6000,w:40},
-{e:'🛠',n:'Ключ-Пушка',r:'epic',p:15000,w:20},
-{e:'⚙️',n:'Шестерёнка-Судьбы',r:'epic',p:18000,w:15},
-{e:'🔧',n:'Отвёртка-Убийца',r:'mythic',p:50000,w:5},
-{e:'🪜',n:'Стремянка-Карьерист',r:'legend',p:200000,w:1}
+{e:'🧹',n:'Метла-Краш',r:'uncommon',p:2200,w:150},
+{e:'🪣',n:'Ведро-Топчик',r:'rare',p:5000,w:80},
+{e:'🔨',n:'Молоток-Агонь',r:'rare',p:6000,w:60},
+{e:'🛠',n:'Ключ-Пушка',r:'epic',p:15000,w:35},
+{e:'⚙️',n:'Шестерёнка-Судьбы',r:'epic',p:18000,w:25},
+{e:'🔧',n:'Отвёртка-Убийца',r:'mythic',p:50000,w:10},
+{e:'🪜',n:'Стремянка-Карьерист',r:'legend',p:200000,w:3}
 ]},
 {id:'gold',emoji:'🏅',name:'Золотой',price:1500,items:[
-{e:'🥁',n:'Барабан-Вайб',r:'common',p:900,w:400},
-{e:'🎧',n:'Наушники-Чилл',r:'common',p:1000,w:300},
+{e:'🥁',n:'Барабан-Вайб',r:'common',p:900,w:350},
+{e:'🎧',n:'Наушники-Чилл',r:'common',p:1000,w:280},
 {e:'🎮',n:'Геймпад-Краш',r:'common',p:1500,w:200},
-{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:3000,w:130},
-{e:'💻',n:'Ноутбук-Пушка',r:'rare',p:7000,w:60},
-{e:'📷',n:'Фотик-Агонь',r:'rare',p:8000,w:40},
-{e:'🕹',n:'Джойстик-Улёт',r:'epic',p:18000,w:20},
-{e:'🎸',n:'Гитара-Свага',r:'epic',p:22000,w:15},
-{e:'🛹',n:'Скейт-Хайп',r:'mythic',p:60000,w:5},
-{e:'🎳',n:'Боулинг-Легенда',r:'legend',p:250000,w:1}
+{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:3000,w:150},
+{e:'💻',n:'Ноутбук-Пушка',r:'rare',p:7000,w:80},
+{e:'📷',n:'Фотик-Агонь',r:'rare',p:8000,w:60},
+{e:'🕹',n:'Джойстик-Улёт',r:'epic',p:18000,w:35},
+{e:'🎸',n:'Гитара-Свага',r:'epic',p:22000,w:25},
+{e:'🛹',n:'Скейт-Хайп',r:'mythic',p:60000,w:10},
+{e:'🎳',n:'Боулинг-Легенда',r:'legend',p:250000,w:3}
 ]},
 {id:'meme',emoji:'😂',name:'Мемный',price:2000,items:[
-{e:'🥒',n:'Огурец-Свага',r:'common',p:1200,w:400},
-{e:'🍞',n:'Батон-Краш',r:'common',p:1400,w:300},
+{e:'🥒',n:'Огурец-Свага',r:'common',p:1200,w:350},
+{e:'🍞',n:'Батон-Краш',r:'common',p:1400,w:280},
 {e:'🧅',n:'Луковица-Вайб',r:'common',p:1800,w:200},
-{e:'🥔',n:'Картошка-Изи',r:'uncommon',p:3500,w:130},
-{e:'🧦',n:'Носок-Топчик',r:'rare',p:8000,w:60},
-{e:'🍪',n:'Печенье-Агонь',r:'rare',p:9000,w:40},
-{e:'🧸',n:'Мишка-Пушка',r:'epic',p:22000,w:20},
-{e:'🥁',n:'Барабан-Улёт',r:'epic',p:26000,w:15},
-{e:'🧻',n:'Рулон-Хайп',r:'mythic',p:70000,w:5},
-{e:'👑',n:'Корона-Кривулька',r:'legend',p:300000,w:1}
+{e:'🥔',n:'Картошка-Изи',r:'uncommon',p:3500,w:150},
+{e:'🧦',n:'Носок-Топчик',r:'rare',p:8000,w:80},
+{e:'🍪',n:'Печенье-Агонь',r:'rare',p:9000,w:60},
+{e:'🧸',n:'Мишка-Пушка',r:'epic',p:22000,w:35},
+{e:'🥁',n:'Барабан-Улёт',r:'epic',p:26000,w:25},
+{e:'🧻',n:'Рулон-Хайп',r:'mythic',p:70000,w:10},
+{e:'👑',n:'Корона-Кривулька',r:'legend',p:300000,w:3}
 ]},
 {id:'animal',emoji:'🐱',name:'Звериный',price:2500,items:[
-{e:'🐱',n:'Кот-Свага',r:'common',p:1500,w:400},
-{e:'🐶',n:'Пёс-Краш',r:'common',p:1800,w:300},
+{e:'🐱',n:'Кот-Свага',r:'common',p:1500,w:350},
+{e:'🐶',n:'Пёс-Краш',r:'common',p:1800,w:280},
 {e:'🐹',n:'Хомяк-Вайб',r:'common',p:2200,w:200},
-{e:'🐰',n:'Кролик-Изи',r:'uncommon',p:5000,w:130},
-{e:'🦊',n:'Лис-Топчик',r:'rare',p:12000,w:60},
-{e:'🐻',n:'Медведь-Босс',r:'rare',p:15000,w:40},
-{e:'🦁',n:'Лев-Агонь',r:'epic',p:50000,w:20},
-{e:'🐯',n:'Тигр-Пушка',r:'epic',p:60000,w:15},
-{e:'🐉',n:'Дракон-Китаец',r:'mythic',p:250000,w:5},
-{e:'🦄',n:'Единорог-Блестящий',r:'legend',p:800000,w:1}
+{e:'🐰',n:'Кролик-Изи',r:'uncommon',p:5000,w:150},
+{e:'🦊',n:'Лис-Топчик',r:'rare',p:12000,w:80},
+{e:'🐻',n:'Медведь-Босс',r:'rare',p:15000,w:60},
+{e:'🦁',n:'Лев-Агонь',r:'epic',p:50000,w:35},
+{e:'🐯',n:'Тигр-Пушка',r:'epic',p:60000,w:25},
+{e:'🐉',n:'Дракон-Китаец',r:'mythic',p:250000,w:10},
+{e:'🦄',n:'Единорог-Блестящий',r:'legend',p:800000,w:3}
 ]},
 {id:'platinum',emoji:'💠',name:'Платиновый',price:3000,items:[
-{e:'👑',n:'Корона-Свага',r:'common',p:2000,w:400},
-{e:'💎',n:'Алмаз-Вайб',r:'common',p:2200,w:300},
+{e:'👑',n:'Корона-Свага',r:'common',p:2000,w:350},
+{e:'💎',n:'Алмаз-Вайб',r:'common',p:2200,w:280},
 {e:'🏆',n:'Кубок-Топчик',r:'common',p:2500,w:200},
-{e:'📱',n:'Телефон-Пушка',r:'uncommon',p:5500,w:130},
-{e:'🎁',n:'Подарок-Агонь',r:'rare',p:12000,w:60},
-{e:'🦄',n:'Единорог-Улёт',r:'rare',p:16000,w:40},
-{e:'🐉',n:'Дракон-Тостер',r:'epic',p:35000,w:20},
-{e:'🚀',n:'Ракета-Блендер',r:'epic',p:42000,w:15},
-{e:'🌟',n:'Суперзвезда-Фен',r:'mythic',p:120000,w:5},
-{e:'🕳',n:'Чёрная дыра-Плита',r:'legend',p:500000,w:1}
+{e:'📱',n:'Телефон-Пушка',r:'uncommon',p:5500,w:150},
+{e:'🎁',n:'Подарок-Агонь',r:'rare',p:12000,w:80},
+{e:'🦄',n:'Единорог-Улёт',r:'rare',p:16000,w:60},
+{e:'🐉',n:'Дракон-Тостер',r:'epic',p:35000,w:35},
+{e:'🚀',n:'Ракета-Блендер',r:'epic',p:42000,w:25},
+{e:'🌟',n:'Суперзвезда-Фен',r:'mythic',p:120000,w:10},
+{e:'🕳',n:'Чёрная дыра-Плита',r:'legend',p:500000,w:3}
 ]},
 {id:'sport',emoji:'⚽',name:'Спортивный',price:3500,items:[
-{e:'⚽',n:'Мяч-Свага',r:'common',p:2200,w:400},
-{e:'🏀',n:'Баскет-Краш',r:'common',p:2500,w:300},
+{e:'⚽',n:'Мяч-Свага',r:'common',p:2200,w:350},
+{e:'🏀',n:'Баскет-Краш',r:'common',p:2500,w:280},
 {e:'🏈',n:'Мяч-Вайб',r:'common',p:2800,w:200},
-{e:'🎾',n:'Теннис-Топчик',r:'uncommon',p:6500,w:130},
-{e:'🏐',n:'Волейбол-Пушка',r:'rare',p:15000,w:60},
-{e:'🎳',n:'Боулинг-Промах',r:'rare',p:18000,w:40},
-{e:'🏓',n:'Пинг-Понг',r:'epic',p:50000,w:20},
-{e:'🥊',n:'Перчатка-Кулак',r:'epic',p:60000,w:15},
-{e:'🏆',n:'Кубок-Золотой',r:'mythic',p:200000,w:5},
-{e:'🥇',n:'Медаль-Чемпиона',r:'legend',p:700000,w:1}
+{e:'🎾',n:'Теннис-Топчик',r:'uncommon',p:6500,w:150},
+{e:'🏐',n:'Волейбол-Пушка',r:'rare',p:15000,w:80},
+{e:'🎳',n:'Боулинг-Промах',r:'rare',p:18000,w:60},
+{e:'🏓',n:'Пинг-Понг',r:'epic',p:50000,w:35},
+{e:'🥊',n:'Перчатка-Кулак',r:'epic',p:60000,w:25},
+{e:'🏆',n:'Кубок-Золотой',r:'mythic',p:200000,w:10},
+{e:'🥇',n:'Медаль-Чемпиона',r:'legend',p:700000,w:3}
 ]},
 {id:'tech',emoji:'📱',name:'Техно',price:4000,items:[
-{e:'📱',n:'Телефон-Кирпич',r:'common',p:2500,w:400},
-{e:'💻',n:'Ноутбук-Утюг',r:'common',p:2800,w:300},
+{e:'📱',n:'Телефон-Кирпич',r:'common',p:2500,w:350},
+{e:'💻',n:'Ноутбук-Утюг',r:'common',p:2800,w:280},
 {e:'🖱',n:'Мышь-Свага',r:'common',p:3200,w:200},
-{e:'⌨️',n:'Клава-Краш',r:'uncommon',p:7500,w:130},
-{e:'🖥',n:'Монитор-Топчик',r:'rare',p:18000,w:60},
-{e:'🎧',n:'Наушники-Пушка',r:'rare',p:22000,w:40},
-{e:'📷',n:'Фотик-Агонь',r:'epic',p:60000,w:20},
-{e:'🕹',n:'Джойстик-Улёт',r:'epic',p:70000,w:15},
-{e:'🖨',n:'Принтер-Пожиратель',r:'mythic',p:250000,w:5},
-{e:'📡',n:'Спутник-Шпион',r:'legend',p:800000,w:1}
+{e:'⌨️',n:'Клава-Краш',r:'uncommon',p:7500,w:150},
+{e:'🖥',n:'Монитор-Топчик',r:'rare',p:18000,w:80},
+{e:'🎧',n:'Наушники-Пушка',r:'rare',p:22000,w:60},
+{e:'📷',n:'Фотик-Агонь',r:'epic',p:60000,w:35},
+{e:'🕹',n:'Джойстик-Улёт',r:'epic',p:70000,w:25},
+{e:'🖨',n:'Принтер-Пожиратель',r:'mythic',p:250000,w:10},
+{e:'📡',n:'Спутник-Шпион',r:'legend',p:800000,w:3}
 ]},
 {id:'diamond',emoji:'💎',name:'Алмазный',price:5000,items:[
-{e:'💍',n:'Кольцо-Свага',r:'common',p:3200,w:400},
-{e:'💻',n:'Ноутбук-Краш',r:'common',p:3800,w:300},
+{e:'💍',n:'Кольцо-Свага',r:'common',p:3200,w:350},
+{e:'💻',n:'Ноутбук-Краш',r:'common',p:3800,w:280},
 {e:'🎧',n:'Наушники-Вайб',r:'common',p:4500,w:200},
-{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:10000,w:130},
-{e:'💎',n:'Алмаз-Пушка',r:'rare',p:25000,w:60},
-{e:'🏎',n:'Болид-Агонь',r:'rare',p:32000,w:40},
-{e:'👑',n:'Корона-Улёт',r:'epic',p:80000,w:20},
-{e:'🚀',n:'Ракета-Хайп',r:'epic',p:150000,w:15},
-{e:'🌟',n:'Суперзвезда-Легенда',r:'mythic',p:450000,w:5},
-{e:'🐲',n:'Древний дракон-Баня',r:'legend',p:1800000,w:1}
+{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:10000,w:150},
+{e:'💎',n:'Алмаз-Пушка',r:'rare',p:25000,w:80},
+{e:'🏎',n:'Болид-Агонь',r:'rare',p:32000,w:60},
+{e:'👑',n:'Корона-Улёт',r:'epic',p:80000,w:35},
+{e:'🚀',n:'Ракета-Хайп',r:'epic',p:150000,w:25},
+{e:'🌟',n:'Суперзвезда-Легенда',r:'mythic',p:450000,w:10},
+{e:'🐲',n:'Древний дракон-Баня',r:'legend',p:1800000,w:3}
 ]},
 {id:'grandma',emoji:'👵',name:'Бабушкин',price:7000,items:[
-{e:'🧦',n:'Носок-Свага',r:'common',p:4500,w:400},
-{e:'🍪',n:'Печенье-Краш',r:'common',p:5500,w:300},
+{e:'🧦',n:'Носок-Свага',r:'common',p:4500,w:350},
+{e:'🍪',n:'Печенье-Краш',r:'common',p:5500,w:280},
 {e:'🥒',n:'Огурец-Вайб',r:'common',p:6500,w:200},
-{e:'🍞',n:'Батон-Топчик',r:'uncommon',p:14000,w:130},
-{e:'🥔',n:'Картошка-Пушка',r:'rare',p:35000,w:60},
-{e:'🧅',n:'Луковица-Агонь',r:'rare',p:42000,w:40},
-{e:'🧸',n:'Мишка-Улёт',r:'epic',p:110000,w:20},
-{e:'🪣',n:'Ведро-Хайп',r:'epic',p:140000,w:15},
-{e:'🧻',n:'Рулон-Легенда',r:'mythic',p:400000,w:5},
-{e:'🕳',n:'Чёрная дыра-Плита',r:'legend',p:1800000,w:1}
+{e:'🍞',n:'Батон-Топчик',r:'uncommon',p:14000,w:150},
+{e:'🥔',n:'Картошка-Пушка',r:'rare',p:35000,w:80},
+{e:'🧅',n:'Луковица-Агонь',r:'rare',p:42000,w:60},
+{e:'🧸',n:'Мишка-Улёт',r:'epic',p:110000,w:35},
+{e:'🪣',n:'Ведро-Хайп',r:'epic',p:140000,w:25},
+{e:'🧻',n:'Рулон-Легенда',r:'mythic',p:400000,w:10},
+{e:'🕳',n:'Чёрная дыра-Плита',r:'legend',p:1800000,w:3}
 ]},
 {id:'magic',emoji:'🔮',name:'Магический',price:8000,items:[
-{e:'🔮',n:'Шар-Свага',r:'common',p:5000,w:400},
-{e:'📜',n:'Свиток-Краш',r:'common',p:5500,w:300},
+{e:'🔮',n:'Шар-Свага',r:'common',p:5000,w:350},
+{e:'📜',n:'Свиток-Краш',r:'common',p:5500,w:280},
 {e:'🕯',n:'Свеча-Вайб',r:'common',p:7000,w:200},
-{e:'🧿',n:'Амулет-Топчик',r:'uncommon',p:18000,w:130},
-{e:'💀',n:'Череп-Пушка',r:'rare',p:45000,w:60},
-{e:'🗡',n:'Меч-Агонь',r:'rare',p:55000,w:40},
-{e:'🏹',n:'Лук-Улёт',r:'epic',p:150000,w:20},
-{e:'⚗️',n:'Котел-Хайп',r:'epic',p:190000,w:15},
-{e:'🪄',n:'Палочка-Волшебника',r:'mythic',p:600000,w:5},
-{e:'🧙',n:'Маг-Древний',r:'legend',p:2500000,w:1}
+{e:'🧿',n:'Амулет-Топчик',r:'uncommon',p:18000,w:150},
+{e:'💀',n:'Череп-Пушка',r:'rare',p:45000,w:80},
+{e:'🗡',n:'Меч-Агонь',r:'rare',p:55000,w:60},
+{e:'🏹',n:'Лук-Улёт',r:'epic',p:150000,w:35},
+{e:'⚗️',n:'Котел-Хайп',r:'epic',p:190000,w:25},
+{e:'🪄',n:'Палочка-Волшебника',r:'mythic',p:600000,w:10},
+{e:'🧙',n:'Маг-Древний',r:'legend',p:2500000,w:3}
 ]},
 {id:'ruby',emoji:'❤️',name:'Рубиновый',price:10000,items:[
-{e:'💎',n:'Алмаз-Свага',r:'common',p:7000,w:400},
-{e:'📱',n:'Телефон-Краш',r:'common',p:8500,w:300},
+{e:'💎',n:'Алмаз-Свага',r:'common',p:7000,w:350},
+{e:'📱',n:'Телефон-Краш',r:'common',p:8500,w:280},
 {e:'🏎',n:'Болид-Вайб',r:'common',p:10000,w:200},
-{e:'👑',n:'Корона-Топчик',r:'uncommon',p:28000,w:130},
-{e:'🚀',n:'Ракета-Пушка',r:'rare',p:70000,w:60},
-{e:'🌟',n:'Суперзвезда-Агонь',r:'rare',p:90000,w:40},
-{e:'👽',n:'Пришелец-Улёт',r:'epic',p:240000,w:20},
-{e:'🦄',n:'Единорог-Хайп',r:'epic',p:320000,w:15},
-{e:'🌌',n:'Галактика-Легенда',r:'mythic',p:900000,w:5},
-{e:'💫',n:'Комета-Скамейка',r:'legend',p:3500000,w:1}
+{e:'👑',n:'Корона-Топчик',r:'uncommon',p:28000,w:150},
+{e:'🚀',n:'Ракета-Пушка',r:'rare',p:70000,w:80},
+{e:'🌟',n:'Суперзвезда-Агонь',r:'rare',p:90000,w:60},
+{e:'👽',n:'Пришелец-Улёт',r:'epic',p:240000,w:35},
+{e:'🦄',n:'Единорог-Хайп',r:'epic',p:320000,w:25},
+{e:'🌌',n:'Галактика-Легенда',r:'mythic',p:900000,w:10},
+{e:'💫',n:'Комета-Скамейка',r:'legend',p:3500000,w:3}
 ]},
 {id:'emerald',emoji:'💚',name:'Изумрудный',price:25000,items:[
-{e:'🏎',n:'Болид-Свага',r:'common',p:18000,w:400},
-{e:'👑',n:'Корона-Краш',r:'common',p:22000,w:300},
+{e:'🏎',n:'Болид-Свага',r:'common',p:18000,w:350},
+{e:'👑',n:'Корона-Краш',r:'common',p:22000,w:280},
 {e:'🚀',n:'Ракета-Вайб',r:'common',p:28000,w:200},
-{e:'🌟',n:'Суперзвезда-Топчик',r:'uncommon',p:80000,w:130},
-{e:'👽',n:'Пришелец-Пушка',r:'rare',p:220000,w:60},
-{e:'🦄',n:'Единорог-Агонь',r:'rare',p:300000,w:40},
-{e:'🌌',n:'Галактика-Улёт',r:'epic',p:850000,w:20},
-{e:'⚡',n:'Молния-Хайп',r:'epic',p:1200000,w:15},
-{e:'💫',n:'Комета-Кастрюля',r:'mythic',p:3200000,w:5},
-{e:'🌈',n:'Радуга-Легенда',r:'legend',p:12000000,w:1}
+{e:'🌟',n:'Суперзвезда-Топчик',r:'uncommon',p:80000,w:150},
+{e:'👽',n:'Пришелец-Пушка',r:'rare',p:220000,w:80},
+{e:'🦄',n:'Единорог-Агонь',r:'rare',p:300000,w:60},
+{e:'🌌',n:'Галактика-Улёт',r:'epic',p:850000,w:35},
+{e:'⚡',n:'Молния-Хайп',r:'epic',p:1200000,w:25},
+{e:'💫',n:'Комета-Кастрюля',r:'mythic',p:3200000,w:10},
+{e:'🌈',n:'Радуга-Легенда',r:'legend',p:12000000,w:3}
 ]},
 {id:'royal',emoji:'👑',name:'Королевский',price:50000,items:[
-{e:'🚀',n:'Ракета-Свага',r:'common',p:40000,w:400},
-{e:'🌟',n:'Суперзвезда-Краш',r:'common',p:50000,w:300},
+{e:'🚀',n:'Ракета-Свага',r:'common',p:40000,w:350},
+{e:'🌟',n:'Суперзвезда-Краш',r:'common',p:50000,w:280},
 {e:'👽',n:'Пришелец-Вайб',r:'common',p:65000,w:200},
-{e:'🦄',n:'Единорог-Топчик',r:'uncommon',p:240000,w:130},
-{e:'🌌',n:'Галактика-Пушка',r:'rare',p:700000,w:60},
-{e:'⚡',n:'Молния-Агонь',r:'rare',p:1000000,w:40},
-{e:'💫',n:'Комета-Улёт',r:'epic',p:2600000,w:20},
-{e:'🪐',n:'Планета-Хайп',r:'epic',p:4000000,w:15},
-{e:'🌈',n:'Радуга-Легенда',r:'mythic',p:12000000,w:5},
-{e:'✨',n:'Сияние-Микроволновка',r:'legend',p:60000000,w:1}
+{e:'🦄',n:'Единорог-Топчик',r:'uncommon',p:240000,w:150},
+{e:'🌌',n:'Галактика-Пушка',r:'rare',p:700000,w:80},
+{e:'⚡',n:'Молния-Агонь',r:'rare',p:1000000,w:60},
+{e:'💫',n:'Комета-Улёт',r:'epic',p:2600000,w:35},
+{e:'🪐',n:'Планета-Хайп',r:'epic',p:4000000,w:25},
+{e:'🌈',n:'Радуга-Легенда',r:'mythic',p:12000000,w:10},
+{e:'✨',n:'Сияние-Микроволновка',r:'legend',p:60000000,w:3}
 ]},
 {id:'cosmic',emoji:'🌌',name:'Космический',price:100000,items:[
-{e:'👽',n:'Пришелец-Свага',r:'common',p:80000,w:400},
-{e:'🦄',n:'Единорог-Краш',r:'common',p:100000,w:300},
+{e:'👽',n:'Пришелец-Свага',r:'common',p:80000,w:350},
+{e:'🦄',n:'Единорог-Краш',r:'common',p:100000,w:280},
 {e:'🌌',n:'Галактика-Вайб',r:'common',p:150000,w:200},
-{e:'⚡',n:'Молния-Топчик',r:'uncommon',p:900000,w:130},
-{e:'💫',n:'Комета-Пушка',r:'rare',p:2400000,w:60},
-{e:'🪐',n:'Планета-Агонь',r:'rare',p:3400000,w:40},
-{e:'🌈',n:'Радуга-Улёт',r:'epic',p:9000000,w:20},
-{e:'🌠',n:'Звездопад-Хайп',r:'epic',p:16000000,w:15},
-{e:'✨',n:'Сияние-Легенда',r:'mythic',p:55000000,w:5},
-{e:'🕳',n:'Чёрная дыра-Рюкзак',r:'legend',p:400000000,w:1}
+{e:'⚡',n:'Молния-Топчик',r:'uncommon',p:900000,w:150},
+{e:'💫',n:'Комета-Пушка',r:'rare',p:2400000,w:80},
+{e:'🪐',n:'Планета-Агонь',r:'rare',p:3400000,w:60},
+{e:'🌈',n:'Радуга-Улёт',r:'epic',p:9000000,w:35},
+{e:'🌠',n:'Звездопад-Хайп',r:'epic',p:16000000,w:25},
+{e:'✨',n:'Сияние-Легенда',r:'mythic',p:55000000,w:10},
+{e:'🕳',n:'Чёрная дыра-Рюкзак',r:'legend',p:400000000,w:3}
 ]},
 {id:'million',emoji:'💰',name:'Миллионный',price:1000000,items:[
-{e:'🪙',n:'Монетка-Миллион',r:'common',p:800000,w:400},
-{e:'💵',n:'Купюра-Свага',r:'common',p:1100000,w:300},
+{e:'🪙',n:'Монетка-Миллион',r:'common',p:800000,w:350},
+{e:'💵',n:'Купюра-Свага',r:'common',p:1100000,w:280},
 {e:'💎',n:'Алмаз-Краш',r:'common',p:1500000,w:200},
-{e:'🏆',n:'Кубок-Вайб',r:'uncommon',p:3000000,w:130},
-{e:'👑',n:'Корона-Топчик',r:'rare',p:8000000,w:60},
-{e:'🚀',n:'Ракета-Пушка',r:'rare',p:12000000,w:40},
-{e:'🌟',n:'Суперзвезда-Агонь',r:'epic',p:35000000,w:20},
-{e:'💫',n:'Комета-Улёт',r:'epic',p:50000000,w:15},
-{e:'🌈',n:'Радуга-Хайп',r:'mythic',p:200000000,w:5},
-{e:'🕳',n:'Чёрная дыра-Вселенная',r:'legend',p:2000000000,w:1}
+{e:'🏆',n:'Кубок-Вайб',r:'uncommon',p:3000000,w:150},
+{e:'👑',n:'Корона-Топчик',r:'rare',p:8000000,w:80},
+{e:'🚀',n:'Ракета-Пушка',r:'rare',p:12000000,w:60},
+{e:'🌟',n:'Суперзвезда-Агонь',r:'epic',p:35000000,w:35},
+{e:'💫',n:'Комета-Улёт',r:'epic',p:50000000,w:25},
+{e:'🌈',n:'Радуга-Хайп',r:'mythic',p:200000000,w:10},
+{e:'🕳',n:'Чёрная дыра-Вселенная',r:'legend',p:2000000000,w:3}
 ]},
 {id:'five_million',emoji:'💎',name:'Пятимиллионный',price:5000000,items:[
-{e:'💵',n:'Купюра-Миллион',r:'common',p:4000000,w:400},
-{e:'💎',n:'Алмаз-Свага',r:'common',p:5500000,w:300},
+{e:'💵',n:'Купюра-Миллион',r:'common',p:4000000,w:350},
+{e:'💎',n:'Алмаз-Свага',r:'common',p:5500000,w:280},
 {e:'🏆',n:'Кубок-Краш',r:'common',p:7000000,w:200},
-{e:'👑',n:'Корона-Вайб',r:'uncommon',p:20000000,w:130},
-{e:'🚀',n:'Ракета-Топчик',r:'rare',p:60000000,w:60},
-{e:'🌟',n:'Суперзвезда-Пушка',r:'rare',p:90000000,w:40},
-{e:'💫',n:'Комета-Агонь',r:'epic',p:300000000,w:20},
-{e:'🌈',n:'Радуга-Улёт',r:'epic',p:500000000,w:15},
-{e:'✨',n:'Сияние-Хайп',r:'mythic',p:1500000000,w:5},
-{e:'🌌',n:'Галактика-Легенда',r:'legend',p:10000000000,w:1}
+{e:'👑',n:'Корона-Вайб',r:'uncommon',p:20000000,w:150},
+{e:'🚀',n:'Ракета-Топчик',r:'rare',p:60000000,w:80},
+{e:'🌟',n:'Суперзвезда-Пушка',r:'rare',p:90000000,w:60},
+{e:'💫',n:'Комета-Агонь',r:'epic',p:300000000,w:35},
+{e:'🌈',n:'Радуга-Улёт',r:'epic',p:500000000,w:25},
+{e:'✨',n:'Сияние-Хайп',r:'mythic',p:1500000000,w:10},
+{e:'🌌',n:'Галактика-Легенда',r:'legend',p:10000000000,w:3}
 ]},
 {id:'ten_million',emoji:'🏆',name:'Десятимиллионный',price:10000000,items:[
-{e:'💎',n:'Алмаз-Миллион',r:'common',p:8000000,w:400},
-{e:'🏆',n:'Кубок-Свага',r:'common',p:11000000,w:300},
+{e:'💎',n:'Алмаз-Миллион',r:'common',p:8000000,w:350},
+{e:'🏆',n:'Кубок-Свага',r:'common',p:11000000,w:280},
 {e:'👑',n:'Корона-Краш',r:'common',p:15000000,w:200},
-{e:'🚀',n:'Ракета-Вайб',r:'uncommon',p:40000000,w:130},
-{e:'🌟',n:'Суперзвезда-Топчик',r:'rare',p:120000000,w:60},
-{e:'💫',n:'Комета-Пушка',r:'rare',p:180000000,w:40},
-{e:'🌈',n:'Радуга-Агонь',r:'epic',p:600000000,w:20},
-{e:'✨',n:'Сияние-Улёт',r:'epic',p:900000000,w:15},
-{e:'🌌',n:'Галактика-Хайп',r:'mythic',p:3000000000,w:5},
-{e:'🕳',n:'Чёрная дыра-Легенда',r:'legend',p:20000000000,w:1}
+{e:'🚀',n:'Ракета-Вайб',r:'uncommon',p:40000000,w:150},
+{e:'🌟',n:'Суперзвезда-Топчик',r:'rare',p:120000000,w:80},
+{e:'💫',n:'Комета-Пушка',r:'rare',p:180000000,w:60},
+{e:'🌈',n:'Радуга-Агонь',r:'epic',p:600000000,w:35},
+{e:'✨',n:'Сияние-Улёт',r:'epic',p:900000000,w:25},
+{e:'🌌',n:'Галактика-Хайп',r:'mythic',p:3000000000,w:10},
+{e:'🕳',n:'Чёрная дыра-Легенда',r:'legend',p:20000000000,w:3}
 ]}
 ];
 
@@ -604,24 +603,17 @@ let upgradeBet=null,upgradeWant=null,upgradeWheelAngle=0,upgradeRolling=false;
 function getCurrentCase(){return CASES.find(c=>c.id===currentCaseId)||CASES[0];}
 function pickRandomItem(c){const t=c.items.reduce((s,i)=>s+i.w,0);let r=Math.random()*t;for(const i of c.items){r-=i.w;if(r<=0)return i;}return c.items[0];}
 function formatPrice(n){return Math.round(n).toLocaleString('ru-RU');}
-
 function switchTab(v){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));const e=document.getElementById('view-'+v);if(e)e.classList.add('active');}
-
 function renderCasePicker(){const p=document.getElementById('casePicker');if(!p)return;p.innerHTML=CASES.map(c=>`<div class="case-option ${c.id===currentCaseId?'active':''}" onclick="selectCase('${c.id}')"><span class="case-emoji">${c.emoji}</span><div class="case-name">${c.name}</div><div class="case-price">${formatPrice(c.price)} 🪙</div></div>`).join('');updateOpenButton();updateAmountAvailability();}
-
 function selectCase(id){if(isOpening)return;currentCaseId=id;renderCasePicker();resetRoulette();}
-
-// Показывает, пролетают ли дорогие предметы в рулетке — 15% слотятся как редкие, но не выигрывают
-function buildRouletteItem(i){const s=RARITY_STARS[i.r]||1;return`<div class="emoji">${i.e}</div><div class="label">${i.n}</div><div class="price-tag">${formatPrice(i.p)} 🪙</div>`;}
-
+function buildRouletteItem(i){return`<div class="emoji">${i.e}</div><div class="label">${i.n}</div><div class="price-tag">${formatPrice(i.p)} 🪙</div>`;}
 function resetRoulette(){const r=document.getElementById('roulette');if(!r)return;const c=getCurrentCase();r.style.transition='none';r.style.transform='translateX(0)';r.innerHTML='';for(let i=0;i<60;i++){const it=pickRandomItem(c);const el=document.createElement('div');el.className='item r-'+it.r;el.innerHTML=buildRouletteItem(it);r.appendChild(el);}}
 
-function generateRoulette(){const r=document.getElementById('roulette');const c=getCurrentCase();r.innerHTML='';const winItem=pickRandomItem(c);const winIdx=45;for(let i=0;i<60;i++){let it;if(i===winIdx){it=winItem;}else if(Math.random()<0.15&&i>20&&i<70){it=c.items[Math.floor(Math.random()*c.items.length)];}else{it=pickRandomItem(c);}const el=document.createElement('div');el.className='item r-'+it.r;el.innerHTML=buildRouletteItem(it);r.appendChild(el);}return{winItem,winIdx};}
+// Только топ-3 дорогих пролетают в ленте, 8% шанс
+function generateRoulette(){const r=document.getElementById('roulette');const c=getCurrentCase();r.innerHTML='';const winItem=pickRandomItem(c);const winIdx=45;const sorted=[...c.items].sort((a,b)=>b.p-a.p);const topItems=sorted.slice(0,3);for(let i=0;i<60;i++){let it;if(i===winIdx){it=winItem;}else if(i>18&&i<72){if(Math.random()<0.08){it=topItems[Math.floor(Math.random()*topItems.length)];}else{it=pickRandomItem(c);}}else{it=pickRandomItem(c);}const el=document.createElement('div');el.className='item r-'+it.r;el.innerHTML=buildRouletteItem(it);r.appendChild(el);}return{winItem,winIdx};}
 
 function updateOpenButton(){const b=document.getElementById('openBtn');if(!b)return;const c=getCurrentCase();const t=c.price*selectedAmount;b.textContent=`Открыть ×${selectedAmount} за ${formatPrice(t)} 🪙`;if(balance<t){b.disabled=true;b.textContent=`Не хватает ${formatPrice(t-balance)} 🪙`;}else b.disabled=false;}
-
 function selectAmount(n){if(isOpening)return;selectedAmount=n;document.querySelectorAll('.amount-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.amount)===n));updateOpenButton();updateAmountAvailability();}
-
 function updateAmountAvailability(){const c=getCurrentCase();document.querySelectorAll('.amount-btn').forEach(b=>{const a=parseInt(b.dataset.amount);b.classList.toggle('disabled',c.price*a>balance);});}
 
 function openCase(){if(isOpening)return;const c=getCurrentCase();const t=c.price*selectedAmount;if(balance<t){shakeBalance();return;}isOpening=true;balance-=t;updateBalance('minus');const ob=document.getElementById('openBtn');if(ob)ob.disabled=true;const cb=document.getElementById('caseBox');if(cb){cb.classList.add('opening');cb.textContent='📦';setTimeout(()=>{cb.classList.remove('opening');cb.textContent=c.emoji;},500);}
@@ -630,42 +622,28 @@ if(selectedAmount===1){const{winItem,winIdx}=generateRoulette();const r=document
 setTimeout(()=>{if(selectedAmount===1){showDrop(wins[0]);addToHistory(wins[0]);}else{showMultiDrop(wins);wins.forEach(w=>addToHistory(w));}isOpening=false;updateOpenButton();updateAmountAvailability();},selectedAmount===1?6200:3200);}
 
 function showDrop(it){pendingDrop=it;pendingMulti=null;const m=document.getElementById('dropModal'),c=document.getElementById('dropCard');if(!m||!c)return;c.className='drop-card r-'+it.r;document.getElementById('dropSingleView').style.display='block';document.getElementById('dropMultiView').style.display='none';document.getElementById('dropAllRow').style.display='none';document.getElementById('dropEmoji').textContent=it.e;document.getElementById('dropRarity').textContent=RARITY_LABELS[it.r];document.getElementById('dropName').textContent=it.n;document.getElementById('dropPrice').textContent='Стоимость: '+formatPrice(it.p)+' 🪙';m.classList.add('show');}
-
 function showMultiDrop(items){pendingMulti=items;pendingDrop=null;const m=document.getElementById('dropModal'),c=document.getElementById('dropCard');if(!m||!c)return;c.className='drop-card wide';document.getElementById('dropSingleView').style.display='none';document.getElementById('dropMultiView').style.display='block';document.getElementById('dropAllRow').style.display='block';document.getElementById('dropMultiTitle').textContent='Открыто: '+items.length;document.getElementById('dropMultiGrid').innerHTML=items.map(i=>`<div class="multi-drop-item r-${i.r}"><span class="md-emoji">${i.e}</span><div class="md-name">${i.n}</div><div class="md-price">${formatPrice(i.p)} 🪙</div></div>`).join('');m.classList.add('show');}
-
 function keepDrop(){if(pendingMulti){pendingMulti.forEach(i=>inventory.push(i));pendingMulti=null;renderInventory();closeDrop();return;}if(!pendingDrop)return;inventory.push(pendingDrop);pendingDrop=null;renderInventory();closeDrop();}
-
 function sellDrop(){if(pendingMulti){const t=pendingMulti.reduce((s,i)=>s+i.p,0);balance+=t;updateBalance('plus');pendingMulti.forEach(i=>addToHistory({...i,sold:true}));pendingMulti=null;renderInventory();closeDrop();return;}if(!pendingDrop)return;balance+=pendingDrop.p;updateBalance('plus');addToHistory({...pendingDrop,sold:true});pendingDrop=null;renderInventory();closeDrop();}
-
 function sellAllDrop(){if(!pendingMulti)return;const t=pendingMulti.reduce((s,i)=>s+i.p,0);balance+=t;updateBalance('plus');pendingMulti.forEach(i=>addToHistory({...i,sold:true}));pendingMulti=null;renderInventory();closeDrop();}
-
 function closeDrop(){const m=document.getElementById('dropModal');if(m)m.classList.remove('show');pendingDrop=null;pendingMulti=null;document.getElementById('dropSingleView').style.display='block';document.getElementById('dropMultiView').style.display='none';document.getElementById('dropAllRow').style.display='none';updateOpenButton();updateAmountAvailability();}
-
 function addToHistory(it){const t=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});history.unshift({...it,time:t});if(history.length>HISTORY_LIMIT)history.pop();renderHistory();}
-
 function renderHistory(){const l=document.getElementById('historyList');if(!l)return;if(history.length===0){l.innerHTML='<div class="empty-history">Пока пусто</div>';return;}l.innerHTML=history.map(i=>`<div class="history-item"><div class="h-emoji">${i.e}</div><div class="h-info"><div class="h-name">${i.n}${i.sold?' (продан)':''}</div><div class="h-rarity r-${i.r}">${RARITY_LABELS[i.r]} · ${formatPrice(i.p)} 🪙</div></div><div class="h-time">${i.time}</div></div>`).join('');}
-
 function renderInventory(){const g=document.getElementById('inventoryGrid');if(!g)return;document.getElementById('invCount').textContent=inventory.length;document.getElementById('invTotal').textContent=formatPrice(inventory.reduce((s,i)=>s+i.p,0));if(inventory.length===0){g.innerHTML='<div class="empty-history" style="grid-column:1/-1;">Пусто</div>';return;}g.innerHTML=inventory.map((it,idx)=>`<div class="inv-card r-${it.r}"><span class="inv-emoji">${it.e}</span><div class="inv-name">${it.n}</div><div class="inv-rarity r-${it.r}">${RARITY_LABELS[it.r]}</div><div class="inv-price">${formatPrice(it.p)} 🪙</div><button class="inv-sell" onclick="sellFromInventory(${idx})">Продать</button></div>`).join('');}
-
 function sellFromInventory(idx){const it=inventory[idx];if(!it)return;balance+=it.p;updateBalance('plus');addToHistory({...it,sold:true});inventory.splice(idx,1);renderInventory();}
-
 function updateBalance(t){const b=document.getElementById('balanceBox'),a=document.getElementById('balanceAmount');if(!b||!a)return;a.textContent=formatPrice(balance);b.classList.remove('plus','minus');void b.offsetWidth;if(t==='plus')b.classList.add('plus');if(t==='minus')b.classList.add('minus');}
 function shakeBalance(){const b=document.getElementById('balanceBox');if(!b)return;b.classList.remove('minus');void b.offsetWidth;b.classList.add('minus');}
-
 function resetDemo(){if(isOpening)return;balance=START_BALANCE;history=[];inventory=[];pendingDrop=null;pendingMulti=null;upgradeBet=null;upgradeWant=null;selectedAmount=1;document.querySelectorAll('.amount-btn').forEach(b=>b.classList.toggle('active',b.dataset.amount==='1'));updateBalance();renderHistory();renderInventory();resetRoulette();renderUpgrader();renderCasePicker();}
 
-// === АПГРЕЙДЕР (средние шансы) ===
+// === АПГРЕЙДЕР ===
 function calcUpgradeChance(){if(!upgradeBet||!upgradeWant)return 0;if(upgradeWant.p<=upgradeBet.p)return 85;const ratio=upgradeBet.p/upgradeWant.p;let chance=Math.pow(ratio,1.5)*85;if(chance>85)chance=85;if(chance<0.5)chance=0.5;return Math.round(chance*100)/100;}
-
 function renderUpgrader(){const bc=document.getElementById('slotBetContent'),wc=document.getElementById('slotWantContent'),sb=document.getElementById('slotBet'),sw=document.getElementById('slotWant');if(!bc||!wc)return;if(upgradeBet){bc.innerHTML=`<div class="slot-emoji">${upgradeBet.e}</div><div class="slot-name">${upgradeBet.n}</div><div class="slot-price">${formatPrice(upgradeBet.p)} 🪙</div>`;sb.classList.add('filled');}else{bc.innerHTML='<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>';sb.classList.remove('filled');}
 if(upgradeWant){wc.innerHTML=`<div class="slot-emoji">${upgradeWant.e}</div><div class="slot-name">${upgradeWant.n}</div><div class="slot-price">${formatPrice(upgradeWant.p)} 🪙</div>`;sw.classList.add('filled');}else{wc.innerHTML='<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>';sw.classList.remove('filled');}
 const ch=document.getElementById('upgraderChance'),btn=document.getElementById('upgraderStart');if(upgradeBet&&upgradeWant){const c=calcUpgradeChance();ch.innerHTML='Шанс выигрыша: <strong>'+c.toFixed(2)+'%</strong>';btn.disabled=false;document.getElementById('upgraderWheel').style.background=`conic-gradient(var(--green) 0deg ${c/100*360}deg,var(--red) ${c/100*360}deg 360deg)`;}else{ch.innerHTML='Шанс выигрыша: <strong>—</strong>';btn.disabled=true;}}
-
 function openSlotPicker(t){if(upgradeRolling)return;const m=document.getElementById('slotPickerModal'),ti=document.getElementById('slotPickerTitle'),g=document.getElementById('slotPickerGrid');if(t==='bet'){ti.textContent='Выбери свой предмет';if(inventory.length===0){g.innerHTML='<div class="empty-history" style="grid-column:1/-1;">Инвентарь пуст</div>';}else{g.innerHTML=inventory.map((it,i)=>`<div class="slot-picker-item" onclick="pickSlot(${i})"><span class="sp-emoji">${it.e}</span><div class="sp-name">${it.n}</div><div class="sp-price">${formatPrice(it.p)} 🪙</div></div>`).join('');}}else{ti.textContent='Выбери желаемый предмет';const all=[],seen=new Set();CASES.forEach(c=>c.items.forEach(it=>{const k=it.e+it.n;if(!seen.has(k)){seen.add(k);all.push(it);}}));all.sort((a,b)=>a.p-b.p);g.innerHTML=all.map((it,i)=>`<div class="slot-picker-item" onclick="pickWant(${i})"><span class="sp-emoji">${it.e}</span><div class="sp-name">${it.n}</div><div class="sp-price">${formatPrice(it.p)} 🪙</div></div>`).join('');window._wantItems=all;}m.classList.add('show');}
 function pickSlot(i){upgradeBet=inventory[i];closeSlotPicker();renderUpgrader();}
 function pickWant(i){upgradeWant=window._wantItems[i];closeSlotPicker();renderUpgrader();}
 function closeSlotPicker(){document.getElementById('slotPickerModal').classList.remove('show');}
-
 function startUpgrade(){if(upgradeRolling||!upgradeBet||!upgradeWant)return;if(upgradeBet.p>=upgradeWant.p){setUpgradeResult('Нужен предмет дороже','lose');return;}upgradeRolling=true;document.getElementById('upgraderStart').disabled=true;setUpgradeResult('','');
 const chance=calcUpgradeChance();const win=Math.random()*100<chance;const wheel=document.getElementById('upgraderWheel');const extra=4+Math.floor(Math.random()*3);const cd=(chance/100)*360;let ta;if(win){const a=5+Math.random()*Math.max(1,cd-10);ta=upgradeWheelAngle+extra*360+(360-a);}else{const a=cd+5+Math.random()*Math.max(1,355-cd);ta=upgradeWheelAngle+extra*360+(360-a);}upgradeWheelAngle=ta;wheel.style.transform='rotate('+upgradeWheelAngle+'deg)';
 setTimeout(()=>{const bi=inventory.indexOf(upgradeBet);if(bi!==-1)inventory.splice(bi,1);if(win){inventory.push(upgradeWant);addToHistory({...upgradeWant,n:upgradeWant.n+' (апгрейд)'});setUpgradeResult('✅ Успех! '+upgradeWant.e+' '+upgradeWant.n,'win');showGamePopup(true,null,'Ты получил '+upgradeWant.n);}else{addToHistory({...upgradeBet,n:upgradeBet.n+' (сгорел)'});setUpgradeResult('❌ Провал. Ты потерял '+upgradeBet.e+' '+upgradeBet.n,'lose');showGamePopup(false,null,'Ты потерял '+upgradeBet.n);}renderInventory();upgradeBet=null;upgradeWant=null;renderUpgrader();upgradeRolling=false;document.getElementById('upgraderStart').disabled=false;},5200);}
@@ -711,13 +689,11 @@ function setBreederResult(t,type){const el=document.getElementById('breederResul
 // === ПОПАП ===
 const LOSE_PHRASES=[{t:'ТЫ ЛОХ',e:'💀'},{t:'ТЫ ДЕБИЛ',e:'🤡'},{t:'ТЫ ПРОИГРАЛ',e:'😭'},{t:'ПОЗОР ТЕБЕ',e:'👎'},{t:'РОДИТЕЛИ В УЖАСЕ',e:'😱'},{t:'МАМА ПЛАЧЕТ',e:'😢'},{t:'ТЫ ДНО',e:'🕳'},{t:'ТЫ НУБ',e:'🐣'},{t:'ТЫ БОМЖ',e:'🥺'},{t:'ЛУЗЕР',e:'🏳'},{t:'ТЫ ОПОЗОРИЛСЯ',e:'🤦'},{t:'ТВОЯ МАМА ЗНАЕТ',e:'📞'},{t:'ТЫ КАК ПЕНЬ',e:'🪵'},{t:'ТЫ НОЛЬ',e:'0️⃣'},{t:'ТЫ КАК НОСОК',e:'🧦'},{t:'ТЫ БЕЗДАРЬ',e:'🚫'},{t:'ТЫ ОШИБКА ПРИРОДЫ',e:'❌'},{t:'ТЫ ХУЖЕ ШКАФА',e:'🚪'},{t:'ТЫ ПРОИГРАЛ СТОЛЕШНИЦЕ',e:'🪑'},{t:'ХА-ХА-ХА',e:'😂'}];
 const WIN_PHRASES=[{t:'МОЛОДЕЦ!',e:'🏆'},{t:'ТЫ ПРОДАЛ СВОЮ МАМУ',e:'😈'},{t:'РОДИТЕЛИ В ПРЕКРАСНОМ СОСТОЯНИИ',e:'😎'},{t:'ВАУ, ТЫ ЛЕГЕНДА',e:'🌟'},{t:'ВСЁ КРУТО, ТЫ КОСМОС',e:'🌌'},{t:'МАМА ГОРДИТСЯ',e:'🥰'},{t:'ПАПА В ВОСТОРГЕ',e:'🤩'},{t:'ТЫ ПРОДАЛ ОТЦА',e:'😎'},{t:'МАМА НЕ УЗНАЕТ',e:'🤫'},{t:'ТЫ ТОП',e:'🔝'},{t:'КРАСАВЧИК',e:'💅'},{t:'УМНИЦА',e:'🧠'},{t:'ГЕНИЙ',e:'🧠'},{t:'ЦАРЬ',e:'👑'},{t:'БОСС',e:'💼'},{t:'ХАРОШ',e:'🔥'},{t:'ТЫ КАК БОГ',e:'⚡'},{t:'ТЫ КАК ЗВЕЗДА',e:'⭐'},{t:'ТЫ КАК ЧЕМПИОН',e:'🥇'},{t:'ВАУ-ВАУ-ВАУ',e:'🎉'}];
-
 function showGamePopup(win,overrideTitle,sub){const p=document.getElementById('gamePopup'),inner=document.getElementById('gamePopupInner');if(!p||!inner)return;const list=win?WIN_PHRASES:LOSE_PHRASES;const ph=list[Math.floor(Math.random()*list.length)];inner.className='game-popup-inner '+(win?'win':'lose');document.getElementById('gamePopupEmoji').textContent=ph.e;document.getElementById('gamePopupText').textContent=overrideTitle||ph.t;document.getElementById('gamePopupSub').textContent=sub||'';p.classList.add('show');}
 function closeGamePopup(){const p=document.getElementById('gamePopup');if(p)p.classList.remove('show');}
 
 // === INIT ===
 updateBalance();renderCasePicker();renderHistory();renderInventory();resetRoulette();renderUpgrader();updateAmountAvailability();
-
 document.getElementById('dropModal').addEventListener('click',e=>{if(e.target.id==='dropModal')keepDrop();});
 document.getElementById('gamePopup').addEventListener('click',e=>{if(e.target.id==='gamePopup')closeGamePopup();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeGamePopup();closeDrop();closeSlotPicker();}});
