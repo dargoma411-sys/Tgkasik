@@ -13,145 +13,52 @@
         --green: #4caf50; --blue: #3b82f6; --purple: #a855f7;
         --pink: #ec4899; --gold: #f59e0b; --red: #ef4444;
     }
-    body {
-        background: radial-gradient(circle at 50% 0%, #1a1f2e 0%, #0f1117 60%);
-        color: var(--text); min-height: 100vh; display: flex; flex-direction: column;
-        overflow-x: hidden; padding-bottom: 20px;
-    }
-    .topbar {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 14px 18px; background: rgba(23, 26, 35, 0.85);
-        backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
-        position: sticky; top: 0; z-index: 50;
-    }
+    body { background: radial-gradient(circle at 50% 0%, #1a1f2e 0%, #0f1117 60%); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; padding-bottom: 20px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: rgba(23, 26, 35, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 50; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: 1px; }
-    .logo-icon {
-        width: 34px; height: 34px; border-radius: 9px;
-        background: linear-gradient(135deg, var(--accent), #ff7b00);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.1rem; box-shadow: 0 0 18px rgba(245, 166, 35, 0.5);
-    }
-    .balance {
-        display: flex; align-items: center; gap: 8px;
-        background: var(--bg-3); border: 1px solid var(--line);
-        padding: 8px 14px; border-radius: 30px; font-weight: 700; font-size: 0.95rem;
-    }
+    .logo-icon { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--accent), #ff7b00); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 0 18px rgba(245, 166, 35, 0.5); }
+    .balance { display: flex; align-items: center; gap: 8px; background: var(--bg-3); border: 1px solid var(--line); padding: 8px 14px; border-radius: 30px; font-weight: 700; font-size: 0.95rem; }
     .balance .coin { font-size: 1.05rem; }
     .balance .amount { color: var(--accent-2); min-width: 52px; text-align: right; }
     .balance.plus { animation: balancePop 0.4s ease; }
     .balance.minus { animation: balanceShake 0.4s ease; }
     @keyframes balancePop { 0% { transform: scale(1); } 50% { transform: scale(1.12); box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); } 100% { transform: scale(1); } }
     @keyframes balanceShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-    .tabs {
-        display: flex; gap: 6px; padding: 12px 16px 0;
-        max-width: 720px; margin: 0 auto; width: 100%; flex-wrap: wrap;
-    }
-    .tab {
-        flex: 1; min-width: 80px; padding: 10px 6px;
-        background: var(--bg-2); border: 1px solid var(--line);
-        border-radius: 10px; color: var(--muted); font-weight: 700;
-        font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;
-        cursor: pointer; transition: all 0.2s; text-align: center;
-    }
-    .tab.active {
-        background: linear-gradient(135deg, var(--accent), #ff7b00);
-        color: #1a1200; border-color: transparent;
-        box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35);
-    }
-    .main {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        padding: 16px; max-width: 720px; margin: 0 auto; width: 100%;
-    }
+    .tabs { display: flex; gap: 6px; padding: 12px 16px 0; max-width: 720px; margin: 0 auto; width: 100%; flex-wrap: wrap; }
+    .tab { flex: 1; min-width: 74px; padding: 10px 6px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; color: var(--muted); font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .tab.active { background: linear-gradient(135deg, var(--accent), #ff7b00); color: #1a1200; border-color: transparent; box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35); }
+    .main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 16px; max-width: 720px; margin: 0 auto; width: 100%; }
     .view { display: none; width: 100%; }
     .view.active { display: block; }
     .case-title { text-align: center; margin-bottom: 14px; }
     .case-title h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 4px; }
     .case-title p { color: var(--muted); font-size: 0.88rem; }
-    .case-picker {
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 10px; margin-bottom: 16px;
-    }
-    .case-option {
-        background: var(--bg-2); border: 2px solid var(--line);
-        border-radius: 14px; padding: 12px 8px; text-align: center;
-        cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
-    }
-    .case-option.active {
-        border-color: var(--accent);
-        box-shadow: 0 0 20px rgba(245, 166, 35, 0.3);
-        background: linear-gradient(160deg, #232838, #1a1e28);
-    }
-    .case-option .case-emoji { font-size: 1.8rem; margin-bottom: 4px; display: block; }
-    .case-option .case-name { font-size: 0.78rem; font-weight: 800; margin-bottom: 3px; }
-    .case-option .case-price { font-size: 0.75rem; color: var(--accent-2); font-weight: 700; }
-    .case-option .case-glow {
-        position: absolute; inset: -30%;
-        background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 60%);
-        pointer-events: none; opacity: 0; transition: opacity 0.3s;
-    }
+    .case-picker { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 16px; }
+    .case-option { background: var(--bg-2); border: 2px solid var(--line); border-radius: 14px; padding: 10px 8px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .case-option.active { border-color: var(--accent); box-shadow: 0 0 20px rgba(245, 166, 35, 0.3); background: linear-gradient(160deg, #232838, #1a1e28); }
+    .case-option .case-emoji { font-size: 1.6rem; margin-bottom: 3px; display: block; }
+    .case-option .case-name { font-size: 0.7rem; font-weight: 800; margin-bottom: 3px; }
+    .case-option .case-price { font-size: 0.68rem; color: var(--accent-2); font-weight: 700; }
+    .case-option .case-glow { position: absolute; inset: -30%; background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 60%); pointer-events: none; opacity: 0; transition: opacity 0.3s; }
     .case-option.active .case-glow { opacity: 1; }
-    .case-visual {
-        position: relative; width: 170px; height: 170px;
-        margin: 8px auto 18px; display: flex; align-items: center; justify-content: center;
-    }
-    .case-visual .case-box {
-        width: 140px; height: 140px; border-radius: 22px;
-        background: linear-gradient(145deg, #232838, #171a23);
-        border: 2px solid var(--line);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 3.8rem; position: relative;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-        animation: caseFloat 3s ease-in-out infinite; transition: transform 0.3s;
-    }
+    .case-visual { position: relative; width: 170px; height: 170px; margin: 8px auto 18px; display: flex; align-items: center; justify-content: center; }
+    .case-visual .case-box { width: 140px; height: 140px; border-radius: 22px; background: linear-gradient(145deg, #232838, #171a23); border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 3.8rem; position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05); animation: caseFloat 3s ease-in-out infinite; transition: transform 0.3s; }
     .case-visual .case-box.opening { animation: caseShake 0.5s ease; }
     @keyframes caseFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     @keyframes caseShake { 0%, 100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-6px) rotate(-3deg); } 40% { transform: translateX(6px) rotate(3deg); } 60% { transform: translateX(-6px) rotate(-3deg); } 80% { transform: translateX(6px) rotate(3deg); } }
-    .case-visual .glow {
-        position: absolute; inset: -20px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(245, 166, 35, 0.35) 0%, transparent 70%);
-        animation: glowPulse 2.5s ease-in-out infinite; z-index: -1;
-    }
+    .case-visual .glow { position: absolute; inset: -20px; border-radius: 50%; background: radial-gradient(circle, rgba(245, 166, 35, 0.35) 0%, transparent 70%); animation: glowPulse 2.5s ease-in-out infinite; z-index: -1; }
     @keyframes glowPulse { 0%, 100% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1.05); } }
-    .roulette-wrap {
-        width: 100%; position: relative; margin-bottom: 16px;
-        border-radius: 16px; overflow: hidden;
-        background: linear-gradient(180deg, #171a23, #12151c);
-        border: 1px solid var(--line); padding: 14px 0;
-    }
-    .roulette-marker {
-        position: absolute; top: 0; bottom: 0; left: 50%; width: 3px;
-        background: linear-gradient(180deg, transparent, var(--accent), transparent);
-        transform: translateX(-50%); z-index: 10; box-shadow: 0 0 12px var(--accent);
-    }
-    .roulette-marker::before, .roulette-marker::after {
-        content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-        width: 0; height: 0;
-        border-left: 6px solid transparent; border-right: 6px solid transparent;
-    }
+    .roulette-wrap { width: 100%; position: relative; margin-bottom: 16px; border-radius: 16px; overflow: hidden; background: linear-gradient(180deg, #171a23, #12151c); border: 1px solid var(--line); padding: 14px 0; }
+    .roulette-marker { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: linear-gradient(180deg, transparent, var(--accent), transparent); transform: translateX(-50%); z-index: 10; box-shadow: 0 0 12px var(--accent); }
+    .roulette-marker::before, .roulette-marker::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; }
     .roulette-marker::before { top: -2px; border-top: 9px solid var(--accent); }
     .roulette-marker::after { bottom: -2px; border-bottom: 9px solid var(--accent); }
-    .roulette {
-        display: flex; gap: 10px;
-        transition: transform 6s cubic-bezier(0.15, 0.9, 0.25, 1);
-        will-change: transform; padding: 0;
-    }
-    .roulette .item {
-        flex: 0 0 96px; height: 110px; border-radius: 12px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 6px; position: relative; background: #1b1f2b;
-        border: 2px solid var(--line); overflow: hidden;
-    }
+    .roulette { display: flex; gap: 10px; transition: transform 6s cubic-bezier(0.15, 0.9, 0.25, 1); will-change: transform; padding: 0; }
+    .roulette .item { flex: 0 0 96px; height: 110px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; position: relative; background: #1b1f2b; border: 2px solid var(--line); overflow: hidden; }
     .roulette .item .emoji { font-size: 2.2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-    .roulette .item .label {
-        font-size: 0.58rem; color: var(--muted); text-transform: uppercase;
-        letter-spacing: 0.5px; text-align: center; padding: 0 3px; line-height: 1.15;
-        max-height: 26px; overflow: hidden;
-    }
-    .roulette .item .price-tag { font-size: 0.7rem; color: var(--accent-2); font-weight: 700; }
-    .roulette .item::before {
-        content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-        height: 3px; background: var(--muted);
-    }
+    .roulette .item .label { font-size: 0.55rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; padding: 0 3px; line-height: 1.1; max-height: 24px; overflow: hidden; }
+    .roulette .item .price-tag { font-size: 0.68rem; color: var(--accent-2); font-weight: 700; }
+    .roulette .item::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--muted); }
     .roulette .item.r-common::before { background: #6b7280; }
     .roulette .item.r-uncommon::before { background: var(--green); }
     .roulette .item.r-rare::before { background: var(--blue); }
@@ -164,113 +71,65 @@
     .roulette .item.r-epic { box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.25); }
     .roulette .item.r-mythic { box-shadow: inset 0 0 32px rgba(236, 72, 153, 0.3); }
     .roulette .item.r-legend { box-shadow: inset 0 0 35px rgba(245, 158, 11, 0.35), 0 0 25px rgba(245, 158, 11, 0.25); border-color: var(--gold); }
-    .roulette .item.r-legend::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(120deg, transparent 30%, rgba(245, 158, 11, 0.35) 50%, transparent 70%);
-        animation: shine 1.8s linear infinite;
-    }
+    .roulette .item.r-legend::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(245, 158, 11, 0.35) 50%, transparent 70%); animation: shine 1.8s linear infinite; }
     @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
     .actions { display: flex; gap: 10px; width: 100%; margin-bottom: 12px; }
-    .btn {
-        flex: 1; padding: 15px; border: none; border-radius: 14px;
-        font-size: 0.95rem; font-weight: 800; letter-spacing: 0.5px;
-        cursor: pointer; transition: all 0.2s; text-transform: uppercase;
-    }
+    .btn { flex: 1; padding: 15px; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: linear-gradient(135deg, var(--accent), #ff7b00); color: #1a1200; box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35); }
-    .btn-primary:hover { box-shadow: 0 10px 30px rgba(245, 166, 35, 0.55); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
     .btn-secondary { background: var(--bg-3); color: var(--text); border: 1px solid var(--line); flex: 0 0 auto; padding: 15px 20px; }
-    .btn-secondary:hover { background: #252a38; }
     .btn-green { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35); }
-    .btn-green:hover { box-shadow: 0 10px 30px rgba(76, 175, 80, 0.55); }
     .btn-green:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
     .btn-red { background: linear-gradient(135deg, var(--red), #b91c1c); color: white; box-shadow: 0 8px 24px rgba(239, 68, 68, 0.35); }
-    .btn-red:hover { box-shadow: 0 10px 30px rgba(239, 68, 68, 0.55); }
     .btn-red:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+    .btn-blue { background: linear-gradient(135deg, var(--blue), #1e40af); color: white; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35); }
+    .btn-blue:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
     .history { width: 100%; margin-top: 8px; }
     .history h3 { font-size: 0.9rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
-    .history-list {
-        display: flex; flex-direction: column; gap: 8px;
-        max-height: 400px; overflow-y: auto; padding-right: 4px;
-    }
+    .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto; padding-right: 4px; }
     .history-list::-webkit-scrollbar { width: 4px; }
     .history-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
-    .history-item {
-        display: flex; align-items: center; gap: 12px;
-        background: var(--bg-2); border: 1px solid var(--line);
-        border-radius: 12px; padding: 10px 14px; animation: historyIn 0.4s ease;
-    }
+    .history-item { display: flex; align-items: center; gap: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; animation: historyIn 0.4s ease; }
     @keyframes historyIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
     .history-item .h-emoji { font-size: 1.6rem; }
     .history-item .h-info { flex: 1; }
-    .history-item .h-name { font-size: 0.9rem; font-weight: 700; }
-    .history-item .h-rarity { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+    .history-item .h-name { font-size: 0.85rem; font-weight: 700; }
+    .history-item .h-rarity { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
     .history-item .h-rarity.r-common { color: #6b7280; }
     .history-item .h-rarity.r-uncommon { color: var(--green); }
     .history-item .h-rarity.r-rare { color: var(--blue); }
     .history-item .h-rarity.r-epic { color: var(--purple); }
     .history-item .h-rarity.r-mythic { color: var(--pink); }
     .history-item .h-rarity.r-legend { color: var(--gold); }
-    .history-item .h-time { font-size: 0.72rem; color: var(--muted); }
-    .empty-history {
-        text-align: center; color: var(--muted); font-size: 0.85rem;
-        padding: 20px; border: 1px dashed var(--line); border-radius: 12px;
-    }
-    .inventory-summary {
-        display: flex; justify-content: space-between; align-items: center;
-        background: var(--bg-2); border: 1px solid var(--line);
-        border-radius: 12px; padding: 12px 16px; margin-bottom: 14px;
-        flex-wrap: wrap; gap: 8px;
-    }
+    .history-item .h-time { font-size: 0.7rem; color: var(--muted); }
+    .empty-history { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 20px; border: 1px dashed var(--line); border-radius: 12px; }
+    .inventory-summary { display: flex; justify-content: space-between; align-items: center; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
     .inventory-summary .inv-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
     .inventory-summary .inv-value { font-size: 1rem; font-weight: 800; color: var(--accent-2); }
-    .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-    .inv-card {
-        background: linear-gradient(160deg, #1b1f2b, #14171f);
-        border: 2px solid var(--line); border-radius: 14px;
-        padding: 14px 10px; text-align: center;
-        position: relative; overflow: hidden; transition: all 0.2s;
-    }
+    .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .inv-card { background: linear-gradient(160deg, #1b1f2b, #14171f); border: 2px solid var(--line); border-radius: 14px; padding: 12px 8px; text-align: center; position: relative; overflow: hidden; transition: all 0.2s; }
     .inv-card.r-common { border-color: #3a4050; }
     .inv-card.r-uncommon { border-color: var(--green); box-shadow: 0 0 12px rgba(76, 175, 80, 0.15); }
     .inv-card.r-rare { border-color: var(--blue); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
     .inv-card.r-epic { border-color: var(--purple); box-shadow: 0 0 18px rgba(168, 85, 247, 0.25); }
     .inv-card.r-mythic { border-color: var(--pink); box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
     .inv-card.r-legend { border-color: var(--gold); box-shadow: 0 0 22px rgba(245, 158, 11, 0.35); }
-    .inv-card .inv-emoji { font-size: 2.2rem; margin-bottom: 6px; display: block; }
-    .inv-card .inv-name { font-size: 0.75rem; font-weight: 700; margin-bottom: 3px; }
-    .inv-card .inv-rarity { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 4px; }
+    .inv-card .inv-emoji { font-size: 2rem; margin-bottom: 5px; display: block; }
+    .inv-card .inv-name { font-size: 0.7rem; font-weight: 700; margin-bottom: 3px; }
+    .inv-card .inv-rarity { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 4px; }
     .inv-card .inv-rarity.r-common { color: #6b7280; }
     .inv-card .inv-rarity.r-uncommon { color: var(--green); }
     .inv-card .inv-rarity.r-rare { color: var(--blue); }
     .inv-card .inv-rarity.r-epic { color: var(--purple); }
     .inv-card .inv-rarity.r-mythic { color: var(--pink); }
     .inv-card .inv-rarity.r-legend { color: var(--gold); }
-    .inv-card .inv-stars { font-size: 0.7rem; color: var(--accent-2); margin-bottom: 4px; }
-    .inv-card .inv-price { font-size: 0.8rem; color: var(--accent-2); font-weight: 700; margin-bottom: 10px; }
-    .inv-card .inv-sell {
-        width: 100%; padding: 8px; border: none; border-radius: 8px;
-        background: linear-gradient(135deg, var(--green), #2e7d32);
-        color: white; font-weight: 800; font-size: 0.75rem;
-        letter-spacing: 0.5px; cursor: pointer; text-transform: uppercase;
-        transition: all 0.2s;
-    }
-    .inv-card .inv-sell:active { transform: scale(0.96); }
-    .inv-card .inv-sell:hover { box-shadow: 0 4px 14px rgba(76, 175, 80, 0.4); }
-    .drop-modal {
-        position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-        display: none; align-items: center; justify-content: center;
-        z-index: 1000; padding: 20px; opacity: 0; transition: opacity 0.3s;
-    }
+    .inv-card .inv-stars { font-size: 0.65rem; color: var(--accent-2); margin-bottom: 4px; }
+    .inv-card .inv-price { font-size: 0.75rem; color: var(--accent-2); font-weight: 700; margin-bottom: 8px; }
+    .inv-card .inv-sell { width: 100%; padding: 7px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--green), #2e7d32); color: white; font-weight: 800; font-size: 0.68rem; letter-spacing: 0.5px; cursor: pointer; text-transform: uppercase; }
+    .drop-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; opacity: 0; transition: opacity 0.3s; }
     .drop-modal.show { display: flex; opacity: 1; }
-    .drop-card {
-        background: linear-gradient(160deg, #1f232f, #14171f);
-        border: 2px solid var(--line); border-radius: 22px;
-        padding: 36px 28px 28px; text-align: center;
-        max-width: 340px; width: 100%; position: relative;
-        animation: dropIn 0.5s cubic-bezier(0.2, 1.2, 0.3, 1);
-    }
+    .drop-card { background: linear-gradient(160deg, #1f232f, #14171f); border: 2px solid var(--line); border-radius: 22px; padding: 36px 28px 28px; text-align: center; max-width: 340px; width: 100%; position: relative; animation: dropIn 0.5s cubic-bezier(0.2, 1.2, 0.3, 1); }
     @keyframes dropIn { from { opacity: 0; transform: scale(0.7) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .drop-card.r-common { border-color: #6b7280; box-shadow: 0 0 40px rgba(107, 114, 128, 0.3); }
     .drop-card.r-uncommon { border-color: var(--green); box-shadow: 0 0 45px rgba(76, 175, 80, 0.4); }
@@ -288,1152 +147,1166 @@
     .drop-card.r-epic .drop-rarity { color: var(--purple); }
     .drop-card.r-mythic .drop-rarity { color: var(--pink); }
     .drop-card.r-legend .drop-rarity { color: var(--gold); }
-    .drop-card .drop-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+    .drop-card .drop-name { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
     .drop-card .drop-stars { font-size: 1rem; color: var(--accent-2); margin-bottom: 6px; }
     .drop-card .drop-price { font-size: 1rem; color: var(--accent-2); font-weight: 700; margin-bottom: 20px; }
     .drop-card .drop-actions { display: flex; gap: 10px; }
-    .drop-card .drop-btn {
-        flex: 1; padding: 14px; border: none; border-radius: 12px;
-        font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px;
-        cursor: pointer; text-transform: uppercase; transition: all 0.2s;
-    }
-    .drop-card .drop-btn:active { transform: scale(0.97); }
+    .drop-card .drop-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
     .drop-card .drop-btn.keep { background: var(--bg-3); color: var(--text); border: 1px solid var(--line); }
     .drop-card .drop-btn.sell { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
-    .drop-card .drop-btn.sell:hover { box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4); }
-    .upgrader-pickers {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 14px;
-    }
-    .upgrader-slot {
-        background: var(--bg-3);
-        border: 2px dashed var(--line);
-        border-radius: 14px;
-        padding: 14px 10px;
-        text-align: center;
-        min-height: 130px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-    }
+    .upgrader-pickers { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .upgrader-slot { background: var(--bg-3); border: 2px dashed var(--line); border-radius: 14px; padding: 14px 10px; text-align: center; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
     .upgrader-slot:hover { border-color: var(--accent); }
     .upgrader-slot.filled { border-style: solid; border-color: var(--accent); }
     .upgrader-slot .slot-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: 700; }
     .upgrader-slot .slot-emoji { font-size: 2.5rem; margin-bottom: 4px; }
-    .upgrader-slot .slot-name { font-size: 0.72rem; font-weight: 800; margin-bottom: 2px; }
-    .upgrader-slot .slot-price { font-size: 0.75rem; color: var(--accent-2); font-weight: 700; }
+    .upgrader-slot .slot-name { font-size: 0.7rem; font-weight: 800; margin-bottom: 2px; }
+    .upgrader-slot .slot-price { font-size: 0.72rem; color: var(--accent-2); font-weight: 700; }
     .upgrader-arrow { font-size: 1.6rem; color: var(--accent); text-align: center; font-weight: 800; }
-    .upgrader-wheel-wrap {
-        position: relative; width: 100%; max-width: 280px;
-        margin: 0 auto 16px; aspect-ratio: 1;
-    }
-    .upgrader-wheel {
-        width: 100%; height: 100%; border-radius: 50%;
-        position: relative; overflow: hidden;
-        border: 6px solid var(--bg-3);
-        box-shadow: 0 0 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(0,0,0,0.4);
-        transition: transform 5s cubic-bezier(0.15, 0.9, 0.25, 1);
-        background: conic-gradient(var(--green) 0deg 90deg, var(--red) 90deg 360deg);
-    }
-    .upgrader-wheel::after {
-        content: ''; position: absolute; inset: 0; border-radius: 50%;
-        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
-    }
-    .upgrader-center {
-        position: absolute; top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px; height: 60px; border-radius: 50%;
-        background: var(--bg); border: 3px solid var(--line);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.5rem; z-index: 5;
-    }
-    .upgrader-pointer {
-        position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
-        width: 0; height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 20px solid var(--accent);
-        z-index: 10;
-        filter: drop-shadow(0 0 6px var(--accent));
-    }
+    .upgrader-wheel-wrap { position: relative; width: 100%; max-width: 280px; margin: 0 auto 16px; aspect-ratio: 1; }
+    .upgrader-wheel { width: 100%; height: 100%; border-radius: 50%; position: relative; overflow: hidden; border: 6px solid var(--bg-3); box-shadow: 0 0 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(0,0,0,0.4); transition: transform 5s cubic-bezier(0.15, 0.9, 0.25, 1); background: conic-gradient(var(--green) 0deg 90deg, var(--red) 90deg 360deg); }
+    .upgrader-wheel::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%); }
+    .upgrader-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; background: var(--bg); border: 3px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 5; }
+    .upgrader-pointer { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 20px solid var(--accent); z-index: 10; filter: drop-shadow(0 0 6px var(--accent)); }
     .upgrader-chance { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; }
     .upgrader-chance strong { color: var(--accent-2); font-size: 1.1rem; }
     .upgrader-result { text-align: center; font-size: 0.95rem; font-weight: 700; min-height: 24px; margin-bottom: 10px; }
     .upgrader-result.win { color: var(--green); }
     .upgrader-result.lose { color: var(--red); }
-    .slot-picker-modal {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-        display: none; align-items: center; justify-content: center;
-        z-index: 1100; padding: 20px;
-    }
+    .slot-picker-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
     .slot-picker-modal.show { display: flex; }
-    .slot-picker-box {
-        background: var(--bg-2); border: 1px solid var(--line);
-        border-radius: 18px; padding: 20px;
-        max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto;
-    }
+    .slot-picker-box { background: var(--bg-2); border: 1px solid var(--line); border-radius: 18px; padding: 20px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; }
     .slot-picker-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 12px; color: var(--accent-2); }
-    .slot-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-bottom: 12px; }
-    .slot-picker-item {
-        background: var(--bg-3); border: 2px solid var(--line);
-        border-radius: 10px; padding: 10px 6px; text-align: center;
-        cursor: pointer; transition: all 0.2s;
-    }
+    .slot-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .slot-picker-item { background: var(--bg-3); border: 2px solid var(--line); border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer; transition: all 0.2s; }
     .slot-picker-item:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .slot-picker-item .sp-emoji { font-size: 1.6rem; display: block; margin-bottom: 3px; }
-    .slot-picker-item .sp-name { font-size: 0.65rem; font-weight: 700; margin-bottom: 2px; }
-    .slot-picker-item .sp-price { font-size: 0.62rem; color: var(--accent-2); font-weight: 700; }
-    .slot-picker-close {
-        width: 100%; padding: 12px; border: none; border-radius: 10px;
-        background: var(--bg-3); color: var(--text);
-        font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.85rem;
-    }
-
-    .game-popup {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.92);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 2000;
-        padding: 20px;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
+    .slot-picker-item .sp-emoji { font-size: 1.4rem; display: block; margin-bottom: 3px; }
+    .slot-picker-item .sp-name { font-size: 0.6rem; font-weight: 700; margin-bottom: 2px; }
+    .slot-picker-item .sp-price { font-size: 0.58rem; color: var(--accent-2); font-weight: 700; }
+    .slot-picker-close { width: 100%; padding: 12px; border: none; border-radius: 10px; background: var(--bg-3); color: var(--text); font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
+    .games-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .game-card { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+    .game-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+    .game-card .game-desc { color: var(--muted); font-size: 0.82rem; margin-bottom: 12px; }
+    .bet-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .bet-input { flex: 1; min-width: 80px; background: var(--bg-3); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; color: var(--text); font-size: 0.95rem; font-weight: 700; outline: none; }
+    .bet-input:focus { border-color: var(--accent); }
+    .bet-quick { background: var(--bg-3); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; color: var(--text); font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+    .bet-quick:hover { background: #252a38; border-color: var(--accent); }
+    .sapper-info { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+    .sapper-info .info-box { flex: 1; background: var(--bg-3); border: 1px solid var(--line); border-radius: 10px; padding: 8px; text-align: center; }
+    .sapper-info .info-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+    .sapper-info .info-value { font-size: 1rem; font-weight: 800; color: var(--accent-2); }
+    .sapper-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 12px; }
+    .sapper-cell { aspect-ratio: 1; background: linear-gradient(145deg, #232838, #1a1e28); border: 2px solid var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; user-select: none; }
+    .sapper-cell.opened { background: linear-gradient(145deg, #1a3a1f, #143018); border-color: var(--green); cursor: default; }
+    .sapper-cell.mine { background: linear-gradient(145deg, #3a1a1a, #301414); border-color: var(--red); cursor: default; }
+    .mines-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .mine-cell { aspect-ratio: 1; background: linear-gradient(145deg, #232838, #1a1e28); border: 2px solid var(--line); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none; }
+    .mine-cell.opened { background: linear-gradient(145deg, #1a3a1f, #143018); border-color: var(--green); cursor: default; }
+    .mine-cell.exploded { background: linear-gradient(145deg, #3a1a1a, #301414); border-color: var(--red); cursor: default; }
+    .dice-display { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; }
+    .dice { width: 80px; height: 80px; background: linear-gradient(145deg, #232838, #1a1e28); border: 2px solid var(--line); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 800; color: var(--accent-2); }
+    .dice-result { text-align: center; font-size: 0.95rem; color: var(--muted); margin-bottom: 12px; }
+    .dice-result strong { color: var(--accent-2); font-size: 1.1rem; }
+    .coin-display { display: flex; justify-content: center; margin-bottom: 16px; }
+    .coin { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(145deg, var(--accent), #ff7b00); display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 800; color: #1a1200; }
+    .breeder-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+    .breeder-cell { aspect-ratio: 1; background: linear-gradient(145deg, #232838, #1a1e28); border: 2px solid var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; transition: all 0.2s; user-select: none; }
+    .breeder-cell:hover { border-color: var(--accent); }
+    .breeder-cell.opened { background: linear-gradient(145deg, #1a3a1f, #143018); border-color: var(--green); cursor: default; }
+    .breeder-cell.boom { background: linear-gradient(145deg, #3a1a1a, #301414); border-color: var(--red); cursor: default; }
+    .game-result { text-align: center; font-size: 0.95rem; font-weight: 700; min-height: 24px; margin-bottom: 10px; }
+    .game-result.win { color: var(--green); }
+    .game-result.lose { color: var(--red); }
+    .game-actions { display: flex; gap: 10px; }
+    .game-actions .btn { padding: 13px; font-size: 0.85rem; }
+    .game-popup { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; opacity: 0; transition: opacity 0.3s; }
     .game-popup.show { display: flex; opacity: 1; }
-    .game-popup-inner {
-        text-align: center;
-        max-width: 440px;
-        width: 100%;
-        animation: popupIn 0.5s cubic-bezier(0.2, 1.4, 0.3, 1);
-        padding: 30px 24px;
-        border-radius: 24px;
-    }
-    @keyframes popupIn {
-        from { transform: scale(0.5) rotate(-8deg); opacity: 0; }
-        to { transform: scale(1) rotate(0); opacity: 1; }
-    }
-    .game-popup-inner.lose {
-        background: linear-gradient(160deg, #3a0a0a, #1a0505);
-        border: 3px solid var(--red);
-        box-shadow: 0 0 80px rgba(239, 68, 68, 0.6);
-    }
-    .game-popup-inner.win {
-        background: linear-gradient(160deg, #0a3a0a, #051a05);
-        border: 3px solid var(--green);
-        box-shadow: 0 0 80px rgba(76, 175, 80, 0.6);
-    }
-    .game-popup-emoji {
-        font-size: 5.5rem;
-        margin-bottom: 14px;
-        display: block;
-        animation: emojiSpin 1s ease;
-    }
-    @keyframes emojiSpin {
-        from { transform: rotate(-180deg) scale(0); }
-        to { transform: rotate(0) scale(1); }
-    }
-    .game-popup-text {
-        font-size: 1.8rem;
-        font-weight: 900;
-        letter-spacing: 1.5px;
-        margin-bottom: 12px;
-        text-transform: uppercase;
-        line-height: 1.2;
-        word-break: break-word;
-    }
-    .game-popup-inner.lose .game-popup-text {
-        color: var(--red);
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);
-    }
-    .game-popup-inner.win .game-popup-text {
-        color: var(--green);
-        text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.4);
-    }
-    .game-popup-sub {
-        font-size: 0.95rem;
-        color: var(--muted);
-        margin-bottom: 22px;
-    }
-    .game-popup-close {
-        padding: 16px 40px;
-        border: none;
-        border-radius: 14px;
-        font-size: 1rem;
-        font-weight: 900;
-        letter-spacing: 1px;
-        cursor: pointer;
-        text-transform: uppercase;
-        transition: all 0.2s;
-    }
-    .game-popup-inner.lose .game-popup-close {
-        background: linear-gradient(135deg, var(--red), #b91c1c);
-        color: white;
-        box-shadow: 0 8px 24px rgba(239, 68, 68, 0.5);
-    }
-    .game-popup-inner.win .game-popup-close {
-        background: linear-gradient(135deg, var(--green), #2e7d32);
-        color: white;
-        box-shadow: 0 8px 24px rgba(76, 175, 80, 0.5);
-    }
-    .game-popup-close:active { transform: scale(0.95); }
-
+    .game-popup-inner { text-align: center; max-width: 440px; width: 100%; animation: popupIn 0.5s cubic-bezier(0.2, 1.4, 0.3, 1); padding: 30px 24px; border-radius: 24px; }
+    @keyframes popupIn { from { transform: scale(0.5) rotate(-8deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+    .game-popup-inner.lose { background: linear-gradient(160deg, #3a0a0a, #1a0505); border: 3px solid var(--red); box-shadow: 0 0 80px rgba(239, 68, 68, 0.6); }
+    .game-popup-inner.win { background: linear-gradient(160deg, #0a3a0a, #051a05); border: 3px solid var(--green); box-shadow: 0 0 80px rgba(76, 175, 80, 0.6); }
+    .game-popup-emoji { font-size: 5.5rem; margin-bottom: 14px; display: block; }
+    .game-popup-text { font-size: 1.8rem; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 12px; text-transform: uppercase; line-height: 1.2; word-break: break-word; }
+    .game-popup-inner.lose .game-popup-text { color: var(--red); text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4); }
+    .game-popup-inner.win .game-popup-text { color: var(--green); text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.4); }
+    .game-popup-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 22px; }
+    .game-popup-close { padding: 16px 40px; border: none; border-radius: 14px; font-size: 1rem; font-weight: 900; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; }
+    .game-popup-inner.lose .game-popup-close { background: linear-gradient(135deg, var(--red), #b91c1c); color: white; }
+    .game-popup-inner.win .game-popup-close { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
     .footer-note { text-align: center; color: var(--muted); font-size: 0.72rem; padding: 24px 20px 10px; opacity: 0.6; }
     @media (max-width: 420px) {
-        .case-title h1 { font-size: 1.3rem; }
         .roulette .item { flex: 0 0 84px; height: 100px; }
         .roulette .item .emoji { font-size: 1.9rem; }
-        .roulette .item .label { font-size: 0.55rem; }
-        .btn { font-size: 0.82rem; padding: 13px 8px; }
         .case-picker { grid-template-columns: repeat(2, 1fr); }
-        .tab { font-size: 0.62rem; padding: 9px 4px; min-width: 70px; }
         .upgrader-pickers { grid-template-columns: 1fr; }
         .upgrader-arrow { transform: rotate(90deg); }
-        .game-popup-text { font-size: 1.4rem; }
-        .game-popup-emoji { font-size: 4rem; }
+        .game-popup-text { font-size: 1.3rem; }
     }
 </style>
 </head>
 <body>
 
-    <div class="topbar">
-        <div class="logo">
-            <div class="logo-icon">🎁</div>
-            <span>CASE DROP</span>
-        </div>
-        <div class="balance" id="balanceBox">
-            <span class="coin">🪙</span>
-            <span class="amount" id="balanceAmount">1 000</span>
+<div class="topbar">
+    <div class="logo"><div class="logo-icon">🎁</div><span>CASE DROP</span></div>
+    <div class="balance" id="balanceBox"><span class="coin">🪙</span><span class="amount" id="balanceAmount">1 000</span></div>
+</div>
+
+<div class="tabs">
+    <div class="tab active" data-view="cases" onclick="switchTab('cases')">Кейсы</div>
+    <div class="tab" data-view="inventory" onclick="switchTab('inventory')">Инвентарь</div>
+    <div class="tab" data-view="history" onclick="switchTab('history')">История</div>
+    <div class="tab" data-view="upgrader" onclick="switchTab('upgrader')">Апгрейдер</div>
+    <div class="tab" data-view="games" onclick="switchTab('games')">Игры</div>
+</div>
+
+<div class="main">
+
+    <div class="view active" id="view-cases">
+        <div class="case-title"><h1>Открой кейс</h1><p>Испытай удачу — получи редкий предмет</p></div>
+        <div class="case-picker" id="casePicker"></div>
+        <div class="case-visual"><div class="glow"></div><div class="case-box" id="caseBox">🎁</div></div>
+        <div class="roulette-wrap" id="rouletteWrap"><div class="roulette-marker"></div><div class="roulette" id="roulette"></div></div>
+        <div class="actions">
+            <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть</button>
+            <button class="btn btn-secondary" onclick="resetDemo()">↺</button>
         </div>
     </div>
 
-    <div class="tabs">
-        <div class="tab active" data-view="cases" onclick="switchTab('cases')">Кейсы</div>
-        <div class="tab" data-view="inventory" onclick="switchTab('inventory')">Инвентарь</div>
-        <div class="tab" data-view="history" onclick="switchTab('history')">История</div>
-        <div class="tab" data-view="upgrader" onclick="switchTab('upgrader')">Апгрейдер</div>
+    <div class="view" id="view-inventory">
+        <div class="inventory-summary">
+            <span class="inv-label">Предметов: <span id="invCount">0</span></span>
+            <span class="inv-value">Итого: <span id="invTotal">0</span> 🪙</span>
+        </div>
+        <div class="inventory-grid" id="inventoryGrid"></div>
     </div>
 
-    <div class="main">
+    <div class="view" id="view-history">
+        <div class="history"><h3>Последние открытия</h3><div class="history-list" id="historyList"></div></div>
+    </div>
 
-        <div class="view active" id="view-cases">
-            <div class="case-title">
-                <h1>Открой кейс</h1>
-                <p>Испытай удачу — получи редкий предмет</p>
+    <div class="view" id="view-upgrader">
+        <div class="case-title"><h1>Апгрейдер</h1><p>Поставь свой предмет и получи предмет лучше</p></div>
+        <div class="upgrader-pickers">
+            <div class="upgrader-slot" id="slotBet" onclick="openSlotPicker('bet')">
+                <div class="slot-label">Твой предмет</div>
+                <div id="slotBetContent"><div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div></div>
             </div>
-            <div class="case-picker" id="casePicker"></div>
-            <div class="case-visual">
-                <div class="glow"></div>
-                <div class="case-box" id="caseBox">🎁</div>
-            </div>
-            <div class="roulette-wrap" id="rouletteWrap">
-                <div class="roulette-marker"></div>
-                <div class="roulette" id="roulette"></div>
-            </div>
-            <div class="actions">
-                <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть</button>
-                <button class="btn btn-secondary" onclick="resetDemo()">↺</button>
+            <div class="upgrader-arrow">→</div>
+            <div class="upgrader-slot" id="slotWant" onclick="openSlotPicker('want')">
+                <div class="slot-label">Хочешь получить</div>
+                <div id="slotWantContent"><div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div></div>
             </div>
         </div>
-
-        <div class="view" id="view-inventory">
-            <div class="inventory-summary">
-                <span class="inv-label">Предметов: <span id="invCount">0</span></span>
-                <span class="inv-value">Итого: <span id="invTotal">0</span> 🪙</span>
-            </div>
-            <div class="inventory-grid" id="inventoryGrid"></div>
+        <div class="upgrader-wheel-wrap">
+            <div class="upgrader-pointer"></div>
+            <div class="upgrader-wheel" id="upgraderWheel"></div>
+            <div class="upgrader-center">🎡</div>
         </div>
+        <div class="upgrader-chance" id="upgraderChance">Шанс выигрыша: <strong>—</strong></div>
+        <div class="upgrader-result" id="upgraderResult"></div>
+        <div class="game-actions"><button class="btn btn-green" id="upgraderStart" onclick="startUpgrade()" disabled>Крутить</button></div>
+    </div>
 
-        <div class="view" id="view-history">
-            <div class="history">
-                <h3>Последние открытия</h3>
-                <div class="history-list" id="historyList"></div>
-            </div>
-        </div>
+    <div class="view" id="view-games">
+        <div class="games-grid">
 
-        <div class="view" id="view-upgrader">
-            <div class="case-title">
-                <h1>Апгрейдер</h1>
-                <p>Поставь свой предмет и получи предмет лучше</p>
-            </div>
-
-            <div class="upgrader-pickers">
-                <div class="upgrader-slot" id="slotBet" onclick="openSlotPicker('bet')">
-                    <div class="slot-label">Твой предмет</div>
-                    <div id="slotBetContent">
-                        <div class="slot-emoji">➕</div>
-                        <div class="slot-name">Выбрать</div>
-                    </div>
+            <div class="game-card">
+                <h3>💣 Сапёр</h3>
+                <div class="game-desc">Поле 5×5, 5 мин. Открывай клетки — множитель растёт. Нарвёшься — потеряешь ставку.</div>
+                <div class="bet-row">
+                    <input type="number" class="bet-input" id="sapperBet" value="100" min="10" step="10">
+                    <button class="bet-quick" onclick="setBet('sapperBet', 100)">100</button>
+                    <button class="bet-quick" onclick="setBet('sapperBet', 500)">500</button>
+                    <button class="bet-quick" onclick="setBet('sapperBet', 'all')">MAX</button>
                 </div>
-                <div class="upgrader-arrow">→</div>
-                <div class="upgrader-slot" id="slotWant" onclick="openSlotPicker('want')">
-                    <div class="slot-label">Хочешь получить</div>
-                    <div id="slotWantContent">
-                        <div class="slot-emoji">➕</div>
-                        <div class="slot-name">Выбрать</div>
-                    </div>
+                <div class="sapper-info">
+                    <div class="info-box"><div class="info-label">Множитель</div><div class="info-value" id="sapperMult">×1.00</div></div>
+                    <div class="info-box"><div class="info-label">Выигрыш</div><div class="info-value" id="sapperWin">0 🪙</div></div>
+                    <div class="info-box"><div class="info-label">Открыто</div><div class="info-value" id="sapperOpened">0/20</div></div>
+                </div>
+                <div class="sapper-board" id="sapperBoard"></div>
+                <div class="game-result" id="sapperResult"></div>
+                <div class="game-actions">
+                    <button class="btn btn-green" id="sapperStart" onclick="startSapper()">Начать</button>
+                    <button class="btn btn-primary" id="sapperCashout" onclick="cashoutSapper()" disabled>Забрать</button>
                 </div>
             </div>
 
-            <div class="upgrader-wheel-wrap">
-                <div class="upgrader-pointer"></div>
-                <div class="upgrader-wheel" id="upgraderWheel"></div>
-                <div class="upgrader-center" id="upgraderCenter">🎡</div>
+            <div class="game-card">
+                <h3>🎯 Мины</h3>
+                <div class="game-desc">Поле 3×3, 3 мины. Можно забрать в любой момент.</div>
+                <div class="bet-row">
+                    <input type="number" class="bet-input" id="minesBet" value="100" min="10" step="10">
+                    <button class="bet-quick" onclick="setBet('minesBet', 100)">100</button>
+                    <button class="bet-quick" onclick="setBet('minesBet', 500)">500</button>
+                    <button class="bet-quick" onclick="setBet('minesBet', 'all')">MAX</button>
+                </div>
+                <div class="sapper-info">
+                    <div class="info-box"><div class="info-label">Множитель</div><div class="info-value" id="minesMult">×1.00</div></div>
+                    <div class="info-box"><div class="info-label">Выигрыш</div><div class="info-value" id="minesWin">0 🪙</div></div>
+                    <div class="info-box"><div class="info-label">Открыто</div><div class="info-value" id="minesOpened">0/6</div></div>
+                </div>
+                <div class="mines-board" id="minesBoard"></div>
+                <div class="game-result" id="minesResult"></div>
+                <div class="game-actions">
+                    <button class="btn btn-green" id="minesStart" onclick="startMines()">Начать</button>
+                    <button class="btn btn-primary" id="minesCashout" onclick="cashoutMines()" disabled>Забрать</button>
+                </div>
             </div>
 
-            <div class="upgrader-chance" id="upgraderChance">Шанс выигрыша: <strong>—</strong></div>
-
-            <div class="upgrader-result" id="upgraderResult"></div>
-
-            <div class="game-actions">
-                <button class="btn btn-green" id="upgraderStart" onclick="startUpgrade()" disabled>Крутить</button>
+            <div class="game-card">
+                <h3>🎲 Кости</h3>
+                <div class="game-desc">Угадай больше/меньше 7 или ровно 7. Больше/меньше — ×1.9, ровно 7 — ×5.</div>
+                <div class="bet-row">
+                    <input type="number" class="bet-input" id="diceBet" value="100" min="10" step="10">
+                    <button class="bet-quick" onclick="setBet('diceBet', 100)">100</button>
+                    <button class="bet-quick" onclick="setBet('diceBet', 500)">500</button>
+                    <button class="bet-quick" onclick="setBet('diceBet', 'all')">MAX</button>
+                </div>
+                <div class="dice-display"><div class="dice" id="dice1">?</div><div class="dice" id="dice2">?</div></div>
+                <div class="dice-result" id="diceResult">Сумма: <strong>?</strong></div>
+                <div class="game-actions">
+                    <button class="btn btn-blue" onclick="playDice('low')">Меньше 7</button>
+                    <button class="btn btn-green" onclick="playDice('seven')">Ровно 7</button>
+                    <button class="btn btn-red" onclick="playDice('high')">Больше 7</button>
+                </div>
             </div>
-        </div>
 
-    </div>
-
-    <div class="drop-modal" id="dropModal">
-        <div class="drop-card" id="dropCard">
-            <div class="drop-emoji" id="dropEmoji">🎁</div>
-            <div class="drop-rarity" id="dropRarity">Обычный</div>
-            <div class="drop-name" id="dropName">Предмет</div>
-            <div class="drop-stars" id="dropStars">⭐ 1</div>
-            <div class="drop-price" id="dropPrice">+0 🪙</div>
-            <div class="drop-actions">
-                <button class="drop-btn keep" onclick="keepDrop()">Оставить</button>
-                <button class="drop-btn sell" onclick="sellDrop()">Продать</button>
+            <div class="game-card">
+                <h3>🪙 Монетка</h3>
+                <div class="game-desc">Угадай сторону монеты. Орёл или решка — ×1.95.</div>
+                <div class="bet-row">
+                    <input type="number" class="bet-input" id="coinBet" value="100" min="10" step="10">
+                    <button class="bet-quick" onclick="setBet('coinBet', 100)">100</button>
+                    <button class="bet-quick" onclick="setBet('coinBet', 500)">500</button>
+                    <button class="bet-quick" onclick="setBet('coinBet', 'all')">MAX</button>
+                </div>
+                <div class="coin-display"><div class="coin" id="coinDisplay">?</div></div>
+                <div class="game-actions">
+                    <button class="btn btn-blue" onclick="playCoin('heads')">🦅 Орёл</button>
+                    <button class="btn btn-green" onclick="playCoin('tails')">🌿 Решка</button>
+                </div>
             </div>
+
+            <div class="game-card">
+                <h3>🧨 Брейдер</h3>
+                <div class="game-desc">Поле 4×4, 4 бомбы. Открывай клетки — множитель растёт. Успел забрать — забирай, нарвался — теряй.</div>
+                <div class="bet-row">
+                    <input type="number" class="bet-input" id="breederBet" value="100" min="10" step="10">
+                    <button class="bet-quick" onclick="setBet('breederBet', 100)">100</button>
+                    <button class="bet-quick" onclick="setBet('breederBet', 500)">500</button>
+                    <button class="bet-quick" onclick="setBet('breederBet', 'all')">MAX</button>
+                </div>
+                <div class="sapper-info">
+                    <div class="info-box"><div class="info-label">Множитель</div><div class="info-value" id="breederMult">×1.00</div></div>
+                    <div class="info-box"><div class="info-label">Выигрыш</div><div class="info-value" id="breederWin">0 🪙</div></div>
+                    <div class="info-box"><div class="info-label">Открыто</div><div class="info-value" id="breederOpened">0/12</div></div>
+                </div>
+                <div class="breeder-grid" id="breederBoard"></div>
+                <div class="game-result" id="breederResult"></div>
+                <div class="game-actions">
+                    <button class="btn btn-green" id="breederStart" onclick="startBreeder()">Начать</button>
+                    <button class="btn btn-primary" id="breederCashout" onclick="cashoutBreeder()" disabled>Забрать</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="slot-picker-modal" id="slotPickerModal">
-        <div class="slot-picker-box">
-            <h3 id="slotPickerTitle">Выбери предмет</h3>
-            <div class="slot-picker-grid" id="slotPickerGrid"></div>
-            <button class="slot-picker-close" onclick="closeSlotPicker()">Закрыть</button>
+</div>
+
+<div class="drop-modal" id="dropModal">
+    <div class="drop-card" id="dropCard">
+        <div class="drop-emoji" id="dropEmoji">🎁</div>
+        <div class="drop-rarity" id="dropRarity">Обычный</div>
+        <div class="drop-name" id="dropName">Предмет</div>
+        <div class="drop-stars" id="dropStars">⭐ 1</div>
+        <div class="drop-price" id="dropPrice">+0 🪙</div>
+        <div class="drop-actions">
+            <button class="drop-btn keep" onclick="keepDrop()">Оставить</button>
+            <button class="drop-btn sell" onclick="sellDrop()">Продать</button>
         </div>
     </div>
+</div>
 
-    <div class="game-popup" id="gamePopup">
-        <div class="game-popup-inner" id="gamePopupInner">
-            <span class="game-popup-emoji" id="gamePopupEmoji">💀</span>
-            <div class="game-popup-text" id="gamePopupText">ТЫ ЛОХ</div>
-            <div class="game-popup-sub" id="gamePopupSub"></div>
-            <button class="game-popup-close" onclick="closeGamePopup()">Закрыть</button>
-        </div>
+<div class="slot-picker-modal" id="slotPickerModal">
+    <div class="slot-picker-box">
+        <h3 id="slotPickerTitle">Выбери предмет</h3>
+        <div class="slot-picker-grid" id="slotPickerGrid"></div>
+        <button class="slot-picker-close" onclick="closeSlotPicker()">Закрыть</button>
     </div>
+</div>
 
-    <div class="footer-note">
-        Демо-версия · Все предметы виртуальные
+<div class="game-popup" id="gamePopup">
+    <div class="game-popup-inner" id="gamePopupInner">
+        <span class="game-popup-emoji" id="gamePopupEmoji">💀</span>
+        <div class="game-popup-text" id="gamePopupText">ТЫ ЛОХ</div>
+        <div class="game-popup-sub" id="gamePopupSub"></div>
+        <button class="game-popup-close" onclick="closeGamePopup()">Закрыть</button>
     </div>
+</div>
+
+<div class="footer-note">Демо-версия · Все предметы виртуальные</div>
 
 <script>
-    const RARITY_LABELS = {
-        common: 'Обычный', uncommon: 'Необычный', rare: 'Редкий',
-        epic: 'Эпический', mythic: 'Мифический', legend: 'Легендарный'
-    };
-    const RARITY_STARS = { common: 1, uncommon: 2, rare: 3, epic: 4, mythic: 5, legend: 6 };
+const RARITY_LABELS = { common: 'Обычный', uncommon: 'Необычный', rare: 'Редкий', epic: 'Эпический', mythic: 'Мифический', legend: 'Легендарный' };
+const RARITY_STARS = { common: 1, uncommon: 2, rare: 3, epic: 4, mythic: 5, legend: 6 };
 
-    // === 12 КЕЙСОВ с абсурдными названиями ===
-    const CASES = [
-        { id: 'starter', emoji: '📦', name: 'Стартовый', price: 100, items: [
-            { emoji: '🪙', name: 'Монетка-Столешница', rarity: 'common', price: 50, weight: 50 },
-            { emoji: '🧦', name: 'Носок-Кирпич', rarity: 'common', price: 45, weight: 45 },
-            { emoji: '🍪', name: 'Печенье-Пятка', rarity: 'common', price: 60, weight: 40 },
-            { emoji: '📎', name: 'Скрепка-Табурет', rarity: 'common', price: 40, weight: 40 },
-            { emoji: '🎈', name: 'Шарик-Эпоха', rarity: 'uncommon', price: 150, weight: 12 },
-            { emoji: '🥒', name: 'Огурец-Вселенная', rarity: 'rare', price: 350, weight: 4 },
-            { emoji: '🧅', name: 'Луковица-Молния', rarity: 'epic', price: 900, weight: 0.8 },
-            { emoji: '🥔', name: 'Картошка-Мечта', rarity: 'legend', price: 4000, weight: 0.05 }
-        ]},
-        { id: 'bronze', emoji: '🥉', name: 'Бронзовый', price: 300, items: [
-            { emoji: '🍞', name: 'Батон-Столешница', rarity: 'common', price: 150, weight: 50 },
-            { emoji: '🧻', name: 'Рулон-Мудрость', rarity: 'common', price: 170, weight: 45 },
-            { emoji: '🥄', name: 'Ложка-Легенда', rarity: 'common', price: 200, weight: 40 },
-            { emoji: '🧽', name: 'Губка-Космос', rarity: 'uncommon', price: 450, weight: 15 },
-            { emoji: '🪣', name: 'Ведро-Эпоха', rarity: 'uncommon', price: 600, weight: 10 },
-            { emoji: '🧴', name: 'Крем-Звезда', rarity: 'rare', price: 1300, weight: 5 },
-            { emoji: '🪥', name: 'Щётка-Торнадо', rarity: 'epic', price: 2800, weight: 1.5 },
-            { emoji: '🧸', name: 'Мишка-Цунами', rarity: 'epic', price: 3200, weight: 1 },
-            { emoji: '🔔', name: 'Колокольчик-Вулкан', rarity: 'mythic', price: 9000, weight: 0.3 },
-            { emoji: '🎩', name: 'Шляпа-Парадокс', rarity: 'legend', price: 18000, weight: 0.05 }
-        ]},
-        { id: 'silver', emoji: '🎁', name: 'Серебряный', price: 500, items: [
-            { emoji: '🍩', name: 'Пончик-Шкаф', rarity: 'common', price: 280, weight: 55 },
-            { emoji: '🧁', name: 'Кексик-Стена', rarity: 'common', price: 320, weight: 45 },
-            { emoji: '🍕', name: 'Пицца-Потолок', rarity: 'uncommon', price: 700, weight: 18 },
-            { emoji: '🌮', name: 'Тако-Пол', rarity: 'uncommon', price: 800, weight: 15 },
-            { emoji: '🥨', name: 'Крендель-Дверь', rarity: 'rare', price: 1600, weight: 6 },
-            { emoji: '🧊', name: 'Льдышка-Окно', rarity: 'rare', price: 1900, weight: 5 },
-            { emoji: '🪀', name: 'Йо-йо-Лампа', rarity: 'epic', price: 4500, weight: 2 },
-            { emoji: '🎯', name: 'Дартс-Плинтус', rarity: 'epic', price: 5500, weight: 1.5 },
-            { emoji: '🧩', name: 'Пазл-Батарея', rarity: 'mythic', price: 16000, weight: 0.4 },
-            { emoji: '🪁', name: 'Змей-Ковёр', rarity: 'mythic', price: 22000, weight: 0.2 },
-            { emoji: '🎺', name: 'Труба-Гардина', rarity: 'legend', price: 65000, weight: 0.05 }
-        ]},
-        { id: 'gold', emoji: '🏅', name: 'Золотой', price: 1500, items: [
-            { emoji: '🥁', name: 'Барабан-Подушка', rarity: 'common', price: 900, weight: 50 },
-            { emoji: '🎧', name: 'Наушники-Одеяло', rarity: 'common', price: 1000, weight: 45 },
-            { emoji: '🎮', name: 'Геймпад-Кресло', rarity: 'uncommon', price: 2000, weight: 15 },
-            { emoji: '📱', name: 'Телефон-Диван', rarity: 'uncommon', price: 2500, weight: 12 },
-            { emoji: '💻', name: 'Ноутбук-Штора', rarity: 'rare', price: 5000, weight: 5 },
-            { emoji: '📷', name: 'Фотик-Люстра', rarity: 'rare', price: 5500, weight: 4 },
-            { emoji: '🕹', name: 'Джойстик-Плинтус', rarity: 'epic', price: 11000, weight: 1.5 },
-            { emoji: '🎸', name: 'Гитара-Стол', rarity: 'epic', price: 13000, weight: 1.2 },
-            { emoji: '🛹', name: 'Скейт-Стул', rarity: 'mythic', price: 38000, weight: 0.4 },
-            { emoji: '🚲', name: 'Велик-Табурет', rarity: 'mythic', price: 55000, weight: 0.2 },
-            { emoji: '🎳', name: 'Боулинг-Холодильник', rarity: 'legend', price: 160000, weight: 0.05 }
-        ]},
-        { id: 'platinum', emoji: '💠', name: 'Платиновый', price: 3000, items: [
-            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'common', price: 2000, weight: 50 },
-            { emoji: '💎', name: 'Алмаз-Пылесос', rarity: 'common', price: 2200, weight: 45 },
-            { emoji: '🏆', name: 'Кубок-Стиралка', rarity: 'uncommon', price: 4500, weight: 15 },
-            { emoji: '📱', name: 'Телефон-Чайник', rarity: 'uncommon', price: 5000, weight: 12 },
-            { emoji: '🎁', name: 'Подарок-Кастрюля', rarity: 'rare', price: 10000, weight: 5 },
-            { emoji: '🦄', name: 'Единорог-Утюг', rarity: 'rare', price: 13000, weight: 4 },
-            { emoji: '🐉', name: 'Дракон-Тостер', rarity: 'epic', price: 30000, weight: 1.5 },
-            { emoji: '🚀', name: 'Ракета-Блендер', rarity: 'epic', price: 38000, weight: 1 },
-            { emoji: '🌟', name: 'Суперзвезда-Фен', rarity: 'mythic', price: 100000, weight: 0.3 },
-            { emoji: '👽', name: 'Пришелец-Миксер', rarity: 'mythic', price: 160000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-Плита', rarity: 'legend', price: 450000, weight: 0.04 }
-        ]},
-        { id: 'diamond', emoji: '💎', name: 'Алмазный', price: 5000, items: [
-            { emoji: '💍', name: 'Кольцо-Балкон', rarity: 'common', price: 3200, weight: 50 },
-            { emoji: '💻', name: 'Ноутбук-Лестница', rarity: 'common', price: 3800, weight: 45 },
-            { emoji: '🎧', name: 'Наушники-Подоконник', rarity: 'uncommon', price: 7500, weight: 15 },
-            { emoji: '📱', name: 'Телефон-Карниз', rarity: 'uncommon', price: 9500, weight: 12 },
-            { emoji: '💎', name: 'Алмаз-Фундамент', rarity: 'rare', price: 20000, weight: 5 },
-            { emoji: '🏎', name: 'Болид-Крыша', rarity: 'rare', price: 26000, weight: 4 },
-            { emoji: '👑', name: 'Корона-Подвал', rarity: 'epic', price: 65000, weight: 1.5 },
-            { emoji: '🚀', name: 'Ракета-Чердак', rarity: 'epic', price: 130000, weight: 1 },
-            { emoji: '🌟', name: 'Суперзвезда-Гараж', rarity: 'mythic', price: 380000, weight: 0.3 },
-            { emoji: '👽', name: 'Пришелец-Сарай', rarity: 'mythic', price: 550000, weight: 0.15 },
-            { emoji: '🐲', name: 'Древний дракон-Баня', rarity: 'legend', price: 1600000, weight: 0.03 }
-        ]},
-        { id: 'ruby', emoji: '❤️', name: 'Рубиновый', price: 10000, items: [
-            { emoji: '💎', name: 'Алмаз-Забор', rarity: 'common', price: 7000, weight: 50 },
-            { emoji: '📱', name: 'Телефон-Калитка', rarity: 'common', price: 8000, weight: 45 },
-            { emoji: '🏎', name: 'Болид-Ворота', rarity: 'uncommon', price: 20000, weight: 15 },
-            { emoji: '👑', name: 'Корона-Гараж', rarity: 'uncommon', price: 24000, weight: 12 },
-            { emoji: '🚀', name: 'Ракета-Теплица', rarity: 'rare', price: 60000, weight: 5 },
-            { emoji: '🌟', name: 'Суперзвезда-Беседка', rarity: 'rare', price: 75000, weight: 4 },
-            { emoji: '👽', name: 'Пришелец-Сарай', rarity: 'epic', price: 200000, weight: 1.5 },
-            { emoji: '🦄', name: 'Единорог-Колодец', rarity: 'epic', price: 280000, weight: 1 },
-            { emoji: '🌌', name: 'Галактика-Подвал', rarity: 'mythic', price: 750000, weight: 0.3 },
-            { emoji: '⚡', name: 'Молния-Фонарь', rarity: 'mythic', price: 1100000, weight: 0.15 },
-            { emoji: '💫', name: 'Комета-Лестница', rarity: 'legend', price: 3200000, weight: 0.03 }
-        ]},
-        { id: 'emerald', emoji: '💚', name: 'Изумрудный', price: 25000, items: [
-            { emoji: '🏎', name: 'Болид-Метла', rarity: 'common', price: 18000, weight: 50 },
-            { emoji: '👑', name: 'Корона-Швабра', rarity: 'common', price: 22000, weight: 45 },
-            { emoji: '🚀', name: 'Ракета-Веник', rarity: 'uncommon', price: 60000, weight: 15 },
-            { emoji: '🌟', name: 'Суперзвезда-Тряпка', rarity: 'uncommon', price: 75000, weight: 12 },
-            { emoji: '👽', name: 'Пришелец-Тазик', rarity: 'rare', price: 200000, weight: 5 },
-            { emoji: '🦄', name: 'Единорог-Швабра', rarity: 'rare', price: 280000, weight: 4 },
-            { emoji: '🌌', name: 'Галактика-Ковш', rarity: 'epic', price: 750000, weight: 1.5 },
-            { emoji: '⚡', name: 'Молния-Утюг', rarity: 'epic', price: 1100000, weight: 1 },
-            { emoji: '💫', name: 'Комета-Кастрюля', rarity: 'mythic', price: 2800000, weight: 0.3 },
-            { emoji: '🪐', name: 'Планета-Сковорода', rarity: 'mythic', price: 4500000, weight: 0.15 },
-            { emoji: '🌈', name: 'Радуга-Половник', rarity: 'legend', price: 11000000, weight: 0.03 }
-        ]},
-        { id: 'royal', emoji: '👑', name: 'Королевский', price: 50000, items: [
-            { emoji: '🚀', name: 'Ракета-Кастрюля', rarity: 'common', price: 40000, weight: 50 },
-            { emoji: '🌟', name: 'Суперзвезда-Сковорода', rarity: 'common', price: 50000, weight: 45 },
-            { emoji: '👽', name: 'Пришелец-Половник', rarity: 'uncommon', price: 160000, weight: 15 },
-            { emoji: '🦄', name: 'Единорог-Венчик', rarity: 'uncommon', price: 220000, weight: 12 },
-            { emoji: '🌌', name: 'Галактика-Тёрка', rarity: 'rare', price: 650000, weight: 5 },
-            { emoji: '⚡', name: 'Молния-Мясорубка', rarity: 'rare', price: 950000, weight: 4 },
-            { emoji: '💫', name: 'Комета-Миксер', rarity: 'epic', price: 2400000, weight: 1.5 },
-            { emoji: '🪐', name: 'Планета-Блендер', rarity: 'epic', price: 3800000, weight: 1 },
-            { emoji: '🌈', name: 'Радуга-Тостер', rarity: 'mythic', price: 10000000, weight: 0.3 },
-            { emoji: '🌠', name: 'Звездопад-Чайник', rarity: 'mythic', price: 16000000, weight: 0.15 },
-            { emoji: '✨', name: 'Сияние-Микроволновка', rarity: 'legend', price: 55000000, weight: 0.03 }
-        ]},
-        { id: 'cosmic', emoji: '🌌', name: 'Космический', price: 100000, items: [
-            { emoji: '👽', name: 'Пришелец-Крышка', rarity: 'common', price: 80000, weight: 50 },
-            { emoji: '🦄', name: 'Единорог-Пробка', rarity: 'common', price: 100000, weight: 45 },
-            { emoji: '🌌', name: 'Галактика-Банка', rarity: 'uncommon', price: 550000, weight: 15 },
-            { emoji: '⚡', name: 'Молния-Бутылка', rarity: 'uncommon', price: 850000, weight: 12 },
-            { emoji: '💫', name: 'Комета-Пакет', rarity: 'rare', price: 2200000, weight: 5 },
-            { emoji: '🪐', name: 'Планета-Коробка', rarity: 'rare', price: 3200000, weight: 4 },
-            { emoji: '🌈', name: 'Радуга-Пакет', rarity: 'epic', price: 8500000, weight: 1.5 },
-            { emoji: '🌠', name: 'Звездопад-Мешок', rarity: 'epic', price: 15000000, weight: 1 },
-            { emoji: '✨', name: 'Сияние-Чемодан', rarity: 'mythic', price: 50000000, weight: 0.3 },
-            { emoji: '🔮', name: 'Оракул-Сумка', rarity: 'mythic', price: 75000000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-Рюкзак', rarity: 'legend', price: 350000000, weight: 0.02 }
-        ]},
-        { id: 'meme', emoji: '😂', name: 'Мемный', price: 2000, items: [
-            { emoji: '🥒', name: 'Огурец-Столешница', rarity: 'common', price: 1200, weight: 50 },
-            { emoji: '🍞', name: 'Батон-Табурет', rarity: 'common', price: 1400, weight: 45 },
-            { emoji: '🧅', name: 'Луковица-Кирпич', rarity: 'uncommon', price: 3000, weight: 15 },
-            { emoji: '🥔', name: 'Картошка-Шкаф', rarity: 'uncommon', price: 3500, weight: 12 },
-            { emoji: '🧦', name: 'Носок-Стена', rarity: 'rare', price: 8000, weight: 5 },
-            { emoji: '🍪', name: 'Печенье-Потолок', rarity: 'rare', price: 9000, weight: 4 },
-            { emoji: '🧸', name: 'Мишка-Плинтус', rarity: 'epic', price: 22000, weight: 1.5 },
-            { emoji: '🥁', name: 'Барабан-Гардина', rarity: 'epic', price: 26000, weight: 1 },
-            { emoji: '🧻', name: 'Рулон-Люстра', rarity: 'mythic', price: 70000, weight: 0.3 },
-            { emoji: '🪣', name: 'Ведро-Столешница', rarity: 'mythic', price: 100000, weight: 0.15 },
-            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'legend', price: 300000, weight: 0.04 }
-        ]},
-        { id: 'grandma', emoji: '👵', name: 'Бабушкин', price: 7000, items: [
-            { emoji: '🧦', name: 'Носок-Столешница', rarity: 'common', price: 4500, weight: 50 },
-            { emoji: '🍪', name: 'Печенье-Табурет', rarity: 'common', price: 5500, weight: 45 },
-            { emoji: '🥒', name: 'Огурец-Кирпич', rarity: 'uncommon', price: 12000, weight: 15 },
-            { emoji: '🍞', name: 'Батон-Шкаф', rarity: 'uncommon', price: 14000, weight: 12 },
-            { emoji: '🥔', name: 'Картошка-Стена', rarity: 'rare', price: 30000, weight: 5 },
-            { emoji: '🧅', name: 'Луковица-Потолок', rarity: 'rare', price: 35000, weight: 4 },
-            { emoji: '🧸', name: 'Мишка-Плинтус', rarity: 'epic', price: 90000, weight: 1.5 },
-            { emoji: '🪣', name: 'Ведро-Гардина', rarity: 'epic', price: 110000, weight: 1 },
-            { emoji: '🧻', name: 'Рулон-Люстра', rarity: 'mythic', price: 300000, weight: 0.3 },
-            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'mythic', price: 450000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-Плита', rarity: 'legend', price: 1500000, weight: 0.03 }
-        ]}
-    ];
+// === 20 КЕЙСОВ ===
+const CASES = [
+{ id:'starter', emoji:'📦', name:'Стартовый', price:100, items:[
+{emoji:'🪙',name:'Монетка-Столешница',rarity:'common',price:50,weight:50},
+{emoji:'🧦',name:'Носок-Кирпич',rarity:'common',price:45,weight:45},
+{emoji:'🍪',name:'Печенье-Пятка',rarity:'common',price:60,weight:40},
+{emoji:'📎',name:'Скрепка-Табурет',rarity:'common',price:40,weight:40},
+{emoji:'🎈',name:'Шарик-Эпоха',rarity:'uncommon',price:150,weight:12},
+{emoji:'🥒',name:'Огурец-Вселенная',rarity:'rare',price:350,weight:4},
+{emoji:'🧅',name:'Луковица-Молния',rarity:'epic',price:900,weight:0.8},
+{emoji:'🥔',name:'Картошка-Мечта',rarity:'legend',price:4000,weight:0.05}
+]},
+{ id:'bronze', emoji:'🥉', name:'Бронзовый', price:300, items:[
+{emoji:'🍞',name:'Батон-Столешница',rarity:'common',price:150,weight:50},
+{emoji:'🧻',name:'Рулон-Мудрость',rarity:'common',price:170,weight:45},
+{emoji:'🥄',name:'Ложка-Легенда',rarity:'common',price:200,weight:40},
+{emoji:'🧽',name:'Губка-Космос',rarity:'uncommon',price:450,weight:15},
+{emoji:'🪣',name:'Ведро-Эпоха',rarity:'uncommon',price:600,weight:10},
+{emoji:'🧴',name:'Крем-Звезда',rarity:'rare',price:1300,weight:5},
+{emoji:'🪥',name:'Щётка-Торнадо',rarity:'epic',price:2800,weight:1.5},
+{emoji:'🧸',name:'Мишка-Цунами',rarity:'epic',price:3200,weight:1},
+{emoji:'🔔',name:'Колокольчик-Вулкан',rarity:'mythic',price:9000,weight:0.3},
+{emoji:'🎩',name:'Шляпа-Парадокс',rarity:'legend',price:18000,weight:0.05}
+]},
+{ id:'silver', emoji:'🎁', name:'Серебряный', price:500, items:[
+{emoji:'🍩',name:'Пончик-Шкаф',rarity:'common',price:280,weight:55},
+{emoji:'🧁',name:'Кексик-Стена',rarity:'common',price:320,weight:45},
+{emoji:'🍕',name:'Пицца-Потолок',rarity:'uncommon',price:700,weight:18},
+{emoji:'🌮',name:'Тако-Пол',rarity:'uncommon',price:800,weight:15},
+{emoji:'🥨',name:'Крендель-Дверь',rarity:'rare',price:1600,weight:6},
+{emoji:'🧊',name:'Льдышка-Окно',rarity:'rare',price:1900,weight:5},
+{emoji:'🪀',name:'Йо-йо-Лампа',rarity:'epic',price:4500,weight:2},
+{emoji:'🎯',name:'Дартс-Плинтус',rarity:'epic',price:5500,weight:1.5},
+{emoji:'🧩',name:'Пазл-Батарея',rarity:'mythic',price:16000,weight:0.4},
+{emoji:'🪁',name:'Змей-Ковёр',rarity:'mythic',price:22000,weight:0.2},
+{emoji:'🎺',name:'Труба-Гардина',rarity:'legend',price:65000,weight:0.05}
+]},
+{ id:'gold', emoji:'🏅', name:'Золотой', price:1500, items:[
+{emoji:'🥁',name:'Барабан-Подушка',rarity:'common',price:900,weight:50},
+{emoji:'🎧',name:'Наушники-Одеяло',rarity:'common',price:1000,weight:45},
+{emoji:'🎮',name:'Геймпад-Кресло',rarity:'uncommon',price:2000,weight:15},
+{emoji:'📱',name:'Телефон-Диван',rarity:'uncommon',price:2500,weight:12},
+{emoji:'💻',name:'Ноутбук-Штора',rarity:'rare',price:5000,weight:5},
+{emoji:'📷',name:'Фотик-Люстра',rarity:'rare',price:5500,weight:4},
+{emoji:'🕹',name:'Джойстик-Плинтус',rarity:'epic',price:11000,weight:1.5},
+{emoji:'🎸',name:'Гитара-Стол',rarity:'epic',price:13000,weight:1.2},
+{emoji:'🛹',name:'Скейт-Стул',rarity:'mythic',price:38000,weight:0.4},
+{emoji:'🚲',name:'Велик-Табурет',rarity:'mythic',price:55000,weight:0.2},
+{emoji:'🎳',name:'Боулинг-Холодильник',rarity:'legend',price:160000,weight:0.05}
+]},
+{ id:'platinum', emoji:'💠', name:'Платиновый', price:3000, items:[
+{emoji:'👑',name:'Корона-Микроволновка',rarity:'common',price:2000,weight:50},
+{emoji:'💎',name:'Алмаз-Пылесос',rarity:'common',price:2200,weight:45},
+{emoji:'🏆',name:'Кубок-Стиралка',rarity:'uncommon',price:4500,weight:15},
+{emoji:'📱',name:'Телефон-Чайник',rarity:'uncommon',price:5000,weight:12},
+{emoji:'🎁',name:'Подарок-Кастрюля',rarity:'rare',price:10000,weight:5},
+{emoji:'🦄',name:'Единорог-Утюг',rarity:'rare',price:13000,weight:4},
+{emoji:'🐉',name:'Дракон-Тостер',rarity:'epic',price:30000,weight:1.5},
+{emoji:'🚀',name:'Ракета-Блендер',rarity:'epic',price:38000,weight:1},
+{emoji:'🌟',name:'Суперзвезда-Фен',rarity:'mythic',price:100000,weight:0.3},
+{emoji:'👽',name:'Пришелец-Миксер',rarity:'mythic',price:160000,weight:0.15},
+{emoji:'🕳',name:'Чёрная дыра-Плита',rarity:'legend',price:450000,weight:0.04}
+]},
+{ id:'diamond', emoji:'💎', name:'Алмазный', price:5000, items:[
+{emoji:'💍',name:'Кольцо-Балкон',rarity:'common',price:3200,weight:50},
+{emoji:'💻',name:'Ноутбук-Лестница',rarity:'common',price:3800,weight:45},
+{emoji:'🎧',name:'Наушники-Подоконник',rarity:'uncommon',price:7500,weight:15},
+{emoji:'📱',name:'Телефон-Карниз',rarity:'uncommon',price:9500,weight:12},
+{emoji:'💎',name:'Алмаз-Фундамент',rarity:'rare',price:20000,weight:5},
+{emoji:'🏎',name:'Болид-Крыша',rarity:'rare',price:26000,weight:4},
+{emoji:'👑',name:'Корона-Подвал',rarity:'epic',price:65000,weight:1.5},
+{emoji:'🚀',name:'Ракета-Чердак',rarity:'epic',price:130000,weight:1},
+{emoji:'🌟',name:'Суперзвезда-Гараж',rarity:'mythic',price:380000,weight:0.3},
+{emoji:'👽',name:'Пришелец-Сарай',rarity:'mythic',price:550000,weight:0.15},
+{emoji:'🐲',name:'Древний дракон-Баня',rarity:'legend',price:1600000,weight:0.03}
+]},
+{ id:'ruby', emoji:'❤️', name:'Рубиновый', price:10000, items:[
+{emoji:'💎',name:'Алмаз-Забор',rarity:'common',price:7000,weight:50},
+{emoji:'📱',name:'Телефон-Калитка',rarity:'common',price:8000,weight:45},
+{emoji:'🏎',name:'Болид-Ворота',rarity:'uncommon',price:20000,weight:15},
+{emoji:'👑',name:'Корона-Гараж',rarity:'uncommon',price:24000,weight:12},
+{emoji:'🚀',name:'Ракета-Теплица',rarity:'rare',price:60000,weight:5},
+{emoji:'🌟',name:'Суперзвезда-Беседка',rarity:'rare',price:75000,weight:4},
+{emoji:'👽',name:'Пришелец-Колодец',rarity:'epic',price:200000,weight:1.5},
+{emoji:'🦄',name:'Единорог-Погреб',rarity:'epic',price:280000,weight:1},
+{emoji:'🌌',name:'Галактика-Сарай',rarity:'mythic',price:750000,weight:0.3},
+{emoji:'⚡',name:'Молния-Фонарь',rarity:'mythic',price:1100000,weight:0.15},
+{emoji:'💫',name:'Комета-Скамейка',rarity:'legend',price:3200000,weight:0.03}
+]},
+{ id:'emerald', emoji:'💚', name:'Изумрудный', price:25000, items:[
+{emoji:'🏎',name:'Болид-Метла',rarity:'common',price:18000,weight:50},
+{emoji:'👑',name:'Корона-Швабра',rarity:'common',price:22000,weight:45},
+{emoji:'🚀',name:'Ракета-Веник',rarity:'uncommon',price:60000,weight:15},
+{emoji:'🌟',name:'Суперзвезда-Тряпка',rarity:'uncommon',price:75000,weight:12},
+{emoji:'👽',name:'Пришелец-Тазик',rarity:'rare',price:200000,weight:5},
+{emoji:'🦄',name:'Единорог-Швабра',rarity:'rare',price:280000,weight:4},
+{emoji:'🌌',name:'Галактика-Ковш',rarity:'epic',price:750000,weight:1.5},
+{emoji:'⚡',name:'Молния-Утюг',rarity:'epic',price:1100000,weight:1},
+{emoji:'💫',name:'Комета-Кастрюля',rarity:'mythic',price:2800000,weight:0.3},
+{emoji:'🪐',name:'Планета-Сковорода',rarity:'mythic',price:4500000,weight:0.15},
+{emoji:'🌈',name:'Радуга-Половник',rarity:'legend',price:11000000,weight:0.03}
+]},
+{ id:'royal', emoji:'👑', name:'Королевский', price:50000, items:[
+{emoji:'🚀',name:'Ракета-Кастрюля',rarity:'common',price:40000,weight:50},
+{emoji:'🌟',name:'Суперзвезда-Сковорода',rarity:'common',price:50000,weight:45},
+{emoji:'👽',name:'Пришелец-Половник',rarity:'uncommon',price:160000,weight:15},
+{emoji:'🦄',name:'Единорог-Венчик',rarity:'uncommon',price:220000,weight:12},
+{emoji:'🌌',name:'Галактика-Тёрка',rarity:'rare',price:650000,weight:5},
+{emoji:'⚡',name:'Молния-Мясорубка',rarity:'rare',price:950000,weight:4},
+{emoji:'💫',name:'Комета-Миксер',rarity:'epic',price:2400000,weight:1.5},
+{emoji:'🪐',name:'Планета-Блендер',rarity:'epic',price:3800000,weight:1},
+{emoji:'🌈',name:'Радуга-Тостер',rarity:'mythic',price:10000000,weight:0.3},
+{emoji:'🌠',name:'Звездопад-Чайник',rarity:'mythic',price:16000000,weight:0.15},
+{emoji:'✨',name:'Сияние-Микроволновка',rarity:'legend',price:55000000,weight:0.03}
+]},
+{ id:'cosmic', emoji:'🌌', name:'Космический', price:100000, items:[
+{emoji:'👽',name:'Пришелец-Крышка',rarity:'common',price:80000,weight:50},
+{emoji:'🦄',name:'Единорог-Пробка',rarity:'common',price:100000,weight:45},
+{emoji:'🌌',name:'Галактика-Банка',rarity:'uncommon',price:550000,weight:15},
+{emoji:'⚡',name:'Молния-Бутылка',rarity:'uncommon',price:850000,weight:12},
+{emoji:'💫',name:'Комета-Пакет',rarity:'rare',price:2200000,weight:5},
+{emoji:'🪐',name:'Планета-Коробка',rarity:'rare',price:3200000,weight:4},
+{emoji:'🌈',name:'Радуга-Пакет',rarity:'epic',price:8500000,weight:1.5},
+{emoji:'🌠',name:'Звездопад-Мешок',rarity:'epic',price:15000000,weight:1},
+{emoji:'✨',name:'Сияние-Чемодан',rarity:'mythic',price:50000000,weight:0.3},
+{emoji:'🔮',name:'Оракул-Сумка',rarity:'mythic',price:75000000,weight:0.15},
+{emoji:'🕳',name:'Чёрная дыра-Рюкзак',rarity:'legend',price:350000000,weight:0.02}
+]},
+{ id:'meme', emoji:'😂', name:'Мемный', price:2000, items:[
+{emoji:'🥒',name:'Огурец-Столешница',rarity:'common',price:1200,weight:50},
+{emoji:'🍞',name:'Батон-Табурет',rarity:'common',price:1400,weight:45},
+{emoji:'🧅',name:'Луковица-Кирпич',rarity:'uncommon',price:3000,weight:15},
+{emoji:'🥔',name:'Картошка-Шкаф',rarity:'uncommon',price:3500,weight:12},
+{emoji:'🧦',name:'Носок-Стена',rarity:'rare',price:8000,weight:5},
+{emoji:'🍪',name:'Печенье-Потолок',rarity:'rare',price:9000,weight:4},
+{emoji:'🧸',name:'Мишка-Плинтус',rarity:'epic',price:22000,weight:1.5},
+{emoji:'🥁',name:'Барабан-Гардина',rarity:'epic',price:26000,weight:1},
+{emoji:'🧻',name:'Рулон-Люстра',rarity:'mythic',price:70000,weight:0.3},
+{emoji:'🪣',name:'Ведро-Столешница',rarity:'mythic',price:100000,weight:0.15},
+{emoji:'👑',name:'Корона-Кривулька',rarity:'legend',price:300000,weight:0.04}
+]},
+{ id:'grandma', emoji:'👵', name:'Бабушкин', price:7000, items:[
+{emoji:'🧦',name:'Носок-Столешница',rarity:'common',price:4500,weight:50},
+{emoji:'🍪',name:'Печенье-Табурет',rarity:'common',price:5500,weight:45},
+{emoji:'🥒',name:'Огурец-Кирпич',rarity:'uncommon',price:12000,weight:15},
+{emoji:'🍞',name:'Батон-Шкаф',rarity:'uncommon',price:14000,weight:12},
+{emoji:'🥔',name:'Картошка-Стена',rarity:'rare',price:30000,weight:5},
+{emoji:'🧅',name:'Луковица-Потолок',rarity:'rare',price:35000,weight:4},
+{emoji:'🧸',name:'Мишка-Плинтус',rarity:'epic',price:90000,weight:1.5},
+{emoji:'🪣',name:'Ведро-Гардина',rarity:'epic',price:110000,weight:1},
+{emoji:'🧻',name:'Рулон-Люстра',rarity:'mythic',price:300000,weight:0.3},
+{emoji:'👑',name:'Корона-Микроволновка',rarity:'mythic',price:450000,weight:0.15},
+{emoji:'🕳',name:'Чёрная дыра-Плита',rarity:'legend',price:1500000,weight:0.03}
+]},
+{ id:'street', emoji:'🚧', name:'Уличный', price:1200, items:[
+{emoji:'🧱',name:'Кирпич-Подорожник',rarity:'common',price:800,weight:50},
+{emoji:'🪨',name:'Камень-Философ',rarity:'common',price:900,weight:45},
+{emoji:'🪵',name:'Бревно-Мечта',rarity:'common',price:1000,weight:40},
+{emoji:'🧹',name:'Метла-Босс',rarity:'uncommon',price:2200,weight:15},
+{emoji:'🪣',name:'Ведро-Герой',rarity:'uncommon',price:2600,weight:12},
+{emoji:'🔨',name:'Молоток-Мастер',rarity:'rare',price:5500,weight:5},
+{emoji:'🪚',name:'Пила-Хирург',rarity:'rare',price:6000,weight:4},
+{emoji:'🛠',name:'Ключ-Гаечный',rarity:'epic',price:15000,weight:1.5},
+{emoji:'⚙️',name:'Шестерёнка-Судьбы',rarity:'epic',price:18000,weight:1},
+{emoji:'🔧',name:'Отвёртка-Убийца',rarity:'mythic',price:50000,weight:0.3},
+{emoji:'🪜',name:'Стремянка-Карьерист',rarity:'legend',price:200000,weight:0.04}
+]},
+{ id:'kitchen', emoji:'🍳', name:'Кухонный', price:800, items:[
+{emoji:'🥄',name:'Ложка-Дракон',rarity:'common',price:500,weight:50},
+{emoji:'🍴',name:'Вилка-Молния',rarity:'common',price:600,weight:45},
+{emoji:'🔪',name:'Нож-Джедай',rarity:'common',price:700,weight:40},
+{emoji:'🥢',name:'Палочки-Ниндзя',rarity:'uncommon',price:1500,weight:15},
+{emoji:'🍽',name:'Тарелка-Летающая',rarity:'uncommon',price:1800,weight:12},
+{emoji:'🥛',name:'Стакан-Гранёный',rarity:'rare',price:4000,weight:5},
+{emoji:'🍶',name:'Чайник-Свисток',rarity:'rare',price:4500,weight:4},
+{emoji:'🧂',name:'Соль-Убийца',rarity:'epic',price:11000,weight:1.5},
+{emoji:'🍯',name:'Мёд-Вселенной',rarity:'epic',price:13000,weight:1},
+{emoji:'🍲',name:'Кастрюля-Мечты',rarity:'mythic',price:40000,weight:0.3},
+{emoji:'🍳',name:'Сковорода-Космос',rarity:'legend',price:150000,weight:0.04}
+]},
+{ id:'school', emoji:'🎒', name:'Школьный', price:600, items:[
+{emoji:'📏',name:'Линейка-Судьбы',rarity:'common',price:400,weight:50},
+{emoji:'✏️',name:'Карандаш-Кусака',rarity:'common',price:450,weight:45},
+{emoji:'🖊',name:'Ручка-Вечная',rarity:'common',price:500,weight:40},
+{emoji:'📐',name:'Треугольник-Острый',rarity:'uncommon',price:1100,weight:15},
+{emoji:'📚',name:'Учебник-Кирпич',rarity:'uncommon',price:1300,weight:12},
+{emoji:'🎒',name:'Рюкзак-Спиногрыз',rarity:'rare',price:3000,weight:5},
+{emoji:'🖍',name:'Мелки-Радуга',rarity:'rare',price:3500,weight:4},
+{emoji:'📓',name:'Тетрадь-Смерти',rarity:'epic',price:9000,weight:1.5},
+{emoji:'🖇',name:'Скрепки-Пакет',rarity:'epic',price:11000,weight:1},
+{emoji:'🎓',name:'Шапка-Выпускника',rarity:'mythic',price:35000,weight:0.3},
+{emoji:'🏫',name:'Школа-Целиком',rarity:'legend',price:120000,weight:0.04}
+]},
+{ id:'animal', emoji:'🐱', name:'Звериный', price:2500, items:[
+{emoji:'🐱',name:'Кот-Лежебока',rarity:'common',price:1500,weight:50},
+{emoji:'🐶',name:'Пёс-Барбос',rarity:'common',price:1800,weight:45},
+{emoji:'🐹',name:'Хомяк-Хрюк',rarity:'common',price:2000,weight:40},
+{emoji:'🐰',name:'Кролик-Косой',rarity:'uncommon',price:5000,weight:15},
+{emoji:'🦊',name:'Лис-Хитрец',rarity:'uncommon',price:6000,weight:12},
+{emoji:'🐻',name:'Медведь-Босс',rarity:'rare',price:15000,weight:5},
+{emoji:'🐼',name:'Панда-Лентяй',rarity:'rare',price:18000,weight:4},
+{emoji:'🦁',name:'Лев-Царь',rarity:'epic',price:50000,weight:1.5},
+{emoji:'🐯',name:'Тигр-Усатый',rarity:'epic',price:60000,weight:1},
+{emoji:'🐉',name:'Дракон-Китаец',rarity:'mythic',price:250000,weight:0.3},
+{emoji:'🦄',name:'Единорог-Блестящий',rarity:'legend',price:800000,weight:0.04}
+]},
+{ id:'tech', emoji:'📱', name:'Техно', price:4000, items:[
+{emoji:'📱',name:'Телефон-Кирпич',rarity:'common',price:2500,weight:50},
+{emoji:'💻',name:'Ноутбук-Утюг',rarity:'common',price:2800,weight:45},
+{emoji:'🖱',name:'Мышь-Грызун',rarity:'common',price:3000,weight:40},
+{emoji:'⌨️',name:'Клава-Стучалка',rarity:'uncommon',price:7000,weight:15},
+{emoji:'🖥',name:'Монитор-Глазастый',rarity:'uncommon',price:8000,weight:12},
+{emoji:'🎧',name:'Наушники-Глушилки',rarity:'rare',price:18000,weight:5},
+{emoji:'📷',name:'Фотик-Мигушка',rarity:'rare',price:20000,weight:4},
+{emoji:'🕹',name:'Джойстик-Дёргалка',rarity:'epic',price:55000,weight:1.5},
+{emoji:'🎮',name:'Геймпад-Залипалка',rarity:'epic',price:65000,weight:1},
+{emoji:'🖨',name:'Принтер-Пожиратель',rarity:'mythic',price:200000,weight:0.3},
+{emoji:'📡',name:'Спутник-Шпион',rarity:'legend',price:700000,weight:0.04}
+]},
+{ id:'sport', emoji:'⚽', name:'Спортивный', price:3500, items:[
+{emoji:'⚽',name:'Мяч-Прыгун',rarity:'common',price:2200,weight:50},
+{emoji:'🏀',name:'Баскет-Дырка',rarity:'common',price:2500,weight:45},
+{emoji:'🏈',name:'Мяч-Дыня',rarity:'common',price:2700,weight:40},
+{emoji:'🎾',name:'Теннис-Мохнатик',rarity:'uncommon',price:6500,weight:15},
+{emoji:'🏐',name:'Волейбол-Летун',rarity:'uncommon',price:7500,weight:12},
+{emoji:'🎳',name:'Боулинг-Промах',rarity:'rare',price:17000,weight:5},
+{emoji:'🎱',name:'Бильярд-Восьмёрка',rarity:'rare',price:19000,weight:4},
+{emoji:'🏓',name:'Пинг-Понг',rarity:'epic',price:50000,weight:1.5},
+{emoji:'🥊',name:'Перчатка-Кулак',rarity:'epic',price:60000,weight:1},
+{emoji:'🏆',name:'Кубок-Золотой',rarity:'mythic',price:190000,weight:0.3},
+{emoji:'🥇',name:'Медаль-Чемпиона',rarity:'legend',price:650000,weight:0.04}
+]},
+{ id:'magic', emoji:'🔮', name:'Магический', price:8000, items:[
+{emoji:'🔮',name:'Шар-Предсказаний',rarity:'common',price:5000,weight:50},
+{emoji:'📜',name:'Свиток-Заклинаний',rarity:'common',price:5500,weight:45},
+{emoji:'🕯',name:'Свеча-Ритуал',rarity:'common',price:6000,weight:40},
+{emoji:'🧿',name:'Амулет-Защиты',rarity:'uncommon',price:15000,weight:15},
+{emoji:'💀',name:'Череп-Говорящий',rarity:'uncommon',price:18000,weight:12},
+{emoji:'🗡',name:'Меч-Кладенец',rarity:'rare',price:45000,weight:5},
+{emoji:'🏹',name:'Лук-Меткий',rarity:'rare',price:50000,weight:4},
+{emoji:'⚗️',name:'Котел-Алхимика',rarity:'epic',price:130000,weight:1.5},
+{emoji:'📖',name:'Гримуар-Тайн',rarity:'epic',price:160000,weight:1},
+{emoji:'🪄',name:'Палочка-Волшебника',rarity:'mythic',price:500000,weight:0.3},
+{emoji:'🧙',name:'Маг-Древний',rarity:'legend',price:2000000,weight:0.03}
+]},
+{ id:'trash', emoji:'🗑', name:'Мусорный', price:400, items:[
+{emoji:'🗑',name:'Ведро-Мусорное',rarity:'common',price:250,weight:50},
+{emoji:'📦',name:'Коробка-Пустая',rarity:'common',price:280,weight:45},
+{emoji:'🥫',name:'Банка-Консервная',rarity:'common',price:300,weight:40},
+{emoji:'🧃',name:'Сок-Недопитый',rarity:'uncommon',price:800,weight:15},
+{emoji:'🍌',name:'Банановая-Кожура',rarity:'uncommon',price:900,weight:12},
+{emoji:'🥚',name:'Скорлупа-Яичная',rarity:'rare',price:2200,weight:5},
+{emoji:'🦴',name:'Косточка-Собачья',rarity:'rare',price:2500,weight:4},
+{emoji:'💩',name:'Какашка-Легенда',rarity:'epic',price:7000,weight:1.5},
+{emoji:'🧦',name:'Носок-Дырявый',rarity:'epic',price:8000,weight:1},
+{emoji:'🧟',name:'Зомби-Мусорный',rarity:'mythic',price:25000,weight:0.3},
+{emoji:'🐀',name:'Крыса-Босс',rarity:'legend',price:90000,weight:0.04}
+]}
+];
 
-    const START_BALANCE = 1000;
-    const HISTORY_LIMIT = 40;
+const START_BALANCE = 1000;
+const HISTORY_LIMIT = 40;
 
-    let balance = START_BALANCE;
-    let isOpening = false;
-    let history = [];
-    let inventory = [];
-    let currentCaseId = CASES[0].id;
-    let pendingDrop = null;
+let balance = START_BALANCE;
+let isOpening = false;
+let history = [];
+let inventory = [];
+let currentCaseId = CASES[0].id;
+let pendingDrop = null;
 
-    let upgradeBet = null;
-    let upgradeWant = null;
-    let upgradeWheelAngle = 0;
-    let upgradeRolling = false;
-    let slotPickerTarget = null;
+let upgradeBet = null;
+let upgradeWant = null;
+let upgradeWheelAngle = 0;
+let upgradeRolling = false;
 
-    function getCurrentCase() {
-        return CASES.find(c => c.id === currentCaseId) || CASES[0];
+function getCurrentCase() { return CASES.find(c => c.id === currentCaseId) || CASES[0]; }
+function pickRandomItem(caseObj) {
+    const items = caseObj.items;
+    const total = items.reduce((s, it) => s + it.weight, 0);
+    let r = Math.random() * total;
+    for (const it of items) { r -= it.weight; if (r <= 0) return it; }
+    return items[0];
+}
+function formatPrice(n) { return Math.round(n).toLocaleString('ru-RU'); }
+
+function switchTab(view) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const el = document.getElementById('view-' + view);
+    if (el) el.classList.add('active');
+}
+
+function renderCasePicker() {
+    const picker = document.getElementById('casePicker');
+    if (!picker) return;
+    picker.innerHTML = CASES.map(c => `
+        <div class="case-option ${c.id === currentCaseId ? 'active' : ''}" onclick="selectCase('${c.id}')">
+            <div class="case-glow"></div>
+            <span class="case-emoji">${c.emoji}</span>
+            <div class="case-name">${c.name}</div>
+            <div class="case-price">${formatPrice(c.price)} 🪙</div>
+        </div>
+    `).join('');
+    updateOpenButton();
+}
+
+function selectCase(id) { if (isOpening) return; currentCaseId = id; renderCasePicker(); resetRoulette(); }
+
+function buildRouletteItem(item) {
+    const stars = RARITY_STARS[item.rarity] || 1;
+    return `<div class="emoji">${item.emoji}</div><div class="label">${item.name}</div><div class="price-tag">${formatPrice(item.price)} 🪙</div><div style="font-size:0.6rem;color:var(--accent-2);">⭐${stars}</div>`;
+}
+
+function resetRoulette() {
+    const roulette = document.getElementById('roulette');
+    if (!roulette) return;
+    const caseObj = getCurrentCase();
+    roulette.style.transition = 'none';
+    roulette.style.transform = 'translateX(0)';
+    roulette.innerHTML = '';
+    for (let i = 0; i < 60; i++) {
+        const item = pickRandomItem(caseObj);
+        const el = document.createElement('div');
+        el.className = 'item r-' + item.rarity;
+        el.innerHTML = buildRouletteItem(item);
+        roulette.appendChild(el);
     }
+}
 
-    function pickRandomItem(caseObj) {
-        const items = caseObj.items;
-        const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
-        let random = Math.random() * totalWeight;
-        for (const item of items) {
-            random -= item.weight;
-            if (random <= 0) return item;
-        }
-        return items[0];
+function generateRoulette() {
+    const roulette = document.getElementById('roulette');
+    const caseObj = getCurrentCase();
+    roulette.innerHTML = '';
+    const winItem = pickRandomItem(caseObj);
+    const winIndex = 45;
+    for (let i = 0; i < 60; i++) {
+        const item = i === winIndex ? winItem : pickRandomItem(caseObj);
+        const el = document.createElement('div');
+        el.className = 'item r-' + item.rarity;
+        el.innerHTML = buildRouletteItem(item);
+        roulette.appendChild(el);
     }
+    return { winItem, winIndex };
+}
 
-    function formatPrice(n) {
-        return Math.round(n).toLocaleString('ru-RU');
+function updateOpenButton() {
+    const btn = document.getElementById('openBtn');
+    if (!btn) return;
+    const c = getCurrentCase();
+    btn.textContent = `Открыть за ${formatPrice(c.price)} 🪙`;
+}
+
+function openCase() {
+    if (isOpening) return;
+    const c = getCurrentCase();
+    if (balance < c.price) { shakeBalance(); return; }
+    isOpening = true;
+    balance -= c.price;
+    updateBalance('minus');
+    const openBtn = document.getElementById('openBtn');
+    if (openBtn) openBtn.disabled = true;
+    const caseBox = document.getElementById('caseBox');
+    if (caseBox) {
+        caseBox.classList.add('opening');
+        caseBox.textContent = '📦';
+        setTimeout(() => { caseBox.classList.remove('opening'); caseBox.textContent = c.emoji; }, 500);
     }
+    const { winItem, winIndex } = generateRoulette();
+    const roulette = document.getElementById('roulette');
+    roulette.style.transition = 'none';
+    roulette.style.transform = 'translateX(0)';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        const items = roulette.querySelectorAll('.item');
+        const winEl = items[winIndex];
+        if (!winEl) return;
+        const wrap = document.getElementById('rouletteWrap');
+        if (!wrap) return;
+        const wr = wrap.getBoundingClientRect();
+        const we = winEl.getBoundingClientRect();
+        const wc = wr.left + wr.width / 2;
+        const ec = we.left + we.width / 2;
+        const targetX = ec - wc;
+        roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
+        roulette.style.transform = `translateX(${-targetX}px)`;
+    }));
+    setTimeout(() => {
+        showDrop(winItem);
+        addToHistory(winItem);
+        isOpening = false;
+        if (openBtn) openBtn.disabled = false;
+    }, 6200);
+}
 
-    function switchTab(view) {
-        document.querySelectorAll('.tab').forEach(t => {
-            t.classList.toggle('active', t.dataset.view === view);
-        });
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById('view-' + view);
-        if (target) target.classList.add('active');
-    }
+function showDrop(item) {
+    pendingDrop = item;
+    const modal = document.getElementById('dropModal');
+    const card = document.getElementById('dropCard');
+    if (!modal || !card) return;
+    card.className = 'drop-card r-' + item.rarity;
+    document.getElementById('dropEmoji').textContent = item.emoji;
+    document.getElementById('dropRarity').textContent = RARITY_LABELS[item.rarity];
+    document.getElementById('dropName').textContent = item.name;
+    document.getElementById('dropStars').textContent = '⭐'.repeat(RARITY_STARS[item.rarity]) + ' ' + RARITY_STARS[item.rarity];
+    document.getElementById('dropPrice').textContent = 'Стоимость: ' + formatPrice(item.price) + ' 🪙';
+    modal.classList.add('show');
+}
+function keepDrop() { if (!pendingDrop) return; inventory.push(pendingDrop); pendingDrop = null; renderInventory(); closeDrop(); }
+function sellDrop() { if (!pendingDrop) return; balance += pendingDrop.price; updateBalance('plus'); addToHistory({...pendingDrop, sold:true}); pendingDrop = null; renderInventory(); closeDrop(); }
+function closeDrop() { const m = document.getElementById('dropModal'); if (m) m.classList.remove('show'); pendingDrop = null; }
 
-    function renderCasePicker() {
-        const picker = document.getElementById('casePicker');
-        if (!picker) return;
-        picker.innerHTML = CASES.map(c => `
-            <div class="case-option ${c.id === currentCaseId ? 'active' : ''}" onclick="selectCase('${c.id}')">
-                <div class="case-glow"></div>
-                <span class="case-emoji">${c.emoji}</span>
-                <div class="case-name">${c.name}</div>
-                <div class="case-price">${formatPrice(c.price)} 🪙</div>
-            </div>
-        `).join('');
-        updateOpenButton();
-    }
-
-    function selectCase(id) {
-        if (isOpening) return;
-        currentCaseId = id;
-        renderCasePicker();
-        resetRoulette();
-    }
-
-    function buildRouletteItem(item) {
-        const stars = RARITY_STARS[item.rarity] || 1;
-        return `
-            <div class="emoji">${item.emoji}</div>
-            <div class="label">${item.name}</div>
-            <div class="price-tag">${formatPrice(item.price)} 🪙</div>
-            <div style="font-size:0.65rem;color:var(--accent-2);">⭐${stars}</div>
-        `;
-    }
-
-    function resetRoulette() {
-        const roulette = document.getElementById('roulette');
-        if (!roulette) return;
-        const caseObj = getCurrentCase();
-        roulette.style.transition = 'none';
-        roulette.style.transform = 'translateX(0)';
-        roulette.innerHTML = '';
-        for (let i = 0; i < 60; i++) {
-            const item = pickRandomItem(caseObj);
-            const el = document.createElement('div');
-            el.className = `item r-${item.rarity}`;
-            el.innerHTML = buildRouletteItem(item);
-            roulette.appendChild(el);
-        }
-    }
-
-    function generateRoulette() {
-        const roulette = document.getElementById('roulette');
-        const caseObj = getCurrentCase();
-        roulette.innerHTML = '';
-        const winItem = pickRandomItem(caseObj);
-        const winIndex = 45;
-
-        for (let i = 0; i < 60; i++) {
-            const item = i === winIndex ? winItem : pickRandomItem(caseObj);
-            const el = document.createElement('div');
-            el.className = `item r-${item.rarity}`;
-            el.innerHTML = buildRouletteItem(item);
-            roulette.appendChild(el);
-        }
-        return { winItem, winIndex };
-    }
-
-    function updateOpenButton() {
-        const btn = document.getElementById('openBtn');
-        if (!btn) return;
-        const caseObj = getCurrentCase();
-        btn.textContent = `Открыть за ${formatPrice(caseObj.price)} 🪙`;
-    }
-
-    function openCase() {
-        if (isOpening) return;
-        const caseObj = getCurrentCase();
-        if (balance < caseObj.price) { shakeBalance(); return; }
-
-        isOpening = true;
-        balance -= caseObj.price;
-        updateBalance('minus');
-
-        const openBtn = document.getElementById('openBtn');
-        if (openBtn) openBtn.disabled = true;
-
-        const caseBox = document.getElementById('caseBox');
-        if (caseBox) {
-            caseBox.classList.add('opening');
-            caseBox.textContent = '📦';
-            setTimeout(() => {
-                caseBox.classList.remove('opening');
-                caseBox.textContent = caseObj.emoji;
-            }, 500);
-        }
-
-        const { winItem, winIndex } = generateRoulette();
-        const roulette = document.getElementById('roulette');
-        roulette.style.transition = 'none';
-        roulette.style.transform = 'translateX(0)';
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                const items = roulette.querySelectorAll('.item');
-                const winEl = items[winIndex];
-                if (!winEl) return;
-                const wrap = document.getElementById('rouletteWrap');
-                if (!wrap) return;
-                const wrapRect = wrap.getBoundingClientRect();
-                const winRect = winEl.getBoundingClientRect();
-                const wrapCenter = wrapRect.left + wrapRect.width / 2;
-                const winCenter = winRect.left + winRect.width / 2;
-                const targetX = winCenter - wrapCenter;
-                roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
-                roulette.style.transform = `translateX(${-targetX}px)`;
-            });
-        });
-
-        setTimeout(() => {
-            showDrop(winItem);
-            addToHistory(winItem);
-            isOpening = false;
-            if (openBtn) openBtn.disabled = false;
-        }, 6200);
-    }
-
-    function showDrop(item) {
-        pendingDrop = item;
-        const modal = document.getElementById('dropModal');
-        const card = document.getElementById('dropCard');
-        const emoji = document.getElementById('dropEmoji');
-        const rarity = document.getElementById('dropRarity');
-        const name = document.getElementById('dropName');
-        const stars = document.getElementById('dropStars');
-        const price = document.getElementById('dropPrice');
-        if (!modal || !card) return;
-
-        card.className = 'drop-card r-' + item.rarity;
-        emoji.textContent = item.emoji;
-        rarity.textContent = RARITY_LABELS[item.rarity];
-        name.textContent = item.name;
-        const starCount = RARITY_STARS[item.rarity] || 1;
-        stars.textContent = '⭐'.repeat(starCount) + ' ' + starCount;
-        price.textContent = `Стоимость: ${formatPrice(item.price)} 🪙`;
-        modal.classList.add('show');
-    }
-
-    function keepDrop() {
-        if (!pendingDrop) return;
-        inventory.push(pendingDrop);
-        pendingDrop = null;
-        renderInventory();
-        closeDrop();
-    }
-
-    function sellDrop() {
-        if (!pendingDrop) return;
-        balance += pendingDrop.price;
-        updateBalance('plus');
-        addToHistory({ ...pendingDrop, sold: true });
-        pendingDrop = null;
-        renderInventory();
-        closeDrop();
-    }
-
-    function closeDrop() {
-        const modal = document.getElementById('dropModal');
-        if (modal) modal.classList.remove('show');
-        pendingDrop = null;
-    }
-
-    function addToHistory(item) {
-        const now = new Date();
-        const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-        history.unshift({ ...item, time });
-        if (history.length > HISTORY_LIMIT) history.pop();
-        renderHistory();
-    }
-
-    function renderHistory() {
-        const list = document.getElementById('historyList');
-        if (!list) return;
-        if (history.length === 0) {
-            list.innerHTML = '<div class="empty-history">Пока пусто — открой первый кейс</div>';
-            return;
-        }
-        list.innerHTML = history.map(item => `
-            <div class="history-item">
-                <div class="h-emoji">${item.emoji}</div>
-                <div class="h-info">
-                    <div class="h-name">${item.name}${item.sold ? ' (продан)' : ''}</div>
-                    <div class="h-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]} · ${formatPrice(item.price)} 🪙 · ⭐${RARITY_STARS[item.rarity]}</div>
-                </div>
-                <div class="h-time">${item.time}</div>
-            </div>
-        `).join('');
-    }
-
-    function renderInventory() {
-        const grid = document.getElementById('inventoryGrid');
-        const count = document.getElementById('invCount');
-        const total = document.getElementById('invTotal');
-        if (!grid) return;
-        if (count) count.textContent = inventory.length;
-        const sum = inventory.reduce((s, it) => s + it.price, 0);
-        if (total) total.textContent = formatPrice(sum);
-
-        if (inventory.length === 0) {
-            grid.innerHTML = '<div class="empty-history" style="grid-column: 1/-1;">Инвентарь пуст — открой кейс</div>';
-            return;
-        }
-
-        grid.innerHTML = inventory.map((item, index) => {
-            const stars = RARITY_STARS[item.rarity] || 1;
-            return `
-                <div class="inv-card r-${item.rarity}">
-                    <span class="inv-emoji">${item.emoji}</span>
-                    <div class="inv-name">${item.name}</div>
-                    <div class="inv-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]}</div>
-                    <div class="inv-stars">${'⭐'.repeat(stars)} ${stars}</div>
-                    <div class="inv-price">${formatPrice(item.price)} 🪙</div>
-                    <button class="inv-sell" onclick="sellFromInventory(${index})">Продать</button>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function sellFromInventory(index) {
-        const item = inventory[index];
-        if (!item) return;
-        balance += item.price;
-        updateBalance('plus');
-        addToHistory({ ...item, sold: true });
-        inventory.splice(index, 1);
-        renderInventory();
-    }
-
-    function updateBalance(type) {
-        const box = document.getElementById('balanceBox');
-        const amount = document.getElementById('balanceAmount');
-        if (!box || !amount) return;
-        amount.textContent = formatPrice(balance);
-        box.classList.remove('plus', 'minus');
-        void box.offsetWidth;
-        if (type === 'plus') box.classList.add('plus');
-        if (type === 'minus') box.classList.add('minus');
-    }
-
-    function shakeBalance() {
-        const box = document.getElementById('balanceBox');
-        if (!box) return;
-        box.classList.remove('minus');
-        void box.offsetWidth;
-        box.classList.add('minus');
-    }
-
-    function resetDemo() {
-        if (isOpening) return;
-        balance = START_BALANCE;
-        history = [];
-        inventory = [];
-        pendingDrop = null;
-        upgradeBet = null;
-        upgradeWant = null;
-        updateBalance();
-        renderHistory();
-        renderInventory();
-        resetRoulette();
-        renderUpgrader();
-    }
-
-    function calcUpgradeChance() {
-        if (!upgradeBet || !upgradeWant) return 0;
-        if (upgradeWant.price <= upgradeBet.price) return 90;
-        const ratio = upgradeBet.price / upgradeWant.price;
-        let chance = ratio * 90;
-        if (chance > 90) chance = 90;
-        if (chance < 5) chance = 5;
-        return Math.round(chance * 10) / 10;
-    }
-
-    function renderUpgrader() {
-        const betContent = document.getElementById('slotBetContent');
-        const wantContent = document.getElementById('slotWantContent');
-        const slotBet = document.getElementById('slotBet');
-        const slotWant = document.getElementById('slotWant');
-
-        if (upgradeBet) {
-            betContent.innerHTML = `
-                <div class="slot-emoji">${upgradeBet.emoji}</div>
-                <div class="slot-name">${upgradeBet.name}</div>
-                <div class="slot-price">${formatPrice(upgradeBet.price)} 🪙</div>
-            `;
-            slotBet.classList.add('filled');
-        } else {
-            betContent.innerHTML = `<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>`;
-            slotBet.classList.remove('filled');
-        }
-
-        if (upgradeWant) {
-            wantContent.innerHTML = `
-                <div class="slot-emoji">${upgradeWant.emoji}</div>
-                <div class="slot-name">${upgradeWant.name}</div>
-                <div class="slot-price">${formatPrice(upgradeWant.price)} 🪙</div>
-            `;
-            slotWant.classList.add('filled');
-        } else {
-            wantContent.innerHTML = `<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>`;
-            slotWant.classList.remove('filled');
-        }
-
-        const chanceEl = document.getElementById('upgraderChance');
-        const startBtn = document.getElementById('upgraderStart');
-        if (upgradeBet && upgradeWant) {
-            const chance = calcUpgradeChance();
-            chanceEl.innerHTML = `Шанс выигрыша: <strong>${chance}%</strong>`;
-            startBtn.disabled = false;
-
-            const wheel = document.getElementById('upgraderWheel');
-            const angle = (chance / 100) * 360;
-            wheel.style.background = `conic-gradient(
-                var(--green) 0deg ${angle}deg,
-                var(--red) ${angle}deg 360deg
-            )`;
-        } else {
-            chanceEl.innerHTML = `Шанс выигрыша: <strong>—</strong>`;
-            startBtn.disabled = true;
-        }
-    }
-
-    function openSlotPicker(target) {
-        if (upgradeRolling) return;
-        slotPickerTarget = target;
-        const modal = document.getElementById('slotPickerModal');
-        const title = document.getElementById('slotPickerTitle');
-        const grid = document.getElementById('slotPickerGrid');
-
-        if (target === 'bet') {
-            title.textContent = 'Выбери свой предмет';
-            if (inventory.length === 0) {
-                grid.innerHTML = '<div class="empty-history" style="grid-column:1/-1;">Инвентарь пуст</div>';
-            } else {
-                grid.innerHTML = inventory.map((item, i) => `
-                    <div class="slot-picker-item" onclick="pickSlotItem(${i})">
-                        <span class="sp-emoji">${item.emoji}</span>
-                        <div class="sp-name">${item.name}</div>
-                        <div class="sp-price">${formatPrice(item.price)} 🪙</div>
-                    </div>
-                `).join('');
-            }
-        } else {
-            title.textContent = 'Выбери желаемый предмет';
-            const allItems = [];
-            const seen = new Set();
-            CASES.forEach(c => c.items.forEach(it => {
-                const key = it.emoji + '|' + it.name;
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    allItems.push(it);
-                }
-            }));
-            allItems.sort((a, b) => a.price - b.price);
-            grid.innerHTML = allItems.map((item, i) => `
-                <div class="slot-picker-item" onclick="pickWantItem(${i})">
-                    <span class="sp-emoji">${item.emoji}</span>
-                    <div class="sp-name">${item.name}</div>
-                    <div class="sp-price">${formatPrice(item.price)} 🪙</div>
-                </div>
-            `).join('');
-            window._wantItems = allItems;
-        }
-
-        modal.classList.add('show');
-    }
-
-    function pickSlotItem(index) {
-        upgradeBet = inventory[index];
-        closeSlotPicker();
-        renderUpgrader();
-    }
-
-    function pickWantItem(index) {
-        upgradeWant = window._wantItems[index];
-        closeSlotPicker();
-        renderUpgrader();
-    }
-
-    function closeSlotPicker() {
-        const modal = document.getElementById('slotPickerModal');
-        if (modal) modal.classList.remove('show');
-        slotPickerTarget = null;
-    }
-
-    function startUpgrade() {
-        if (upgradeRolling) return;
-        if (!upgradeBet || !upgradeWant) return;
-        if (upgradeBet.price >= upgradeWant.price) {
-            setUpgradeResult('Желаемый предмет должен быть дороже ставки', 'lose');
-            return;
-        }
-
-        upgradeRolling = true;
-        const startBtn = document.getElementById('upgraderStart');
-        startBtn.disabled = true;
-        setUpgradeResult('', '');
-
-        const chance = calcUpgradeChance();
-        const win = Math.random() * 100 < chance;
-
-        const wheel = document.getElementById('upgraderWheel');
-        const extraSpins = 4 + Math.floor(Math.random() * 3);
-        const targetAngle = upgradeWheelAngle + extraSpins * 360 + (Math.random() * 360);
-        upgradeWheelAngle = targetAngle;
-        wheel.style.transform = `rotate(${targetAngle}deg)`;
-
-        setTimeout(() => {
-            const betIndex = inventory.indexOf(upgradeBet);
-            if (betIndex !== -1) inventory.splice(betIndex, 1);
-
-            if (win) {
-                inventory.push(upgradeWant);
-                addToHistory({ ...upgradeWant, name: upgradeWant.name + ' (апгрейд)' });
-                setUpgradeResult(`✅ Успех! Ты получил ${upgradeWant.emoji} ${upgradeWant.name}`, 'win');
-                showGamePopup(true, null, `Ты получил ${upgradeWant.name}`);
-            } else {
-                addToHistory({ ...upgradeBet, name: upgradeBet.name + ' (сгорел)' });
-                setUpgradeResult(`❌ Неудача. Ты потерял ${upgradeBet.emoji} ${upgradeBet.name}`, 'lose');
-                showGamePopup(false, null, `Ты потерял ${upgradeBet.name}`);
-            }
-
-            renderInventory();
-            upgradeBet = null;
-            upgradeWant = null;
-            renderUpgrader();
-            upgradeRolling = false;
-            startBtn.disabled = false;
-        }, 5200);
-    }
-
-    function setUpgradeResult(text, type) {
-        const el = document.getElementById('upgraderResult');
-        if (!el) return;
-        el.textContent = text;
-        el.className = 'upgrader-result' + (type ? ' ' + type : '');
-    }
-
-    // === БОЛЬШИЕ СПИСКИ ФРАЗ ===
-    const LOSE_PHRASES = [
-        { text: 'ТЫ ЛОХ', emoji: '💀' },
-        { text: 'ТЫ ДЕБИЛ', emoji: '🤡' },
-        { text: 'ТЫ ПРОИГРАЛ', emoji: '😭' },
-        { text: 'ЛОХ И ЛОХ', emoji: '🐀' },
-        { text: 'НУ ТЫ И ЛОШАРА', emoji: '🐴' },
-        { text: 'ПОЗОР ТЕБЕ', emoji: '👎' },
-        { text: 'ОПЯТЬ МИМО', emoji: '🙈' },
-        { text: 'ФАК, ТЫ ПРОИГРАЛ', emoji: '💩' },
-        { text: 'ТЫ ЖАЛОК', emoji: '🥴' },
-        { text: 'НЕ ТВОЙ ДЕНЬ', emoji: '👻' },
-        { text: 'РОДИТЕЛИ В УЖАСЕ', emoji: '😱' },
-        { text: 'МАМА ПЛАЧЕТ', emoji: '😢' },
-        { text: 'ПАПА РАЗОЧАРОВАН', emoji: '😔' },
-        { text: 'БАБУШКА В ШОКЕ', emoji: '😵' },
-        { text: 'ТЫ ДНО', emoji: '🕳' },
-        { text: 'ТЫ НУБ', emoji: '🐣' },
-        { text: 'ТЫ БОМЖ', emoji: '🥺' },
-        { text: 'ТЫ НИЩИЙ', emoji: '🪙' },
-        { text: 'ХА-ХА-ХА', emoji: '😂' },
-        { text: 'ЛУЗЕР', emoji: '🏳' },
-        { text: 'ТЫ ОПОЗОРИЛСЯ', emoji: '🤦' },
-        { text: 'СМЕШНОЙ ТЫ', emoji: '🤣' },
-        { text: 'ТЫ ПРОИГРАЛ ВСЁ', emoji: '💸' },
-        { text: 'ТВОЯ МАМА ЗНАЕТ', emoji: '📞' },
-        { text: 'ТЫ ТУПОЙ', emoji: '🧱' },
-        { text: 'ТЫ КАК ПЕНЬ', emoji: '🪵' },
-        { text: 'ТЫ НОЛЬ', emoji: '0️⃣' },
-        { text: 'ТЫ ПУСТОЕ МЕСТО', emoji: '⬜' },
-        { text: 'ТЫ КАК ПРОБКА', emoji: '🍾' },
-        { text: 'ТЫ КАК НОСОК', emoji: '🧦' },
-        { text: 'ТЫ КАК БАТОН', emoji: '🍞' },
-        { text: 'ТЫ ПРОИГРАЛ СТОЛЕШНИЦЕ', emoji: '🪑' },
-        { text: 'ТЫ УПАЛ НА КИРПИЧ', emoji: '🧱' },
-        { text: 'ТЫ КАК ТАБУРЕТ', emoji: '🪑' },
-        { text: 'ТЫ ХУЖЕ ШКАФА', emoji: '🚪' },
-        { text: 'ТЫ КАК ПЛИНТУС', emoji: '📏' },
-        { text: 'ТЫ КАК ЛЮСТРА', emoji: '💡' },
-        { text: 'ТЫ КАК ГАРДИНА', emoji: '🪟' },
-        { text: 'ТЫ КАК ПОТОЛОК', emoji: '🏠' },
-        { text: 'ТЫ КАК СТЕНА', emoji: '🧱' }
-    ];
-
-    const WIN_PHRASES = [
-        { text: 'МОЛОДЕЦ!', emoji: '🏆' },
-        { text: 'ТЫ ПРОДАЛ СВОЮ МАМУ', emoji: '😈' },
-        { text: 'РОДИТЕЛИ В ПРЕКРАСНОМ СОСТОЯНИИ', emoji: '😎' },
-        { text: 'РОДИТЕЛИ В ШОКЕ', emoji: '🤯' },
-        { text: 'ВАУ, ТЫ ЛЕГЕНДА', emoji: '🌟' },
-        { text: 'ВСЁ КРУТО, ТЫ КОСМОС', emoji: '🌌' },
-        { text: 'МАМА ГОРДИТСЯ', emoji: '🥰' },
-        { text: 'ПАПА В ВОСТОРГЕ', emoji: '🤩' },
-        { text: 'ТЫ ПРОДАЛ ОТЦА', emoji: '😎' },
-        { text: 'МАМА НЕ УЗНАЕТ', emoji: '🤫' },
-        { text: 'ВАУ-ВАУ-ВАУ', emoji: '🎉' },
-        { text: 'ТЫ ТОП', emoji: '🔝' },
-        { text: 'ВСЕ ЗАВИДУЮТ', emoji: '😏' },
-        { text: 'КРАСАВЧИК', emoji: '💅' },
-        { text: 'УМНИЦА', emoji: '🧠' },
-        { text: 'ГЕНИЙ', emoji: '🧠' },
-        { text: 'ЦАРЬ', emoji: '👑' },
-        { text: 'БОСС', emoji: '💼' },
-        { text: 'ХАРОШ', emoji: '🔥' },
-        { text: 'БОГАТЫЙ И КРАСИВЫЙ', emoji: '💰' },
-        { text: 'ТЫ ГЕНИЙ ЭТОГО МИРА', emoji: '🌍' },
-        { text: 'ВАУ, ТЫ КОСМОС', emoji: '🚀' },
-        { text: 'ВСЁ ПРОСТО ОГОНЬ', emoji: '🔥' },
-        { text: 'ТЫ КАК БОГ', emoji: '⚡' },
-        { text: 'ТЫ КАК ЗВЕЗДА', emoji: '⭐' },
-        { text: 'ТЫ КАК СОЛНЦЕ', emoji: '☀️' },
-        { text: 'ТЫ КАК ЛУНА', emoji: '🌙' },
-        { text: 'ТЫ КАК РАДУГА', emoji: '🌈' },
-        { text: 'ТЫ КАК МОЛНИЯ', emoji: '⚡' },
-        { text: 'ТЫ КАК ВУЛКАН', emoji: '🌋' },
-        { text: 'ТЫ КАК ЦУНАМИ', emoji: '🌊' },
-        { text: 'ТЫ КАК ТОРНАДО', emoji: '🌪' },
-        { text: 'ТЫ КАК УРАГАН', emoji: '🌀' },
-        { text: 'ТЫ КАК КОМЕТА', emoji: '☄️' },
-        { text: 'ТЫ КАК ГАЛАКТИКА', emoji: '🌌' },
-        { text: 'ТЫ КАК ВСЕЛЕННАЯ', emoji: '🪐' },
-        { text: 'ТЫ КАК ЧЁРНАЯ ДЫРА', emoji: '🕳' },
-        { text: 'ТЫ КАК СУПЕРНОВА', emoji: '💥' },
-        { text: 'ТЫ КАК БОЛЬШОЙ ВЗРЫВ', emoji: '💣' },
-        { text: 'ТЫ КАК ПРАЗДНИК', emoji: '🎊' },
-        { text: 'ТЫ КАК ФЕЙЕРВЕРК', emoji: '🎆' },
-        { text: 'ТЫ КАК САЛЮТ', emoji: '🎇' },
-        { text: 'ТЫ КАК ПАРАД', emoji: '🎺' },
-        { text: 'ТЫ КАК КОНЦЕРТ', emoji: '🎸' },
-        { text: 'ТЫ КАК РОК-ЗВЕЗДА', emoji: '🎤' },
-        { text: 'ТЫ КАК ЧЕМПИОН', emoji: '🥇' },
-        { text: 'ТЫ КАК ПОБЕДИТЕЛЬ', emoji: '🏅' },
-        { text: 'ТЫ КАК ЛЕГЕНДА', emoji: '📜' },
-        { text: 'ТЫ КАК МИФ', emoji: '🐉' },
-        { text: 'ТЫ КАК БОГАТЫРЬ', emoji: '🛡' },
-        { text: 'ТЫ КАК ГЕРОЙ', emoji: '🦸' }
-    ];
-
-    function showGamePopup(win, overrideTitle, sub) {
-        const popup = document.getElementById('gamePopup');
-        const inner = document.getElementById('gamePopupInner');
-        const emoji = document.getElementById('gamePopupEmoji');
-        const text = document.getElementById('gamePopupText');
-        const subEl = document.getElementById('gamePopupSub');
-
-        const list = win ? WIN_PHRASES : LOSE_PHRASES;
-        const phrase = list[Math.floor(Math.random() * list.length)];
-
-        inner.className = 'game-popup-inner ' + (win ? 'win' : 'lose');
-        emoji.textContent = phrase.emoji;
-        text.textContent = overrideTitle || phrase.text;
-        subEl.textContent = sub || '';
-
-        popup.classList.add('show');
-    }
-
-    function closeGamePopup() {
-        const popup = document.getElementById('gamePopup');
-        if (popup) popup.classList.remove('show');
-    }
-
-    // === ИНИЦИАЛИЗАЦИЯ ===
-    updateBalance();
-    renderCasePicker();
+function addToHistory(item) {
+    const t = new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+    history.unshift({...item, time: t});
+    if (history.length > HISTORY_LIMIT) history.pop();
     renderHistory();
-    renderInventory();
-    resetRoulette();
-    renderUpgrader();
+}
+function renderHistory() {
+    const list = document.getElementById('historyList');
+    if (!list) return;
+    if (history.length === 0) { list.innerHTML = '<div class="empty-history">Пока пусто</div>'; return; }
+    list.innerHTML = history.map(i => `
+        <div class="history-item">
+            <div class="h-emoji">${i.emoji}</div>
+            <div class="h-info">
+                <div class="h-name">${i.name}${i.sold ? ' (продан)' : ''}</div>
+                <div class="h-rarity r-${i.rarity}">${RARITY_LABELS[i.rarity]} · ${formatPrice(i.price)} 🪙 · ⭐${RARITY_STARS[i.rarity]}</div>
+            </div>
+            <div class="h-time">${i.time}</div>
+        </div>
+    `).join('');
+}
+function renderInventory() {
+    const grid = document.getElementById('inventoryGrid');
+    if (!grid) return;
+    document.getElementById('invCount').textContent = inventory.length;
+    document.getElementById('invTotal').textContent = formatPrice(inventory.reduce((s,it) => s + it.price, 0));
+    if (inventory.length === 0) { grid.innerHTML = '<div class="empty-history" style="grid-column:1/-1;">Пусто</div>'; return; }
+    grid.innerHTML = inventory.map((item, idx) => {
+        const st = RARITY_STARS[item.rarity] || 1;
+        return `
+            <div class="inv-card r-${item.rarity}">
+                <span class="inv-emoji">${item.emoji}</span>
+                <div class="inv-name">${item.name}</div>
+                <div class="inv-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]}</div>
+                <div class="inv-stars">${'⭐'.repeat(st)} ${st}</div>
+                <div class="inv-price">${formatPrice(item.price)} 🪙</div>
+                <button class="inv-sell" onclick="sellFromInventory(${idx})">Продать</button>
+            </div>
+        `;
+    }).join('');
+}
+function sellFromInventory(idx) {
+    const it = inventory[idx]; if (!it) return;
+    balance += it.price; updateBalance('plus'); addToHistory({...it, sold:true}); inventory.splice(idx, 1); renderInventory();
+}
+function updateBalance(type) {
+    const box = document.getElementById('balanceBox');
+    const amt = document.getElementById('balanceAmount');
+    if (!box || !amt) return;
+    amt.textContent = formatPrice(balance);
+    box.classList.remove('plus','minus'); void box.offsetWidth;
+    if (type === 'plus') box.classList.add('plus');
+    if (type === 'minus') box.classList.add('minus');
+}
+function shakeBalance() { const b = document.getElementById('balanceBox'); if (!b) return; b.classList.remove('minus'); void b.offsetWidth; b.classList.add('minus'); }
 
-    const dropModal = document.getElementById('dropModal');
-    if (dropModal) {
-        dropModal.addEventListener('click', (e) => {
-            if (e.target.id === 'dropModal') keepDrop();
-        });
+function resetDemo() {
+    if (isOpening) return;
+    balance = START_BALANCE; history = []; inventory = []; pendingDrop = null;
+    upgradeBet = null; upgradeWant = null;
+    updateBalance(); renderHistory(); renderInventory(); resetRoulette(); renderUpgrader();
+}
+
+// === АПГРЕЙДЕР ===
+function calcUpgradeChance() {
+    if (!upgradeBet || !upgradeWant) return 0;
+    if (upgradeWant.price <= upgradeBet.price) return 90;
+    let ch = (upgradeBet.price / upgradeWant.price) * 90;
+    if (ch > 90) ch = 90;
+    if (ch < 5) ch = 5;
+    return Math.round(ch * 10) / 10;
+}
+function renderUpgrader() {
+    const bc = document.getElementById('slotBetContent');
+    const wc = document.getElementById('slotWantContent');
+    const sb = document.getElementById('slotBet');
+    const sw = document.getElementById('slotWant');
+    if (!bc || !wc) return;
+    if (upgradeBet) {
+        bc.innerHTML = `<div class="slot-emoji">${upgradeBet.emoji}</div><div class="slot-name">${upgradeBet.name}</div><div class="slot-price">${formatPrice(upgradeBet.price)} 🪙</div>`;
+        sb.classList.add('filled');
+    } else { bc.innerHTML = '<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>'; sb.classList.remove('filled'); }
+    if (upgradeWant) {
+        wc.innerHTML = `<div class="slot-emoji">${upgradeWant.emoji}</div><div class="slot-name">${upgradeWant.name}</div><div class="slot-price">${formatPrice(upgradeWant.price)} 🪙</div>`;
+        sw.classList.add('filled');
+    } else { wc.innerHTML = '<div class="slot-emoji">➕</div><div class="slot-name">Выбрать</div>'; sw.classList.remove('filled'); }
+    const ch = document.getElementById('upgraderChance');
+    const btn = document.getElementById('upgraderStart');
+    if (upgradeBet && upgradeWant) {
+        const c = calcUpgradeChance();
+        ch.innerHTML = 'Шанс выигрыша: <strong>' + c + '%</strong>';
+        btn.disabled = false;
+        document.getElementById('upgraderWheel').style.background = `conic-gradient(var(--green) 0deg ${c/100*360}deg, var(--red) ${c/100*360}deg 360deg)`;
+    } else { ch.innerHTML = 'Шанс выигрыша: <strong>—</strong>'; btn.disabled = true; }
+}
+function openSlotPicker(target) {
+    if (upgradeRolling) return;
+    const modal = document.getElementById('slotPickerModal');
+    const title = document.getElementById('slotPickerTitle');
+    const grid = document.getElementById('slotPickerGrid');
+    if (target === 'bet') {
+        title.textContent = 'Выбери свой предмет';
+        if (inventory.length === 0) { grid.innerHTML = '<div class="empty-history" style="grid-column:1/-1;">Инвентарь пуст</div>'; }
+        else { grid.innerHTML = inventory.map((it,i) => `<div class="slot-picker-item" onclick="pickSlot(${i})"><span class="sp-emoji">${it.emoji}</span><div class="sp-name">${it.name}</div><div class="sp-price">${formatPrice(it.price)} 🪙</div></div>`).join(''); }
+    } else {
+        title.textContent = 'Выбери желаемый предмет';
+        const all = []; const seen = new Set();
+        CASES.forEach(c => c.items.forEach(it => { const k = it.emoji+it.name; if (!seen.has(k)) { seen.add(k); all.push(it); } }));
+        all.sort((a,b) => a.price - b.price);
+        grid.innerHTML = all.map((it,i) => `<div class="slot-picker-item" onclick="pickWant(${i})"><span class="sp-emoji">${it.emoji}</span><div class="sp-name">${it.name}</div><div class="sp-price">${formatPrice(it.price)} 🪙</div></div>`).join('');
+        window._wantItems = all;
     }
+    modal.classList.add('show');
+}
+function pickSlot(i) { upgradeBet = inventory[i]; closeSlotPicker(); renderUpgrader(); }
+function pickWant(i) { upgradeWant = window._wantItems[i]; closeSlotPicker(); renderUpgrader(); }
+function closeSlotPicker() { document.getElementById('slotPickerModal').classList.remove('show'); }
 
-    const gamePopup = document.getElementById('gamePopup');
-    if (gamePopup) {
-        gamePopup.addEventListener('click', (e) => {
-            if (e.target.id === 'gamePopup') closeGamePopup();
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeGamePopup();
-            closeDrop();
+function startUpgrade() {
+    if (upgradeRolling || !upgradeBet || !upgradeWant) return;
+    if (upgradeBet.price >= upgradeWant.price) { setUpgradeResult('Нужен предмет дороже', 'lose'); return; }
+    upgradeRolling = true;
+    document.getElementById('upgraderStart').disabled = true;
+    setUpgradeResult('', '');
+    const chance = calcUpgradeChance();
+    const win = Math.random() * 100 < chance;
+    const wheel = document.getElementById('upgraderWheel');
+    const extra = 4 + Math.floor(Math.random() * 3);
+    upgradeWheelAngle += extra * 360 + Math.random() * 360;
+    wheel.style.transform = 'rotate(' + upgradeWheelAngle + 'deg)';
+    setTimeout(() => {
+        const bi = inventory.indexOf(upgradeBet);
+        if (bi !== -1) inventory.splice(bi, 1);
+        if (win) {
+            inventory.push(upgradeWant);
+            addToHistory({...upgradeWant, name: upgradeWant.name + ' (апгрейд)'});
+            setUpgradeResult('✅ Успех! ' + upgradeWant.emoji + ' ' + upgradeWant.name, 'win');
+            showGamePopup(true, null, 'Ты получил ' + upgradeWant.name);
+        } else {
+            addToHistory({...upgradeBet, name: upgradeBet.name + ' (сгорел)'});
+            setUpgradeResult('❌ Провал. Ты потерял ' + upgradeBet.emoji + ' ' + upgradeBet.name, 'lose');
+            showGamePopup(false, null, 'Ты потерял ' + upgradeBet.name);
         }
-    });
+        renderInventory(); upgradeBet = null; upgradeWant = null; renderUpgrader();
+        upgradeRolling = false;
+        document.getElementById('upgraderStart').disabled = false;
+    }, 5200);
+}
+function setUpgradeResult(t, type) { const el = document.getElementById('upgraderResult'); if (!el) return; el.textContent = t; el.className = 'upgrader-result' + (type ? ' ' + type : ''); }
+
+// === ИГРЫ ===
+function setBet(id, v) { const el = document.getElementById(id); if (!el) return; el.value = v === 'all' ? Math.floor(balance) : v; }
+
+// Сапёр
+const SAPPER_SIZE = 5, SAPPER_MINES = 5, SAPPER_SAFE = 20;
+let sapperActive = false, sapperBet = 0, sapperMines = [], sapperOpened = [], sapperMult = 1;
+function startSapper() {
+    if (sapperActive) return;
+    const bet = parseInt(document.getElementById('sapperBet').value) || 0;
+    if (bet < 10) { setSapperResult('Мин. ставка 10 🪙', 'lose'); return; }
+    if (bet > balance) { setSapperResult('Мало монет', 'lose'); shakeBalance(); return; }
+    balance -= bet; updateBalance('minus');
+    sapperActive = true; sapperBet = bet; sapperOpened = []; sapperMult = 1;
+    sapperMines = [];
+    const all = Array.from({length: 25}, (_,i) => i);
+    for (let i = 0; i < SAPPER_MINES; i++) { const k = Math.floor(Math.random()*all.length); sapperMines.push(all.splice(k,1)[0]); }
+    document.getElementById('sapperStart').disabled = true;
+    document.getElementById('sapperCashout').disabled = true;
+    setSapperResult('', ''); renderSapper(); updateSapperInfo();
+}
+function renderSapper() {
+    const b = document.getElementById('sapperBoard'); if (!b) return;
+    b.innerHTML = '';
+    for (let i = 0; i < 25; i++) { const c = document.createElement('div'); c.className = 'sapper-cell'; c.dataset.index = i; c.onclick = () => clickSapper(i); b.appendChild(c); }
+}
+function clickSapper(i) {
+    if (!sapperActive || sapperOpened.includes(i)) return;
+    const c = document.querySelector('.sapper-cell[data-index="' + i + '"]');
+    if (!c) return;
+    if (sapperMines.includes(i)) { c.classList.add('mine'); c.textContent = '💣'; endSapper(false); }
+    else {
+        c.classList.add('opened'); c.textContent = '💎'; sapperOpened.push(i);
+        sapperMult = 1 + Math.pow(sapperOpened.length / SAPPER_SAFE, 2) * 4;
+        updateSapperInfo();
+        if (sapperOpened.length === SAPPER_SAFE) { endSapper(true); return; }
+        document.getElementById('sapperCashout').disabled = false;
+    }
+}
+function updateSapperInfo() {
+    document.getElementById('sapperMult').textContent = '×' + sapperMult.toFixed(2);
+    document.getElementById('sapperWin').textContent = formatPrice(sapperBet * sapperMult) + ' 🪙';
+    document.getElementById('sapperOpened').textContent = sapperOpened.length + '/' + SAPPER_SAFE;
+}
+function cashoutSapper() { if (sapperActive) endSapper(true); }
+function endSapper(win) {
+    sapperActive = false;
+    document.getElementById('sapperStart').disabled = false;
+    document.getElementById('sapperCashout').disabled = true;
+    sapperMines.forEach(i => { const c = document.querySelector('.sapper-cell[data-index="' + i + '"]'); if (c && !c.classList.contains('mine')) { c.classList.add('mine'); c.textContent = '💣'; } });
+    if (win) {
+        const w = Math.round(sapperBet * sapperMult);
+        balance += w; updateBalance('plus');
+        setSapperResult('✅ Выигрыш: ' + formatPrice(w) + ' 🪙', 'win');
+        showGamePopup(true, null, 'Сапёр: +' + formatPrice(w));
+    } else {
+        setSapperResult('❌ Мина! Потеряно ' + formatPrice(sapperBet) + ' 🪙', 'lose');
+        showGamePopup(false, null, 'Сапёр: -' + formatPrice(sapperBet));
+    }
+}
+function setSapperResult(t, type) { const el = document.getElementById('sapperResult'); if (!el) return; el.textContent = t; el.className = 'game-result' + (type ? ' ' + type : ''); }
+
+// Мины
+const MINES_SIZE = 9, MINES_COUNT = 3, MINES_SAFE = 6;
+let minesActive = false, minesBet = 0, minesMines = [], minesOpened = [], minesMult = 1;
+function startMines() {
+    if (minesActive) return;
+    const bet = parseInt(document.getElementById('minesBet').value) || 0;
+    if (bet < 10) { setMinesResult('Мин. ставка 10 🪙', 'lose'); return; }
+    if (bet > balance) { setMinesResult('Мало монет', 'lose'); shakeBalance(); return; }
+    balance -= bet; updateBalance('minus');
+    minesActive = true; minesBet = bet; minesOpened = []; minesMult = 1;
+    minesMines = [];
+    const all = Array.from({length: MINES_SIZE}, (_,i) => i);
+    for (let i = 0; i < MINES_COUNT; i++) { const k = Math.floor(Math.random()*all.length); minesMines.push(all.splice(k,1)[0]); }
+    document.getElementById('minesStart').disabled = true;
+    document.getElementById('minesCashout').disabled = true;
+    setMinesResult('', ''); renderMines(); updateMinesInfo();
+}
+function renderMines() {
+    const b = document.getElementById('minesBoard'); if (!b) return;
+    b.innerHTML = '';
+    for (let i = 0; i < MINES_SIZE; i++) { const c = document.createElement('div'); c.className = 'mine-cell'; c.dataset.index = i; c.onclick = () => clickMine(i); b.appendChild(c); }
+}
+function clickMine(i) {
+    if (!minesActive || minesOpened.includes(i)) return;
+    const c = document.querySelector('.mine-cell[data-index="' + i + '"]');
+    if (!c) return;
+    if (minesMines.includes(i)) { c.classList.add('exploded'); c.textContent = '💥'; endMines(false); }
+    else {
+        c.classList.add('opened'); c.textContent = '💎'; minesOpened.push(i);
+        minesMult = 1 + Math.pow(minesOpened.length / MINES_SAFE, 2) * 3;
+        updateMinesInfo();
+        if (minesOpened.length === MINES_SAFE) { endMines(true); return; }
+        document.getElementById('minesCashout').disabled = false;
+    }
+}
+function updateMinesInfo() {
+    document.getElementById('minesMult').textContent = '×' + minesMult.toFixed(2);
+    document.getElementById('minesWin').textContent = formatPrice(minesBet * minesMult) + ' 🪙';
+    document.getElementById('minesOpened').textContent = minesOpened.length + '/' + MINES_SAFE;
+}
+function cashoutMines() { if (minesActive) endMines(true); }
+function endMines(win) {
+    minesActive = false;
+    document.getElementById('minesStart').disabled = false;
+    document.getElementById('minesCashout').disabled = true;
+    minesMines.forEach(i => { const c = document.querySelector('.mine-cell[data-index="' + i + '"]'); if (c && !c.classList.contains('exploded')) { c.classList.add('exploded'); c.textContent = '💣'; } });
+    if (win) {
+        const w = Math.round(minesBet * minesMult);
+        balance += w; updateBalance('plus');
+        setMinesResult('✅ Выигрыш: ' + formatPrice(w) + ' 🪙', 'win');
+        showGamePopup(true, null, 'Мины: +' + formatPrice(w));
+    } else {
+        setMinesResult('❌ Мина! Потеряно ' + formatPrice(minesBet) + ' 🪙', 'lose');
+        showGamePopup(false, null, 'Мины: -' + formatPrice(minesBet));
+    }
+}
+function setMinesResult(t, type) { const el = document.getElementById('minesResult'); if (!el) return; el.textContent = t; el.className = 'game-result' + (type ? ' ' + type : ''); }
+
+// Кости
+let diceRolling = false;
+function playDice(choice) {
+    if (diceRolling) return;
+    const bet = parseInt(document.getElementById('diceBet').value) || 0;
+    if (bet < 10) { showGamePopup(false, 'МИН. СТАВКА 10', ''); return; }
+    if (bet > balance) { shakeBalance(); return; }
+    balance -= bet; updateBalance('minus');
+    diceRolling = true;
+    let t = 0;
+    const iv = setInterval(() => {
+        document.getElementById('dice1').textContent = Math.floor(Math.random()*6)+1;
+        document.getElementById('dice2').textContent = Math.floor(Math.random()*6)+1;
+        t++;
+        if (t > 12) { clearInterval(iv); finishDice(choice, bet); }
+    }, 80);
+}
+function finishDice(choice, bet) {
+    const v1 = Math.floor(Math.random()*6)+1, v2 = Math.floor(Math.random()*6)+1;
+    const sum = v1 + v2;
+    document.getElementById('dice1').textContent = v1;
+    document.getElementById('dice2').textContent = v2;
+    document.getElementById('diceResult').innerHTML = 'Сумма: <strong>' + sum + '</strong>';
+    let win = false, mult = 0;
+    if (choice === 'low' && sum < 7) { win = true; mult = 1.9; }
+    else if (choice === 'seven' && sum === 7) { win = true; mult = 5; }
+    else if (choice === 'high' && sum > 7) { win = true; mult = 1.9; }
+    if (win) {
+        const w = Math.round(bet * mult);
+        balance += w; updateBalance('plus');
+        showGamePopup(true, null, 'Кости: +' + formatPrice(w));
+    } else {
+        showGamePopup(false, null, 'Кости: -' + formatPrice(bet));
+    }
+    diceRolling = false;
+}
+
+// Монетка
+let coinFlipping = false;
+function playCoin(choice) {
+    if (coinFlipping) return;
+    const bet = parseInt(document.getElementById('coinBet').value) || 0;
+    if (bet < 10) { showGamePopup(false, 'МИН. СТАВКА 10', ''); return; }
+    if (bet > balance) { shakeBalance(); return; }
+    balance -= bet; updateBalance('minus');
+    coinFlipping = true;
+    document.getElementById('coinDisplay').textContent = '...';
+    setTimeout(() => {
+        const res = Math.random() < 0.5 ? 'heads' : 'tails';
+        document.getElementById('coinDisplay').textContent = res === 'heads' ? '🦅' : '🌿';
+        if (res === choice) {
+            const w = Math.round(bet * 1.95);
+            balance += w; updateBalance('plus');
+            showGamePopup(true, null, 'Монетка: +' + formatPrice(w));
+        } else {
+            showGamePopup(false, null, 'Монетка: -' + formatPrice(bet));
+        }
+        coinFlipping = false;
+    }, 1000);
+}
+
+// Брейдер
+const BREEDER_SIZE = 16, BREEDER_BOMBS = 4, BREEDER_SAFE = 12;
+let breederActive = false, breederBet = 0, breederBombs = [], breederOpened = [], breederMult = 1;
+function startBreeder() {
+    if (breederActive) return;
+    const bet = parseInt(document.getElementById('breederBet').value) || 0;
+    if (bet < 10) { setBreederResult('Мин. ставка 10 🪙', 'lose'); return; }
+    if (bet > balance) { setBreederResult('Мало монет', 'lose'); shakeBalance(); return; }
+    balance -= bet; updateBalance('minus');
+    breederActive = true; breederBet = bet; breederOpened = []; breederMult = 1;
+    breederBombs = [];
+    const all = Array.from({length: BREEDER_SIZE}, (_,i) => i);
+    for (let i = 0; i < BREEDER_BOMBS; i++) { const k = Math.floor(Math.random()*all.length); breederBombs.push(all.splice(k,1)[0]); }
+    document.getElementById('breederStart').disabled = true;
+    document.getElementById('breederCashout').disabled = true;
+    setBreederResult('', ''); renderBreeder(); updateBreederInfo();
+}
+function renderBreeder() {
+    const b = document.getElementById('breederBoard'); if (!b) return;
+    b.innerHTML = '';
+    for (let i = 0; i < BREEDER_SIZE; i++) { const c = document.createElement('div'); c.className = 'breeder-cell'; c.dataset.index = i; c.onclick = () => clickBreeder(i); b.appendChild(c); }
+}
+function clickBreeder(i) {
+    if (!breederActive || breederOpened.includes(i)) return;
+    const c = document.querySelector('.breeder-cell[data-index="' + i + '"]');
+    if (!c) return;
+    if (breederBombs.includes(i)) { c.classList.add('boom'); c.textContent = '💥'; endBreeder(false); }
+    else {
+        c.classList.add('opened'); c.textContent = '💎'; breederOpened.push(i);
+        breederMult = 1 + Math.pow(breederOpened.length / BREEDER_SAFE, 2) * 5;
+        updateBreederInfo();
+        if (breederOpened.length === BREEDER_SAFE) { endBreeder(true); return; }
+        document.getElementById('breederCashout').disabled = false;
+    }
+}
+function updateBreederInfo() {
+    document.getElementById('breederMult').textContent = '×' + breederMult.toFixed(2);
+    document.getElementById('breederWin').textContent = formatPrice(breederBet * breederMult) + ' 🪙';
+    document.getElementById('breederOpened').textContent = breederOpened.length + '/' + BREEDER_SAFE;
+}
+function cashoutBreeder() { if (breederActive) endBreeder(true); }
+function endBreeder(win) {
+    breederActive = false;
+    document.getElementById('breederStart').disabled = false;
+    document.getElementById('breederCashout').disabled = true;
+    breederBombs.forEach(i => { const c = document.querySelector('.breeder-cell[data-index="' + i + '"]'); if (c && !c.classList.contains('boom')) { c.classList.add('boom'); c.textContent = '💣'; } });
+    if (win) {
+        const w = Math.round(breederBet * breederMult);
+        balance += w; updateBalance('plus');
+        setBreederResult('✅ Выигрыш: ' + formatPrice(w) + ' 🪙', 'win');
+        showGamePopup(true, null, 'Брейдер: +' + formatPrice(w));
+    } else {
+        setBreederResult('❌ Бомба! Потеряно ' + formatPrice(breederBet) + ' 🪙', 'lose');
+        showGamePopup(false, null, 'Брейдер: -' + formatPrice(breederBet));
+    }
+}
+function setBreederResult(t, type) { const el = document.getElementById('breederResult'); if (!el) return; el.textContent = t; el.className = 'game-result' + (type ? ' ' + type : ''); }
+
+// === ПОПАП ===
+const LOSE_PHRASES = [
+{text:'ТЫ ЛОХ',emoji:'💀'},{text:'ТЫ ДЕБИЛ',emoji:'🤡'},{text:'ТЫ ПРОИГРАЛ',emoji:'😭'},
+{text:'ЛОХ И ЛОХ',emoji:'🐀'},{text:'НУ ТЫ И ЛОШАРА',emoji:'🐴'},{text:'ПОЗОР ТЕБЕ',emoji:'👎'},
+{text:'ОПЯТЬ МИМО',emoji:'🙈'},{text:'ФАК, ТЫ ПРОИГРАЛ',emoji:'💩'},{text:'ТЫ ЖАЛОК',emoji:'🥴'},
+{text:'НЕ ТВОЙ ДЕНЬ',emoji:'👻'},{text:'РОДИТЕЛИ В УЖАСЕ',emoji:'😱'},{text:'МАМА ПЛАЧЕТ',emoji:'😢'},
+{text:'ПАПА РАЗОЧАРОВАН',emoji:'😔'},{text:'БАБУШКА В ШОКЕ',emoji:'😵'},{text:'ТЫ ДНО',emoji:'🕳'},
+{text:'ТЫ НУБ',emoji:'🐣'},{text:'ТЫ БОМЖ',emoji:'🥺'},{text:'ТЫ НИЩИЙ',emoji:'🪙'},
+{text:'ХА-ХА-ХА',emoji:'😂'},{text:'ЛУЗЕР',emoji:'🏳'},{text:'ТЫ ОПОЗОРИЛСЯ',emoji:'🤦'},
+{text:'СМЕШНОЙ ТЫ',emoji:'🤣'},{text:'ТЫ ПРОИГРАЛ ВСЁ',emoji:'💸'},{text:'ТВОЯ МАМА ЗНАЕТ',emoji:'📞'},
+{text:'ТЫ ТУПОЙ',emoji:'🧱'},{text:'ТЫ КАК ПЕНЬ',emoji:'🪵'},{text:'ТЫ НОЛЬ',emoji:'0️⃣'},
+{text:'ТЫ ПУСТОЕ МЕСТО',emoji:'⬜'},{text:'ТЫ КАК ПРОБКА',emoji:'🍾'},{text:'ТЫ КАК НОСОК',emoji:'🧦'},
+{text:'ТЫ КАК БАТОН',emoji:'🍞'},{text:'ТЫ ПРОИГРАЛ СТОЛЕШНИЦЕ',emoji:'🪑'},{text:'ТЫ УПАЛ НА КИРПИЧ',emoji:'🧱'},
+{text:'ТЫ КАК ТАБУРЕТ',emoji:'🪑'},{text:'ТЫ ХУЖЕ ШКАФА',emoji:'🚪'},{text:'ТЫ КАК ПЛИНТУС',emoji:'📏'},
+{text:'ТЫ КАК ЛЮСТРА',emoji:'💡'},{text:'ТЫ КАК ГАРДИНА',emoji:'🪟'},{text:'ТЫ КАК ПОТОЛОК',emoji:'🏠'},
+{text:'ТЫ КАК СТЕНА',emoji:'🧱'},{text:'ТЫ БЕЗДАРЬ',emoji:'🚫'},{text:'ТЫ ОШИБКА ПРИРОДЫ',emoji:'❌'}
+];
+const WIN_PHRASES = [
+{text:'МОЛОДЕЦ!',emoji:'🏆'},{text:'ТЫ ПРОДАЛ СВОЮ МАМУ',emoji:'😈'},{text:'РОДИТЕЛИ В ПРЕКРАСНОМ СОСТОЯНИИ',emoji:'😎'},
+{text:'РОДИТЕЛИ В ШОКЕ',emoji:'🤯'},{text:'ВАУ, ТЫ ЛЕГЕНДА',emoji:'🌟'},{text:'ВСЁ КРУТО, ТЫ КОСМОС',emoji:'🌌'},
+{text:'МАМА ГОРДИТСЯ',emoji:'🥰'},{text:'ПАПА В ВОСТОРГЕ',emoji:'🤩'},{text:'ТЫ ПРОДАЛ ОТЦА',emoji:'😎'},
+{text:'МАМА НЕ УЗНАЕТ',emoji:'🤫'},{text:'ВАУ-ВАУ-ВАУ',emoji:'🎉'},{text:'ТЫ ТОП',emoji:'🔝'},
+{text:'ВСЕ ЗАВИДУЮТ',emoji:'😏'},{text:'КРАСАВЧИК',emoji:'💅'},{text:'УМНИЦА',emoji:'🧠'},
+{text:'ГЕНИЙ',emoji:'🧠'},{text:'ЦАРЬ',emoji:'👑'},{text:'БОСС',emoji:'💼'},
+{text:'ХАРОШ',emoji:'🔥'},{text:'БОГАТЫЙ И КРАСИВЫЙ',emoji:'💰'},{text:'ТЫ ГЕНИЙ ЭТОГО МИРА',emoji:'🌍'},
+{text:'ВАУ, ТЫ КОСМОС',emoji:'🚀'},{text:'ВСЁ ПРОСТО ОГОНЬ',emoji:'🔥'},{text:'ТЫ КАК БОГ',emoji:'⚡'},
+{text:'ТЫ КАК ЗВЕЗДА',emoji:'⭐'},{text:'ТЫ КАК СОЛНЦЕ',emoji:'☀️'},{text:'ТЫ КАК ЛУНА',emoji:'🌙'},
+{text:'ТЫ КАК РАДУГА',emoji:'🌈'},{text:'ТЫ КАК МОЛНИЯ',emoji:'⚡'},{text:'ТЫ КАК ВУЛКАН',emoji:'🌋'},
+{text:'ТЫ КАК ЦУНАМИ',emoji:'🌊'},{text:'ТЫ КАК ТОРНАДО',emoji:'🌪'},{text:'ТЫ КАК УРАГАН',emoji:'🌀'},
+{text:'ТЫ КАК КОМЕТА',emoji:'☄️'},{text:'ТЫ КАК ГАЛАКТИКА',emoji:'🌌'},{text:'ТЫ КАК ВСЕЛЕННАЯ',emoji:'🪐'},
+{text:'ТЫ КАК ЧЁРНАЯ ДЫРА',emoji:'🕳'},{text:'ТЫ КАК СУПЕРНОВА',emoji:'💥'},{text:'ТЫ КАК БОЛЬШОЙ ВЗРЫВ',emoji:'💣'},
+{text:'ТЫ КАК ПРАЗДНИК',emoji:'🎊'},{text:'ТЫ КАК ФЕЙЕРВЕРК',emoji:'🎆'},{text:'ТЫ КАК РОК-ЗВЕЗДА',emoji:'🎤'},
+{text:'ТЫ КАК ЧЕМПИОН',emoji:'🥇'},{text:'ТЫ КАК ЛЕГЕНДА',emoji:'📜'},{text:'ТЫ КАК БОГАТЫРЬ',emoji:'🛡'}
+];
+
+function showGamePopup(win, overrideTitle, sub) {
+    const p = document.getElementById('gamePopup');
+    const inner = document.getElementById('gamePopupInner');
+    if (!p || !inner) return;
+    const list = win ? WIN_PHRASES : LOSE_PHRASES;
+    const ph = list[Math.floor(Math.random() * list.length)];
+    inner.className = 'game-popup-inner ' + (win ? 'win' : 'lose');
+    document.getElementById('gamePopupEmoji').textContent = ph.emoji;
+    document.getElementById('gamePopupText').textContent = overrideTitle || ph.text;
+    document.getElementById('gamePopupSub').textContent = sub || '';
+    p.classList.add('show');
+}
+function closeGamePopup() { const p = document.getElementById('gamePopup'); if (p) p.classList.remove('show'); }
+
+// === INIT ===
+updateBalance(); renderCasePicker(); renderHistory(); renderInventory(); resetRoulette(); renderUpgrader();
+
+document.getElementById('dropModal').addEventListener('click', e => { if (e.target.id === 'dropModal') keepDrop(); });
+document.getElementById('gamePopup').addEventListener('click', e => { if (e.target.id === 'gamePopup') closeGamePopup(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeGamePopup(); closeDrop(); closeSlotPicker(); } });
 </script>
 </body>
 </html>
