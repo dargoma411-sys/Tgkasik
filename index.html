@@ -73,6 +73,10 @@
     .roulette .item.r-legend { box-shadow: inset 0 0 35px rgba(245, 158, 11, 0.35), 0 0 25px rgba(245, 158, 11, 0.25); border-color: var(--gold); }
     .roulette .item.r-legend::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(245, 158, 11, 0.35) 50%, transparent 70%); animation: shine 1.8s linear infinite; }
     @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    .case-amount { display: flex; gap: 8px; width: 100%; margin-bottom: 12px; }
+    .amount-btn { flex: 1; padding: 10px; background: var(--bg-2); border: 2px solid var(--line); border-radius: 10px; color: var(--muted); font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+    .amount-btn.active { background: linear-gradient(135deg, var(--accent), #ff7b00); color: #1a1200; border-color: transparent; box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35); }
+    .amount-btn.disabled { opacity: 0.4; cursor: not-allowed; border-color: var(--red); }
     .actions { display: flex; gap: 10px; width: 100%; margin-bottom: 12px; }
     .btn { flex: 1; padding: 15px; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
     .btn:active { transform: scale(0.97); }
@@ -130,6 +134,7 @@
     .drop-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; opacity: 0; transition: opacity 0.3s; }
     .drop-modal.show { display: flex; opacity: 1; }
     .drop-card { background: linear-gradient(160deg, #1f232f, #14171f); border: 2px solid var(--line); border-radius: 22px; padding: 36px 28px 28px; text-align: center; max-width: 340px; width: 100%; position: relative; animation: dropIn 0.5s cubic-bezier(0.2, 1.2, 0.3, 1); }
+    .drop-card.wide { max-width: 500px; }
     @keyframes dropIn { from { opacity: 0; transform: scale(0.7) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .drop-card.r-common { border-color: #6b7280; box-shadow: 0 0 40px rgba(107, 114, 128, 0.3); }
     .drop-card.r-uncommon { border-color: var(--green); box-shadow: 0 0 45px rgba(76, 175, 80, 0.4); }
@@ -154,6 +159,20 @@
     .drop-card .drop-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
     .drop-card .drop-btn.keep { background: var(--bg-3); color: var(--text); border: 1px solid var(--line); }
     .drop-card .drop-btn.sell { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
+    .drop-card .drop-btn.sell-all { background: linear-gradient(135deg, var(--gold), #b45309); color: white; }
+    .drop-card .drop-buttons-row { display: flex; gap: 10px; margin-top: 6px; }
+    .drop-card .drop-buttons-row .drop-btn { width: 100%; }
+    .multi-drop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin: 16px 0; max-height: 50vh; overflow-y: auto; padding: 4px; }
+    .multi-drop-item { background: linear-gradient(160deg, #1b1f2b, #14171f); border: 2px solid var(--line); border-radius: 12px; padding: 12px 6px; text-align: center; animation: dropIn 0.4s cubic-bezier(0.2, 1.2, 0.3, 1); }
+    .multi-drop-item.r-common { border-color: #6b7280; }
+    .multi-drop-item.r-uncommon { border-color: var(--green); }
+    .multi-drop-item.r-rare { border-color: var(--blue); }
+    .multi-drop-item.r-epic { border-color: var(--purple); }
+    .multi-drop-item.r-mythic { border-color: var(--pink); }
+    .multi-drop-item.r-legend { border-color: var(--gold); box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+    .multi-drop-item .md-emoji { font-size: 2rem; display: block; margin-bottom: 4px; }
+    .multi-drop-item .md-name { font-size: 0.65rem; font-weight: 700; margin-bottom: 2px; }
+    .multi-drop-item .md-price { font-size: 0.62rem; color: var(--accent-2); font-weight: 700; }
     .upgrader-pickers { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin-bottom: 14px; }
     .upgrader-slot { background: var(--bg-3); border: 2px dashed var(--line); border-radius: 14px; padding: 14px 10px; text-align: center; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
     .upgrader-slot:hover { border-color: var(--accent); }
@@ -229,8 +248,8 @@
     .game-popup-inner.win { background: linear-gradient(160deg, #0a3a0a, #051a05); border: 3px solid var(--green); box-shadow: 0 0 80px rgba(76, 175, 80, 0.6); }
     .game-popup-emoji { font-size: 5.5rem; margin-bottom: 14px; display: block; }
     .game-popup-text { font-size: 1.8rem; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 12px; text-transform: uppercase; line-height: 1.2; word-break: break-word; }
-    .game-popup-inner.lose .game-popup-text { color: var(--red); text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4); }
-    .game-popup-inner.win .game-popup-text { color: var(--green); text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.4); }
+    .game-popup-inner.lose .game-popup-text { color: var(--red); text-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
+    .game-popup-inner.win .game-popup-text { color: var(--green); text-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
     .game-popup-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 22px; }
     .game-popup-close { padding: 16px 40px; border: none; border-radius: 14px; font-size: 1rem; font-weight: 900; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; }
     .game-popup-inner.lose .game-popup-close { background: linear-gradient(135deg, var(--red), #b91c1c); color: white; }
@@ -268,6 +287,12 @@
         <div class="case-picker" id="casePicker"></div>
         <div class="case-visual"><div class="glow"></div><div class="case-box" id="caseBox">🎁</div></div>
         <div class="roulette-wrap" id="rouletteWrap"><div class="roulette-marker"></div><div class="roulette" id="roulette"></div></div>
+        <div class="case-amount" id="caseAmount">
+            <button class="amount-btn active" data-amount="1" onclick="selectAmount(1)">×1</button>
+            <button class="amount-btn" data-amount="2" onclick="selectAmount(2)">×2</button>
+            <button class="amount-btn" data-amount="5" onclick="selectAmount(5)">×5</button>
+            <button class="amount-btn" data-amount="10" onclick="selectAmount(10)">×10</button>
+        </div>
         <div class="actions">
             <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть</button>
             <button class="btn btn-secondary" onclick="resetDemo()">↺</button>
@@ -314,7 +339,7 @@
 
             <div class="game-card">
                 <h3>💣 Сапёр</h3>
-                <div class="game-desc">Поле 5×5, 5 мин. Открывай клетки — множитель растёт. Нарвёшься — потеряешь ставку.</div>
+                <div class="game-desc">Поле 5×5, 5 мин.</div>
                 <div class="bet-row">
                     <input type="number" class="bet-input" id="sapperBet" value="100" min="10" step="10">
                     <button class="bet-quick" onclick="setBet('sapperBet', 100)">100</button>
@@ -336,7 +361,7 @@
 
             <div class="game-card">
                 <h3>🎯 Мины</h3>
-                <div class="game-desc">Поле 3×3, 3 мины. Можно забрать в любой момент.</div>
+                <div class="game-desc">Поле 3×3, 3 мины.</div>
                 <div class="bet-row">
                     <input type="number" class="bet-input" id="minesBet" value="100" min="10" step="10">
                     <button class="bet-quick" onclick="setBet('minesBet', 100)">100</button>
@@ -358,7 +383,7 @@
 
             <div class="game-card">
                 <h3>🎲 Кости</h3>
-                <div class="game-desc">Угадай больше/меньше 7 или ровно 7. Больше/меньше — ×1.9, ровно 7 — ×5.</div>
+                <div class="game-desc">Больше/меньше 7 — ×1.9. Ровно 7 — ×5.</div>
                 <div class="bet-row">
                     <input type="number" class="bet-input" id="diceBet" value="100" min="10" step="10">
                     <button class="bet-quick" onclick="setBet('diceBet', 100)">100</button>
@@ -376,7 +401,7 @@
 
             <div class="game-card">
                 <h3>🪙 Монетка</h3>
-                <div class="game-desc">Угадай сторону монеты. Орёл или решка — ×1.95.</div>
+                <div class="game-desc">Орёл или решка — ×1.95.</div>
                 <div class="bet-row">
                     <input type="number" class="bet-input" id="coinBet" value="100" min="10" step="10">
                     <button class="bet-quick" onclick="setBet('coinBet', 100)">100</button>
@@ -392,7 +417,7 @@
 
             <div class="game-card">
                 <h3>🧨 Брейдер</h3>
-                <div class="game-desc">Поле 4×4, 4 бомбы. Открывай клетки — множитель растёт. Успел забрать — забирай, нарвался — теряй.</div>
+                <div class="game-desc">Поле 4×4, 4 бомбы.</div>
                 <div class="bet-row">
                     <input type="number" class="bet-input" id="breederBet" value="100" min="10" step="10">
                     <button class="bet-quick" onclick="setBet('breederBet', 100)">100</button>
@@ -419,14 +444,23 @@
 
 <div class="drop-modal" id="dropModal">
     <div class="drop-card" id="dropCard">
-        <div class="drop-emoji" id="dropEmoji">🎁</div>
-        <div class="drop-rarity" id="dropRarity">Обычный</div>
-        <div class="drop-name" id="dropName">Предмет</div>
-        <div class="drop-stars" id="dropStars">⭐ 1</div>
-        <div class="drop-price" id="dropPrice">+0 🪙</div>
+        <div id="dropSingleView">
+            <div class="drop-emoji" id="dropEmoji">🎁</div>
+            <div class="drop-rarity" id="dropRarity">Обычный</div>
+            <div class="drop-name" id="dropName">Предмет</div>
+            <div class="drop-stars" id="dropStars">⭐ 1</div>
+            <div class="drop-price" id="dropPrice">+0 🪙</div>
+        </div>
+        <div id="dropMultiView" style="display:none;">
+            <div class="drop-name" style="margin-bottom:12px;" id="dropMultiTitle">Открыто: 0</div>
+            <div class="multi-drop-grid" id="dropMultiGrid"></div>
+        </div>
         <div class="drop-actions">
             <button class="drop-btn keep" onclick="keepDrop()">Оставить</button>
             <button class="drop-btn sell" onclick="sellDrop()">Продать</button>
+        </div>
+        <div class="drop-buttons-row" id="dropAllRow" style="display:none;">
+            <button class="drop-btn sell-all" onclick="sellAllDrop()">Продать всё</button>
         </div>
     </div>
 </div>
@@ -454,8 +488,16 @@
 const RARITY_LABELS = { common: 'Обычный', uncommon: 'Необычный', rare: 'Редкий', epic: 'Эпический', mythic: 'Мифический', legend: 'Легендарный' };
 const RARITY_STARS = { common: 1, uncommon: 2, rare: 3, epic: 4, mythic: 5, legend: 6 };
 
-// === 20 КЕЙСОВ ===
+// === КЕЙСЫ (Фарм добавлен первым) ===
 const CASES = [
+{ id:'farm', emoji:'🌾', name:'Фарм', price:10, items:[
+{emoji:'❌',name:'Ничего',rarity:'common',price:0,weight:100000},
+{emoji:'🪙',name:'Монетка-Пустышка',rarity:'common',price:5,weight:20000},
+{emoji:'🧦',name:'Носок-Дырка',rarity:'common',price:8,weight:10000},
+{emoji:'💩',name:'Какашка-Легенда',rarity:'epic',price:5000,weight:100},
+{emoji:'🐉',name:'Дракон-Китаец',rarity:'mythic',price:250000,weight:1},
+{emoji:'🕳',name:'Чёрная дыра-Пылесосик',rarity:'legend',price:300000000,weight:0.1}
+]},
 { id:'starter', emoji:'📦', name:'Стартовый', price:100, items:[
 {emoji:'🪙',name:'Монетка-Столешница',rarity:'common',price:50,weight:50},
 {emoji:'🧦',name:'Носок-Кирпич',rarity:'common',price:45,weight:45},
@@ -723,6 +765,8 @@ let history = [];
 let inventory = [];
 let currentCaseId = CASES[0].id;
 let pendingDrop = null;
+let pendingMulti = null;
+let selectedAmount = 1;
 
 let upgradeBet = null;
 let upgradeWant = null;
@@ -758,6 +802,7 @@ function renderCasePicker() {
         </div>
     `).join('');
     updateOpenButton();
+    updateAmountAvailability();
 }
 
 function selectCase(id) { if (isOpening) return; currentCaseId = id; renderCasePicker(); resetRoulette(); }
@@ -803,56 +848,117 @@ function updateOpenButton() {
     const btn = document.getElementById('openBtn');
     if (!btn) return;
     const c = getCurrentCase();
-    btn.textContent = `Открыть за ${formatPrice(c.price)} 🪙`;
+    const total = c.price * selectedAmount;
+    btn.textContent = `Открыть ×${selectedAmount} за ${formatPrice(total)} 🪙`;
+    if (balance < total) {
+        btn.disabled = true;
+        btn.textContent = `Не хватает ${formatPrice(total - balance)} 🪙`;
+    } else {
+        btn.disabled = false;
+    }
+}
+
+function selectAmount(n) {
+    if (isOpening) return;
+    selectedAmount = n;
+    document.querySelectorAll('.amount-btn').forEach(b => {
+        const a = parseInt(b.dataset.amount);
+        b.classList.toggle('active', a === n);
+    });
+    updateOpenButton();
+    updateAmountAvailability();
+}
+
+function updateAmountAvailability() {
+    const c = getCurrentCase();
+    document.querySelectorAll('.amount-btn').forEach(b => {
+        const a = parseInt(b.dataset.amount);
+        b.classList.toggle('disabled', c.price * a > balance);
+    });
 }
 
 function openCase() {
     if (isOpening) return;
     const c = getCurrentCase();
-    if (balance < c.price) { shakeBalance(); return; }
+    const total = c.price * selectedAmount;
+    if (balance < total) { shakeBalance(); return; }
+
     isOpening = true;
-    balance -= c.price;
+    balance -= total;
     updateBalance('minus');
+
     const openBtn = document.getElementById('openBtn');
     if (openBtn) openBtn.disabled = true;
+
     const caseBox = document.getElementById('caseBox');
     if (caseBox) {
         caseBox.classList.add('opening');
         caseBox.textContent = '📦';
         setTimeout(() => { caseBox.classList.remove('opening'); caseBox.textContent = c.emoji; }, 500);
     }
-    const { winItem, winIndex } = generateRoulette();
-    const roulette = document.getElementById('roulette');
-    roulette.style.transition = 'none';
-    roulette.style.transform = 'translateX(0)';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        const items = roulette.querySelectorAll('.item');
-        const winEl = items[winIndex];
-        if (!winEl) return;
-        const wrap = document.getElementById('rouletteWrap');
-        if (!wrap) return;
-        const wr = wrap.getBoundingClientRect();
-        const we = winEl.getBoundingClientRect();
-        const wc = wr.left + wr.width / 2;
-        const ec = we.left + we.width / 2;
-        const targetX = ec - wc;
-        roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
-        roulette.style.transform = `translateX(${-targetX}px)`;
-    }));
+
+    const wins = [];
+    for (let i = 0; i < selectedAmount; i++) wins.push(pickRandomItem(c));
+
+    if (selectedAmount === 1) {
+        const { winItem, winIndex } = generateRoulette();
+        const roulette = document.getElementById('roulette');
+        roulette.style.transition = 'none';
+        roulette.style.transform = 'translateX(0)';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            const items = roulette.querySelectorAll('.item');
+            const winEl = items[winIndex];
+            if (!winEl) return;
+            const wrap = document.getElementById('rouletteWrap');
+            if (!wrap) return;
+            const wr = wrap.getBoundingClientRect();
+            const we = winEl.getBoundingClientRect();
+            const targetX = (we.left + we.width / 2) - (wr.left + wr.width / 2);
+            roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
+            roulette.style.transform = `translateX(${-targetX}px)`;
+        }));
+    } else {
+        const roulette = document.getElementById('roulette');
+        roulette.style.transition = 'none';
+        roulette.style.transform = 'translateX(0)';
+        requestAnimationFrame(() => {
+            roulette.style.transition = 'transform 3s ease-out';
+            roulette.style.transform = `translateX(-${800 + Math.random() * 400}px)`;
+        });
+    }
+
+    const waitTime = selectedAmount === 1 ? 6200 : 3200;
+
     setTimeout(() => {
-        showDrop(winItem);
-        addToHistory(winItem);
+        if (selectedAmount === 1) {
+            showDrop(wins[0]);
+            addToHistory(wins[0]);
+        } else {
+            showMultiDrop(wins);
+            wins.forEach(w => addToHistory(w));
+        }
         isOpening = false;
-        if (openBtn) openBtn.disabled = false;
-    }, 6200);
+        updateOpenButton();
+        updateAmountAvailability();
+    }, waitTime);
 }
 
 function showDrop(item) {
     pendingDrop = item;
+    pendingMulti = null;
     const modal = document.getElementById('dropModal');
     const card = document.getElementById('dropCard');
     if (!modal || !card) return;
+
     card.className = 'drop-card r-' + item.rarity;
+
+    const single = document.getElementById('dropSingleView');
+    const multi = document.getElementById('dropMultiView');
+    const allRow = document.getElementById('dropAllRow');
+    if (single) single.style.display = 'block';
+    if (multi) multi.style.display = 'none';
+    if (allRow) allRow.style.display = 'none';
+
     document.getElementById('dropEmoji').textContent = item.emoji;
     document.getElementById('dropRarity').textContent = RARITY_LABELS[item.rarity];
     document.getElementById('dropName').textContent = item.name;
@@ -860,9 +966,93 @@ function showDrop(item) {
     document.getElementById('dropPrice').textContent = 'Стоимость: ' + formatPrice(item.price) + ' 🪙';
     modal.classList.add('show');
 }
-function keepDrop() { if (!pendingDrop) return; inventory.push(pendingDrop); pendingDrop = null; renderInventory(); closeDrop(); }
-function sellDrop() { if (!pendingDrop) return; balance += pendingDrop.price; updateBalance('plus'); addToHistory({...pendingDrop, sold:true}); pendingDrop = null; renderInventory(); closeDrop(); }
-function closeDrop() { const m = document.getElementById('dropModal'); if (m) m.classList.remove('show'); pendingDrop = null; }
+
+function showMultiDrop(items) {
+    pendingMulti = items;
+    pendingDrop = null;
+    const modal = document.getElementById('dropModal');
+    const card = document.getElementById('dropCard');
+    if (!modal || !card) return;
+
+    card.className = 'drop-card wide';
+
+    document.getElementById('dropSingleView').style.display = 'none';
+    document.getElementById('dropMultiView').style.display = 'block';
+    document.getElementById('dropAllRow').style.display = 'flex';
+    document.getElementById('dropMultiTitle').textContent = 'Открыто: ' + items.length;
+
+    const grid = document.getElementById('dropMultiGrid');
+    grid.innerHTML = items.map(it => `
+        <div class="multi-drop-item r-${it.rarity}">
+            <span class="md-emoji">${it.emoji}</span>
+            <div class="md-name">${it.name}</div>
+            <div class="md-price">${formatPrice(it.price)} 🪙</div>
+        </div>
+    `).join('');
+
+    modal.classList.add('show');
+}
+
+function keepDrop() {
+    if (pendingMulti) {
+        pendingMulti.forEach(it => inventory.push(it));
+        pendingMulti = null;
+        renderInventory();
+        closeDrop();
+        return;
+    }
+    if (!pendingDrop) return;
+    inventory.push(pendingDrop);
+    pendingDrop = null;
+    renderInventory();
+    closeDrop();
+}
+
+function sellDrop() {
+    if (pendingMulti) {
+        const total = pendingMulti.reduce((s, it) => s + it.price, 0);
+        balance += total;
+        updateBalance('plus');
+        pendingMulti.forEach(it => addToHistory({ ...it, sold: true }));
+        pendingMulti = null;
+        renderInventory();
+        closeDrop();
+        return;
+    }
+    if (!pendingDrop) return;
+    balance += pendingDrop.price;
+    updateBalance('plus');
+    addToHistory({ ...pendingDrop, sold: true });
+    pendingDrop = null;
+    renderInventory();
+    closeDrop();
+}
+
+function sellAllDrop() {
+    if (!pendingMulti) return;
+    const total = pendingMulti.reduce((s, it) => s + it.price, 0);
+    balance += total;
+    updateBalance('plus');
+    pendingMulti.forEach(it => addToHistory({ ...it, sold: true }));
+    pendingMulti = null;
+    renderInventory();
+    closeDrop();
+}
+
+function closeDrop() {
+    const modal = document.getElementById('dropModal');
+    if (modal) modal.classList.remove('show');
+    pendingDrop = null;
+    pendingMulti = null;
+    const single = document.getElementById('dropSingleView');
+    const multi = document.getElementById('dropMultiView');
+    const allRow = document.getElementById('dropAllRow');
+    if (single) single.style.display = 'block';
+    if (multi) multi.style.display = 'none';
+    if (allRow) allRow.style.display = 'none';
+    updateOpenButton();
+    updateAmountAvailability();
+}
 
 function addToHistory(item) {
     const t = new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
@@ -922,20 +1112,24 @@ function shakeBalance() { const b = document.getElementById('balanceBox'); if (!
 
 function resetDemo() {
     if (isOpening) return;
-    balance = START_BALANCE; history = []; inventory = []; pendingDrop = null;
+    balance = START_BALANCE; history = []; inventory = []; pendingDrop = null; pendingMulti = null;
     upgradeBet = null; upgradeWant = null;
-    updateBalance(); renderHistory(); renderInventory(); resetRoulette(); renderUpgrader();
+    selectedAmount = 1;
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.toggle('active', b.dataset.amount === '1'));
+    updateBalance(); renderHistory(); renderInventory(); resetRoulette(); renderUpgrader(); renderCasePicker();
 }
 
 // === АПГРЕЙДЕР ===
 function calcUpgradeChance() {
     if (!upgradeBet || !upgradeWant) return 0;
     if (upgradeWant.price <= upgradeBet.price) return 90;
-    let ch = (upgradeBet.price / upgradeWant.price) * 90;
-    if (ch > 90) ch = 90;
-    if (ch < 5) ch = 5;
-    return Math.round(ch * 10) / 10;
+    const ratio = upgradeBet.price / upgradeWant.price;
+    let chance = ratio * ratio * 90;
+    if (chance > 90) chance = 90;
+    if (chance < 0.0001) chance = 0.0001;
+    return Math.round(chance * 10000) / 10000;
 }
+
 function renderUpgrader() {
     const bc = document.getElementById('slotBetContent');
     const wc = document.getElementById('slotWantContent');
@@ -954,7 +1148,8 @@ function renderUpgrader() {
     const btn = document.getElementById('upgraderStart');
     if (upgradeBet && upgradeWant) {
         const c = calcUpgradeChance();
-        ch.innerHTML = 'Шанс выигрыша: <strong>' + c + '%</strong>';
+        let txt = c < 0.01 ? '0.00' + c.toString().replace('.', '') : c.toFixed(2);
+        ch.innerHTML = 'Шанс выигрыша: <strong>' + txt + '%</strong>';
         btn.disabled = false;
         document.getElementById('upgraderWheel').style.background = `conic-gradient(var(--green) 0deg ${c/100*360}deg, var(--red) ${c/100*360}deg 360deg)`;
     } else { ch.innerHTML = 'Шанс выигрыша: <strong>—</strong>'; btn.disabled = true; }
@@ -992,7 +1187,16 @@ function startUpgrade() {
     const win = Math.random() * 100 < chance;
     const wheel = document.getElementById('upgraderWheel');
     const extra = 4 + Math.floor(Math.random() * 3);
-    upgradeWheelAngle += extra * 360 + Math.random() * 360;
+    const chanceDeg = (chance / 100) * 360;
+    let targetAngle;
+    if (win) {
+        const a = 5 + Math.random() * Math.max(1, chanceDeg - 10);
+        targetAngle = upgradeWheelAngle + extra * 360 + (360 - a);
+    } else {
+        const a = chanceDeg + 5 + Math.random() * Math.max(1, 355 - chanceDeg);
+        targetAngle = upgradeWheelAngle + extra * 360 + (360 - a);
+    }
+    upgradeWheelAngle = targetAngle;
     wheel.style.transform = 'rotate(' + upgradeWheelAngle + 'deg)';
     setTimeout(() => {
         const bi = inventory.indexOf(upgradeBet);
@@ -1017,7 +1221,6 @@ function setUpgradeResult(t, type) { const el = document.getElementById('upgrade
 // === ИГРЫ ===
 function setBet(id, v) { const el = document.getElementById(id); if (!el) return; el.value = v === 'all' ? Math.floor(balance) : v; }
 
-// Сапёр
 const SAPPER_SIZE = 5, SAPPER_MINES = 5, SAPPER_SAFE = 20;
 let sapperActive = false, sapperBet = 0, sapperMines = [], sapperOpened = [], sapperMult = 1;
 function startSapper() {
@@ -1075,7 +1278,6 @@ function endSapper(win) {
 }
 function setSapperResult(t, type) { const el = document.getElementById('sapperResult'); if (!el) return; el.textContent = t; el.className = 'game-result' + (type ? ' ' + type : ''); }
 
-// Мины
 const MINES_SIZE = 9, MINES_COUNT = 3, MINES_SAFE = 6;
 let minesActive = false, minesBet = 0, minesMines = [], minesOpened = [], minesMult = 1;
 function startMines() {
@@ -1133,7 +1335,6 @@ function endMines(win) {
 }
 function setMinesResult(t, type) { const el = document.getElementById('minesResult'); if (!el) return; el.textContent = t; el.className = 'game-result' + (type ? ' ' + type : ''); }
 
-// Кости
 let diceRolling = false;
 function playDice(choice) {
     if (diceRolling) return;
@@ -1170,7 +1371,6 @@ function finishDice(choice, bet) {
     diceRolling = false;
 }
 
-// Монетка
 let coinFlipping = false;
 function playCoin(choice) {
     if (coinFlipping) return;
@@ -1194,7 +1394,6 @@ function playCoin(choice) {
     }, 1000);
 }
 
-// Брейдер
 const BREEDER_SIZE = 16, BREEDER_BOMBS = 4, BREEDER_SAFE = 12;
 let breederActive = false, breederBet = 0, breederBombs = [], breederOpened = [], breederMult = 1;
 function startBreeder() {
@@ -1302,7 +1501,13 @@ function showGamePopup(win, overrideTitle, sub) {
 function closeGamePopup() { const p = document.getElementById('gamePopup'); if (p) p.classList.remove('show'); }
 
 // === INIT ===
-updateBalance(); renderCasePicker(); renderHistory(); renderInventory(); resetRoulette(); renderUpgrader();
+updateBalance();
+renderCasePicker();
+renderHistory();
+renderInventory();
+resetRoulette();
+renderUpgrader();
+updateAmountAvailability();
 
 document.getElementById('dropModal').addEventListener('click', e => { if (e.target.id === 'dropModal') keepDrop(); });
 document.getElementById('gamePopup').addEventListener('click', e => { if (e.target.id === 'gamePopup') closeGamePopup(); });
