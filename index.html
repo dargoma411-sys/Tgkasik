@@ -143,8 +143,9 @@
     }
     .roulette .item .emoji { font-size: 2.2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
     .roulette .item .label {
-        font-size: 0.6rem; color: var(--muted); text-transform: uppercase;
-        letter-spacing: 0.5px; text-align: center; padding: 0 4px; line-height: 1.2;
+        font-size: 0.58rem; color: var(--muted); text-transform: uppercase;
+        letter-spacing: 0.5px; text-align: center; padding: 0 3px; line-height: 1.15;
+        max-height: 26px; overflow: hidden;
     }
     .roulette .item .price-tag { font-size: 0.7rem; color: var(--accent-2); font-weight: 700; }
     .roulette .item::before {
@@ -238,7 +239,7 @@
     .inv-card.r-mythic { border-color: var(--pink); box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
     .inv-card.r-legend { border-color: var(--gold); box-shadow: 0 0 22px rgba(245, 158, 11, 0.35); }
     .inv-card .inv-emoji { font-size: 2.2rem; margin-bottom: 6px; display: block; }
-    .inv-card .inv-name { font-size: 0.78rem; font-weight: 700; margin-bottom: 3px; }
+    .inv-card .inv-name { font-size: 0.75rem; font-weight: 700; margin-bottom: 3px; }
     .inv-card .inv-rarity { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 4px; }
     .inv-card .inv-rarity.r-common { color: #6b7280; }
     .inv-card .inv-rarity.r-uncommon { color: var(--green); }
@@ -287,7 +288,7 @@
     .drop-card.r-epic .drop-rarity { color: var(--purple); }
     .drop-card.r-mythic .drop-rarity { color: var(--pink); }
     .drop-card.r-legend .drop-rarity { color: var(--gold); }
-    .drop-card .drop-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+    .drop-card .drop-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
     .drop-card .drop-stars { font-size: 1rem; color: var(--accent-2); margin-bottom: 6px; }
     .drop-card .drop-price { font-size: 1rem; color: var(--accent-2); font-weight: 700; margin-bottom: 20px; }
     .drop-card .drop-actions { display: flex; gap: 10px; }
@@ -300,62 +301,6 @@
     .drop-card .drop-btn.keep { background: var(--bg-3); color: var(--text); border: 1px solid var(--line); }
     .drop-card .drop-btn.sell { background: linear-gradient(135deg, var(--green), #2e7d32); color: white; }
     .drop-card .drop-btn.sell:hover { box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4); }
-    .games-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-    .game-card { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
-    .game-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-    .game-card .game-desc { color: var(--muted); font-size: 0.82rem; margin-bottom: 12px; }
-    .bet-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-    .bet-input {
-        flex: 1; min-width: 80px; background: var(--bg-3);
-        border: 1px solid var(--line); border-radius: 10px;
-        padding: 12px 14px; color: var(--text);
-        font-size: 0.95rem; font-weight: 700; outline: none;
-        transition: border-color 0.2s;
-    }
-    .bet-input:focus { border-color: var(--accent); }
-    .bet-quick {
-        background: var(--bg-3); border: 1px solid var(--line);
-        border-radius: 10px; padding: 12px 14px; color: var(--text);
-        font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-    }
-    .bet-quick:hover { background: #252a38; border-color: var(--accent); }
-    .sapper-info { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-    .sapper-info .info-box {
-        flex: 1; background: var(--bg-3); border: 1px solid var(--line);
-        border-radius: 10px; padding: 8px; text-align: center;
-    }
-    .sapper-info .info-label {
-        font-size: 0.65rem; color: var(--muted); text-transform: uppercase;
-        letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px;
-    }
-    .sapper-info .info-value { font-size: 1rem; font-weight: 800; color: var(--accent-2); }
-    .sapper-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 12px; }
-    .sapper-cell {
-        aspect-ratio: 1; background: linear-gradient(145deg, #232838, #1a1e28);
-        border: 2px solid var(--line); border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.6rem; cursor: pointer; transition: all 0.2s; user-select: none;
-    }
-    .sapper-cell:hover:not(.opened):not(.mine) { border-color: var(--accent); transform: scale(1.05); box-shadow: 0 0 15px rgba(245, 166, 35, 0.3); }
-    .sapper-cell.opened { background: linear-gradient(145deg, #1a3a1f, #143018); border-color: var(--green); cursor: default; animation: cellOpen 0.3s ease; }
-    .sapper-cell.mine { background: linear-gradient(145deg, #3a1a1a, #301414); border-color: var(--red); cursor: default; }
-    @keyframes cellOpen { from { transform: scale(0.8); opacity: 0.5; } to { transform: scale(1); opacity: 1; } }
-    .mines-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
-    .mine-cell {
-        aspect-ratio: 1; background: linear-gradient(145deg, #232838, #1a1e28);
-        border: 2px solid var(--line); border-radius: 14px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 2rem; cursor: pointer; transition: all 0.2s; user-select: none;
-    }
-    .mine-cell:hover:not(.opened):not(.exploded) { border-color: var(--accent); transform: scale(1.05); box-shadow: 0 0 15px rgba(245, 166, 35, 0.3); }
-    .mine-cell.opened { background: linear-gradient(145deg, #1a3a1f, #143018); border-color: var(--green); cursor: default; animation: cellOpen 0.3s ease; }
-    .mine-cell.exploded { background: linear-gradient(145deg, #3a1a1a, #301414); border-color: var(--red); cursor: default; animation: explode 0.4s ease; }
-    @keyframes explode { 0% { transform: scale(1); } 50% { transform: scale(1.15); box-shadow: 0 0 30px rgba(239, 68, 68, 0.8); } 100% { transform: scale(1); } }
-    .game-result { text-align: center; font-size: 0.95rem; font-weight: 700; min-height: 24px; margin-bottom: 10px; }
-    .game-result.win { color: var(--green); }
-    .game-result.lose { color: var(--red); }
-    .game-actions { display: flex; gap: 10px; }
-    .game-actions .btn { padding: 13px; font-size: 0.88rem; }
     .upgrader-pickers {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
@@ -382,7 +327,7 @@
     .upgrader-slot.filled { border-style: solid; border-color: var(--accent); }
     .upgrader-slot .slot-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: 700; }
     .upgrader-slot .slot-emoji { font-size: 2.5rem; margin-bottom: 4px; }
-    .upgrader-slot .slot-name { font-size: 0.75rem; font-weight: 800; margin-bottom: 2px; }
+    .upgrader-slot .slot-name { font-size: 0.72rem; font-weight: 800; margin-bottom: 2px; }
     .upgrader-slot .slot-price { font-size: 0.75rem; color: var(--accent-2); font-weight: 700; }
     .upgrader-arrow { font-size: 1.6rem; color: var(--accent); text-align: center; font-weight: 800; }
     .upgrader-wheel-wrap {
@@ -443,15 +388,14 @@
     }
     .slot-picker-item:hover { border-color: var(--accent); transform: translateY(-2px); }
     .slot-picker-item .sp-emoji { font-size: 1.6rem; display: block; margin-bottom: 3px; }
-    .slot-picker-item .sp-name { font-size: 0.68rem; font-weight: 700; margin-bottom: 2px; }
-    .slot-picker-item .sp-price { font-size: 0.65rem; color: var(--accent-2); font-weight: 700; }
+    .slot-picker-item .sp-name { font-size: 0.65rem; font-weight: 700; margin-bottom: 2px; }
+    .slot-picker-item .sp-price { font-size: 0.62rem; color: var(--accent-2); font-weight: 700; }
     .slot-picker-close {
         width: 100%; padding: 12px; border: none; border-radius: 10px;
         background: var(--bg-3); color: var(--text);
         font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.85rem;
     }
 
-    /* === МОДАЛКА РЕЗУЛЬТАТА ИГРЫ === */
     .game-popup {
         position: fixed;
         inset: 0;
@@ -464,16 +408,13 @@
         opacity: 0;
         transition: opacity 0.3s;
     }
-    .game-popup.show {
-        display: flex;
-        opacity: 1;
-    }
+    .game-popup.show { display: flex; opacity: 1; }
     .game-popup-inner {
         text-align: center;
-        max-width: 420px;
+        max-width: 440px;
         width: 100%;
         animation: popupIn 0.5s cubic-bezier(0.2, 1.4, 0.3, 1);
-        padding: 30px;
+        padding: 30px 24px;
         border-radius: 24px;
     }
     @keyframes popupIn {
@@ -491,8 +432,8 @@
         box-shadow: 0 0 80px rgba(76, 175, 80, 0.6);
     }
     .game-popup-emoji {
-        font-size: 6rem;
-        margin-bottom: 16px;
+        font-size: 5.5rem;
+        margin-bottom: 14px;
         display: block;
         animation: emojiSpin 1s ease;
     }
@@ -501,9 +442,9 @@
         to { transform: rotate(0) scale(1); }
     }
     .game-popup-text {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         font-weight: 900;
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
         margin-bottom: 12px;
         text-transform: uppercase;
         line-height: 1.2;
@@ -518,9 +459,9 @@
         text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.4);
     }
     .game-popup-sub {
-        font-size: 1rem;
+        font-size: 0.95rem;
         color: var(--muted);
-        margin-bottom: 24px;
+        margin-bottom: 22px;
     }
     .game-popup-close {
         padding: 16px 40px;
@@ -550,12 +491,13 @@
         .case-title h1 { font-size: 1.3rem; }
         .roulette .item { flex: 0 0 84px; height: 100px; }
         .roulette .item .emoji { font-size: 1.9rem; }
+        .roulette .item .label { font-size: 0.55rem; }
         .btn { font-size: 0.82rem; padding: 13px 8px; }
         .case-picker { grid-template-columns: repeat(2, 1fr); }
         .tab { font-size: 0.62rem; padding: 9px 4px; min-width: 70px; }
         .upgrader-pickers { grid-template-columns: 1fr; }
         .upgrader-arrow { transform: rotate(90deg); }
-        .game-popup-text { font-size: 1.5rem; }
+        .game-popup-text { font-size: 1.4rem; }
         .game-popup-emoji { font-size: 4rem; }
     }
 </style>
@@ -680,7 +622,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА РЕЗУЛЬТАТА ИГРЫ -->
     <div class="game-popup" id="gamePopup">
         <div class="game-popup-inner" id="gamePopupInner">
             <span class="game-popup-emoji" id="gamePopupEmoji">💀</span>
@@ -701,159 +642,159 @@
     };
     const RARITY_STARS = { common: 1, uncommon: 2, rare: 3, epic: 4, mythic: 5, legend: 6 };
 
-    // === 12 КЕЙСОВ со смешными названиями ===
+    // === 12 КЕЙСОВ с абсурдными названиями ===
     const CASES = [
         { id: 'starter', emoji: '📦', name: 'Стартовый', price: 100, items: [
-            { emoji: '🪙', name: 'Монетка-залипонка', rarity: 'common', price: 50, weight: 50 },
-            { emoji: '🧦', name: 'Носок-предатель', rarity: 'common', price: 45, weight: 45 },
-            { emoji: '🍪', name: 'Печенька-разлучница', rarity: 'common', price: 60, weight: 40 },
-            { emoji: '📎', name: 'Скрепка-залипалка', rarity: 'common', price: 40, weight: 40 },
-            { emoji: '🎈', name: 'Шарик-сдувастик', rarity: 'uncommon', price: 150, weight: 12 },
-            { emoji: '🥒', name: 'Огурец судьбы', rarity: 'rare', price: 350, weight: 4 },
-            { emoji: '🧅', name: 'Луковица-плакучка', rarity: 'epic', price: 900, weight: 0.8 },
-            { emoji: '🥔', name: 'Картошка-лежалка', rarity: 'legend', price: 4000, weight: 0.05 }
+            { emoji: '🪙', name: 'Монетка-Столешница', rarity: 'common', price: 50, weight: 50 },
+            { emoji: '🧦', name: 'Носок-Кирпич', rarity: 'common', price: 45, weight: 45 },
+            { emoji: '🍪', name: 'Печенье-Пятка', rarity: 'common', price: 60, weight: 40 },
+            { emoji: '📎', name: 'Скрепка-Табурет', rarity: 'common', price: 40, weight: 40 },
+            { emoji: '🎈', name: 'Шарик-Эпоха', rarity: 'uncommon', price: 150, weight: 12 },
+            { emoji: '🥒', name: 'Огурец-Вселенная', rarity: 'rare', price: 350, weight: 4 },
+            { emoji: '🧅', name: 'Луковица-Молния', rarity: 'epic', price: 900, weight: 0.8 },
+            { emoji: '🥔', name: 'Картошка-Мечта', rarity: 'legend', price: 4000, weight: 0.05 }
         ]},
         { id: 'bronze', emoji: '🥉', name: 'Бронзовый', price: 300, items: [
-            { emoji: '🍞', name: 'Батон-лежебока', rarity: 'common', price: 150, weight: 50 },
-            { emoji: '🧻', name: 'Рулон-запасливец', rarity: 'common', price: 170, weight: 45 },
-            { emoji: '🥄', name: 'Ложка-мешалка', rarity: 'common', price: 200, weight: 40 },
-            { emoji: '🧽', name: 'Губка-скрипучка', rarity: 'uncommon', price: 450, weight: 15 },
-            { emoji: '🪣', name: 'Ведро-забывайка', rarity: 'uncommon', price: 600, weight: 10 },
-            { emoji: '🧴', name: 'Крем-невидимка', rarity: 'rare', price: 1300, weight: 5 },
-            { emoji: '🪥', name: 'Щётка-кусачка', rarity: 'epic', price: 2800, weight: 1.5 },
-            { emoji: '🧸', name: 'Мишка-обнимашка', rarity: 'epic', price: 3200, weight: 1 },
-            { emoji: '🔔', name: 'Колокольчик-дзынька', rarity: 'mythic', price: 9000, weight: 0.3 },
-            { emoji: '🎩', name: 'Шляпа-невидимка', rarity: 'legend', price: 18000, weight: 0.05 }
+            { emoji: '🍞', name: 'Батон-Столешница', rarity: 'common', price: 150, weight: 50 },
+            { emoji: '🧻', name: 'Рулон-Мудрость', rarity: 'common', price: 170, weight: 45 },
+            { emoji: '🥄', name: 'Ложка-Легенда', rarity: 'common', price: 200, weight: 40 },
+            { emoji: '🧽', name: 'Губка-Космос', rarity: 'uncommon', price: 450, weight: 15 },
+            { emoji: '🪣', name: 'Ведро-Эпоха', rarity: 'uncommon', price: 600, weight: 10 },
+            { emoji: '🧴', name: 'Крем-Звезда', rarity: 'rare', price: 1300, weight: 5 },
+            { emoji: '🪥', name: 'Щётка-Торнадо', rarity: 'epic', price: 2800, weight: 1.5 },
+            { emoji: '🧸', name: 'Мишка-Цунами', rarity: 'epic', price: 3200, weight: 1 },
+            { emoji: '🔔', name: 'Колокольчик-Вулкан', rarity: 'mythic', price: 9000, weight: 0.3 },
+            { emoji: '🎩', name: 'Шляпа-Парадокс', rarity: 'legend', price: 18000, weight: 0.05 }
         ]},
         { id: 'silver', emoji: '🎁', name: 'Серебряный', price: 500, items: [
-            { emoji: '🍩', name: 'Пончик-дырка', rarity: 'common', price: 280, weight: 55 },
-            { emoji: '🧁', name: 'Кексик-сюрпризик', rarity: 'common', price: 320, weight: 45 },
-            { emoji: '🍕', name: 'Пицца-обнимашка', rarity: 'uncommon', price: 700, weight: 18 },
-            { emoji: '🌮', name: 'Тако-хрустелка', rarity: 'uncommon', price: 800, weight: 15 },
-            { emoji: '🥨', name: 'Крендель-загогулина', rarity: 'rare', price: 1600, weight: 6 },
-            { emoji: '🧊', name: 'Льдышка-скользун', rarity: 'rare', price: 1900, weight: 5 },
-            { emoji: '🪀', name: 'Йо-йо-залипалка', rarity: 'epic', price: 4500, weight: 2 },
-            { emoji: '🎯', name: 'Дартс-мазилка', rarity: 'epic', price: 5500, weight: 1.5 },
-            { emoji: '🧩', name: 'Пазл-недостача', rarity: 'mythic', price: 16000, weight: 0.4 },
-            { emoji: '🪁', name: 'Змей-улетайка', rarity: 'mythic', price: 22000, weight: 0.2 },
-            { emoji: '🎺', name: 'Труба-хрипелка', rarity: 'legend', price: 65000, weight: 0.05 }
+            { emoji: '🍩', name: 'Пончик-Шкаф', rarity: 'common', price: 280, weight: 55 },
+            { emoji: '🧁', name: 'Кексик-Стена', rarity: 'common', price: 320, weight: 45 },
+            { emoji: '🍕', name: 'Пицца-Потолок', rarity: 'uncommon', price: 700, weight: 18 },
+            { emoji: '🌮', name: 'Тако-Пол', rarity: 'uncommon', price: 800, weight: 15 },
+            { emoji: '🥨', name: 'Крендель-Дверь', rarity: 'rare', price: 1600, weight: 6 },
+            { emoji: '🧊', name: 'Льдышка-Окно', rarity: 'rare', price: 1900, weight: 5 },
+            { emoji: '🪀', name: 'Йо-йо-Лампа', rarity: 'epic', price: 4500, weight: 2 },
+            { emoji: '🎯', name: 'Дартс-Плинтус', rarity: 'epic', price: 5500, weight: 1.5 },
+            { emoji: '🧩', name: 'Пазл-Батарея', rarity: 'mythic', price: 16000, weight: 0.4 },
+            { emoji: '🪁', name: 'Змей-Ковёр', rarity: 'mythic', price: 22000, weight: 0.2 },
+            { emoji: '🎺', name: 'Труба-Гардина', rarity: 'legend', price: 65000, weight: 0.05 }
         ]},
         { id: 'gold', emoji: '🏅', name: 'Золотой', price: 1500, items: [
-            { emoji: '🥁', name: 'Барабан-соседский', rarity: 'common', price: 900, weight: 50 },
-            { emoji: '🎧', name: 'Наушники-глушилки', rarity: 'common', price: 1000, weight: 45 },
-            { emoji: '🎮', name: 'Геймпад-залипалка', rarity: 'uncommon', price: 2000, weight: 15 },
-            { emoji: '📱', name: 'Телефон-неотвечайка', rarity: 'uncommon', price: 2500, weight: 12 },
-            { emoji: '💻', name: 'Ноутбук-тормозилка', rarity: 'rare', price: 5000, weight: 5 },
-            { emoji: '📷', name: 'Фотик-мигушка', rarity: 'rare', price: 5500, weight: 4 },
-            { emoji: '🕹', name: 'Джойстик-дёргалка', rarity: 'epic', price: 11000, weight: 1.5 },
-            { emoji: '🎸', name: 'Гитара-соседская', rarity: 'epic', price: 13000, weight: 1.2 },
-            { emoji: '🛹', name: 'Скейт-леталка', rarity: 'mythic', price: 38000, weight: 0.4 },
-            { emoji: '🚲', name: 'Велик-заносилка', rarity: 'mythic', price: 55000, weight: 0.2 },
-            { emoji: '🎳', name: 'Боулинг-промах', rarity: 'legend', price: 160000, weight: 0.05 }
+            { emoji: '🥁', name: 'Барабан-Подушка', rarity: 'common', price: 900, weight: 50 },
+            { emoji: '🎧', name: 'Наушники-Одеяло', rarity: 'common', price: 1000, weight: 45 },
+            { emoji: '🎮', name: 'Геймпад-Кресло', rarity: 'uncommon', price: 2000, weight: 15 },
+            { emoji: '📱', name: 'Телефон-Диван', rarity: 'uncommon', price: 2500, weight: 12 },
+            { emoji: '💻', name: 'Ноутбук-Штора', rarity: 'rare', price: 5000, weight: 5 },
+            { emoji: '📷', name: 'Фотик-Люстра', rarity: 'rare', price: 5500, weight: 4 },
+            { emoji: '🕹', name: 'Джойстик-Плинтус', rarity: 'epic', price: 11000, weight: 1.5 },
+            { emoji: '🎸', name: 'Гитара-Стол', rarity: 'epic', price: 13000, weight: 1.2 },
+            { emoji: '🛹', name: 'Скейт-Стул', rarity: 'mythic', price: 38000, weight: 0.4 },
+            { emoji: '🚲', name: 'Велик-Табурет', rarity: 'mythic', price: 55000, weight: 0.2 },
+            { emoji: '🎳', name: 'Боулинг-Холодильник', rarity: 'legend', price: 160000, weight: 0.05 }
         ]},
         { id: 'platinum', emoji: '💠', name: 'Платиновый', price: 3000, items: [
-            { emoji: '👑', name: 'Корона-кривулька', rarity: 'common', price: 2000, weight: 50 },
-            { emoji: '💎', name: 'Алмаз-стекляшка', rarity: 'common', price: 2200, weight: 45 },
-            { emoji: '🏆', name: 'Кубок-пылесборник', rarity: 'uncommon', price: 4500, weight: 15 },
-            { emoji: '📱', name: 'Телефон-легенда', rarity: 'uncommon', price: 5000, weight: 12 },
-            { emoji: '🎁', name: 'Подарок-обманка', rarity: 'rare', price: 10000, weight: 5 },
-            { emoji: '🦄', name: 'Единорог-укурок', rarity: 'rare', price: 13000, weight: 4 },
-            { emoji: '🐉', name: 'Дракон-ленивец', rarity: 'epic', price: 30000, weight: 1.5 },
-            { emoji: '🚀', name: 'Ракета-недолёт', rarity: 'epic', price: 38000, weight: 1 },
-            { emoji: '🌟', name: 'Суперзвезда-недозвезда', rarity: 'mythic', price: 100000, weight: 0.3 },
-            { emoji: '👽', name: 'Пришелец-недолетец', rarity: 'mythic', price: 160000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-пылесосик', rarity: 'legend', price: 450000, weight: 0.04 }
+            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'common', price: 2000, weight: 50 },
+            { emoji: '💎', name: 'Алмаз-Пылесос', rarity: 'common', price: 2200, weight: 45 },
+            { emoji: '🏆', name: 'Кубок-Стиралка', rarity: 'uncommon', price: 4500, weight: 15 },
+            { emoji: '📱', name: 'Телефон-Чайник', rarity: 'uncommon', price: 5000, weight: 12 },
+            { emoji: '🎁', name: 'Подарок-Кастрюля', rarity: 'rare', price: 10000, weight: 5 },
+            { emoji: '🦄', name: 'Единорог-Утюг', rarity: 'rare', price: 13000, weight: 4 },
+            { emoji: '🐉', name: 'Дракон-Тостер', rarity: 'epic', price: 30000, weight: 1.5 },
+            { emoji: '🚀', name: 'Ракета-Блендер', rarity: 'epic', price: 38000, weight: 1 },
+            { emoji: '🌟', name: 'Суперзвезда-Фен', rarity: 'mythic', price: 100000, weight: 0.3 },
+            { emoji: '👽', name: 'Пришелец-Миксер', rarity: 'mythic', price: 160000, weight: 0.15 },
+            { emoji: '🕳', name: 'Чёрная дыра-Плита', rarity: 'legend', price: 450000, weight: 0.04 }
         ]},
         { id: 'diamond', emoji: '💎', name: 'Алмазный', price: 5000, items: [
-            { emoji: '💍', name: 'Кольцо-потеряшка', rarity: 'common', price: 3200, weight: 50 },
-            { emoji: '💻', name: 'Ноутбук-кипелка', rarity: 'common', price: 3800, weight: 45 },
-            { emoji: '🎧', name: 'Наушники-путалка', rarity: 'uncommon', price: 7500, weight: 15 },
-            { emoji: '📱', name: 'Телефон-разряжайка', rarity: 'uncommon', price: 9500, weight: 12 },
-            { emoji: '💎', name: 'Алмаз-царапка', rarity: 'rare', price: 20000, weight: 5 },
-            { emoji: '🏎', name: 'Болид-заглох', rarity: 'rare', price: 26000, weight: 4 },
-            { emoji: '👑', name: 'Корона-тяжёлка', rarity: 'epic', price: 65000, weight: 1.5 },
-            { emoji: '🚀', name: 'Ракета-дырявка', rarity: 'epic', price: 130000, weight: 1 },
-            { emoji: '🌟', name: 'Суперзвезда-зазнайка', rarity: 'mythic', price: 380000, weight: 0.3 },
-            { emoji: '👽', name: 'Пришелец-дачник', rarity: 'mythic', price: 550000, weight: 0.15 },
-            { emoji: '🐲', name: 'Древний дракон-старпёр', rarity: 'legend', price: 1600000, weight: 0.03 }
+            { emoji: '💍', name: 'Кольцо-Балкон', rarity: 'common', price: 3200, weight: 50 },
+            { emoji: '💻', name: 'Ноутбук-Лестница', rarity: 'common', price: 3800, weight: 45 },
+            { emoji: '🎧', name: 'Наушники-Подоконник', rarity: 'uncommon', price: 7500, weight: 15 },
+            { emoji: '📱', name: 'Телефон-Карниз', rarity: 'uncommon', price: 9500, weight: 12 },
+            { emoji: '💎', name: 'Алмаз-Фундамент', rarity: 'rare', price: 20000, weight: 5 },
+            { emoji: '🏎', name: 'Болид-Крыша', rarity: 'rare', price: 26000, weight: 4 },
+            { emoji: '👑', name: 'Корона-Подвал', rarity: 'epic', price: 65000, weight: 1.5 },
+            { emoji: '🚀', name: 'Ракета-Чердак', rarity: 'epic', price: 130000, weight: 1 },
+            { emoji: '🌟', name: 'Суперзвезда-Гараж', rarity: 'mythic', price: 380000, weight: 0.3 },
+            { emoji: '👽', name: 'Пришелец-Сарай', rarity: 'mythic', price: 550000, weight: 0.15 },
+            { emoji: '🐲', name: 'Древний дракон-Баня', rarity: 'legend', price: 1600000, weight: 0.03 }
         ]},
         { id: 'ruby', emoji: '❤️', name: 'Рубиновый', price: 10000, items: [
-            { emoji: '💎', name: 'Алмаз-недогранка', rarity: 'common', price: 7000, weight: 50 },
-            { emoji: '📱', name: 'Телефон-кирпич', rarity: 'common', price: 8000, weight: 45 },
-            { emoji: '🏎', name: 'Болид-табуретка', rarity: 'uncommon', price: 20000, weight: 15 },
-            { emoji: '👑', name: 'Корона-резиновая', rarity: 'uncommon', price: 24000, weight: 12 },
-            { emoji: '🚀', name: 'Ракета-недоделка', rarity: 'rare', price: 60000, weight: 5 },
-            { emoji: '🌟', name: 'Суперзвезда-недозвезда', rarity: 'rare', price: 75000, weight: 4 },
-            { emoji: '👽', name: 'Пришелец-недолетец', rarity: 'epic', price: 200000, weight: 1.5 },
-            { emoji: '🦄', name: 'Единорог-пофигист', rarity: 'epic', price: 280000, weight: 1 },
-            { emoji: '🌌', name: 'Галактика-карманка', rarity: 'mythic', price: 750000, weight: 0.3 },
-            { emoji: '⚡', name: 'Молния-заика', rarity: 'mythic', price: 1100000, weight: 0.15 },
-            { emoji: '💫', name: 'Комета-опоздалка', rarity: 'legend', price: 3200000, weight: 0.03 }
+            { emoji: '💎', name: 'Алмаз-Забор', rarity: 'common', price: 7000, weight: 50 },
+            { emoji: '📱', name: 'Телефон-Калитка', rarity: 'common', price: 8000, weight: 45 },
+            { emoji: '🏎', name: 'Болид-Ворота', rarity: 'uncommon', price: 20000, weight: 15 },
+            { emoji: '👑', name: 'Корона-Гараж', rarity: 'uncommon', price: 24000, weight: 12 },
+            { emoji: '🚀', name: 'Ракета-Теплица', rarity: 'rare', price: 60000, weight: 5 },
+            { emoji: '🌟', name: 'Суперзвезда-Беседка', rarity: 'rare', price: 75000, weight: 4 },
+            { emoji: '👽', name: 'Пришелец-Сарай', rarity: 'epic', price: 200000, weight: 1.5 },
+            { emoji: '🦄', name: 'Единорог-Колодец', rarity: 'epic', price: 280000, weight: 1 },
+            { emoji: '🌌', name: 'Галактика-Подвал', rarity: 'mythic', price: 750000, weight: 0.3 },
+            { emoji: '⚡', name: 'Молния-Фонарь', rarity: 'mythic', price: 1100000, weight: 0.15 },
+            { emoji: '💫', name: 'Комета-Лестница', rarity: 'legend', price: 3200000, weight: 0.03 }
         ]},
         { id: 'emerald', emoji: '💚', name: 'Изумрудный', price: 25000, items: [
-            { emoji: '🏎', name: 'Болид-ржавый', rarity: 'common', price: 18000, weight: 50 },
-            { emoji: '👑', name: 'Корона-мятая', rarity: 'common', price: 22000, weight: 45 },
-            { emoji: '🚀', name: 'Ракета-кривая', rarity: 'uncommon', price: 60000, weight: 15 },
-            { emoji: '🌟', name: 'Суперзвезда-недозвезда', rarity: 'uncommon', price: 75000, weight: 12 },
-            { emoji: '👽', name: 'Пришелец-недолетец', rarity: 'rare', price: 200000, weight: 5 },
-            { emoji: '🦄', name: 'Единорог-пофигист', rarity: 'rare', price: 280000, weight: 4 },
-            { emoji: '🌌', name: 'Галактика-карманка', rarity: 'epic', price: 750000, weight: 1.5 },
-            { emoji: '⚡', name: 'Молния-заика', rarity: 'epic', price: 1100000, weight: 1 },
-            { emoji: '💫', name: 'Комета-опоздалка', rarity: 'mythic', price: 2800000, weight: 0.3 },
-            { emoji: '🪐', name: 'Планета-плоскушка', rarity: 'mythic', price: 4500000, weight: 0.15 },
-            { emoji: '🌈', name: 'Радуга-одноцветка', rarity: 'legend', price: 11000000, weight: 0.03 }
+            { emoji: '🏎', name: 'Болид-Метла', rarity: 'common', price: 18000, weight: 50 },
+            { emoji: '👑', name: 'Корона-Швабра', rarity: 'common', price: 22000, weight: 45 },
+            { emoji: '🚀', name: 'Ракета-Веник', rarity: 'uncommon', price: 60000, weight: 15 },
+            { emoji: '🌟', name: 'Суперзвезда-Тряпка', rarity: 'uncommon', price: 75000, weight: 12 },
+            { emoji: '👽', name: 'Пришелец-Тазик', rarity: 'rare', price: 200000, weight: 5 },
+            { emoji: '🦄', name: 'Единорог-Швабра', rarity: 'rare', price: 280000, weight: 4 },
+            { emoji: '🌌', name: 'Галактика-Ковш', rarity: 'epic', price: 750000, weight: 1.5 },
+            { emoji: '⚡', name: 'Молния-Утюг', rarity: 'epic', price: 1100000, weight: 1 },
+            { emoji: '💫', name: 'Комета-Кастрюля', rarity: 'mythic', price: 2800000, weight: 0.3 },
+            { emoji: '🪐', name: 'Планета-Сковорода', rarity: 'mythic', price: 4500000, weight: 0.15 },
+            { emoji: '🌈', name: 'Радуга-Половник', rarity: 'legend', price: 11000000, weight: 0.03 }
         ]},
         { id: 'royal', emoji: '👑', name: 'Королевский', price: 50000, items: [
-            { emoji: '🚀', name: 'Ракета-недолёт', rarity: 'common', price: 40000, weight: 50 },
-            { emoji: '🌟', name: 'Суперзвезда-зазнайка', rarity: 'common', price: 50000, weight: 45 },
-            { emoji: '👽', name: 'Пришелец-дачник', rarity: 'uncommon', price: 160000, weight: 15 },
-            { emoji: '🦄', name: 'Единорог-укурок', rarity: 'uncommon', price: 220000, weight: 12 },
-            { emoji: '🌌', name: 'Галактика-карманка', rarity: 'rare', price: 650000, weight: 5 },
-            { emoji: '⚡', name: 'Молния-заика', rarity: 'rare', price: 950000, weight: 4 },
-            { emoji: '💫', name: 'Комета-опоздалка', rarity: 'epic', price: 2400000, weight: 1.5 },
-            { emoji: '🪐', name: 'Планета-плоскушка', rarity: 'epic', price: 3800000, weight: 1 },
-            { emoji: '🌈', name: 'Радуга-одноцветка', rarity: 'mythic', price: 10000000, weight: 0.3 },
-            { emoji: '🌠', name: 'Звездопад-недопад', rarity: 'mythic', price: 16000000, weight: 0.15 },
-            { emoji: '✨', name: 'Сияние-мигалка', rarity: 'legend', price: 55000000, weight: 0.03 }
+            { emoji: '🚀', name: 'Ракета-Кастрюля', rarity: 'common', price: 40000, weight: 50 },
+            { emoji: '🌟', name: 'Суперзвезда-Сковорода', rarity: 'common', price: 50000, weight: 45 },
+            { emoji: '👽', name: 'Пришелец-Половник', rarity: 'uncommon', price: 160000, weight: 15 },
+            { emoji: '🦄', name: 'Единорог-Венчик', rarity: 'uncommon', price: 220000, weight: 12 },
+            { emoji: '🌌', name: 'Галактика-Тёрка', rarity: 'rare', price: 650000, weight: 5 },
+            { emoji: '⚡', name: 'Молния-Мясорубка', rarity: 'rare', price: 950000, weight: 4 },
+            { emoji: '💫', name: 'Комета-Миксер', rarity: 'epic', price: 2400000, weight: 1.5 },
+            { emoji: '🪐', name: 'Планета-Блендер', rarity: 'epic', price: 3800000, weight: 1 },
+            { emoji: '🌈', name: 'Радуга-Тостер', rarity: 'mythic', price: 10000000, weight: 0.3 },
+            { emoji: '🌠', name: 'Звездопад-Чайник', rarity: 'mythic', price: 16000000, weight: 0.15 },
+            { emoji: '✨', name: 'Сияние-Микроволновка', rarity: 'legend', price: 55000000, weight: 0.03 }
         ]},
         { id: 'cosmic', emoji: '🌌', name: 'Космический', price: 100000, items: [
-            { emoji: '👽', name: 'Пришелец-дачник', rarity: 'common', price: 80000, weight: 50 },
-            { emoji: '🦄', name: 'Единорог-пофигист', rarity: 'common', price: 100000, weight: 45 },
-            { emoji: '🌌', name: 'Галактика-карманка', rarity: 'uncommon', price: 550000, weight: 15 },
-            { emoji: '⚡', name: 'Молния-заика', rarity: 'uncommon', price: 850000, weight: 12 },
-            { emoji: '💫', name: 'Комета-опоздалка', rarity: 'rare', price: 2200000, weight: 5 },
-            { emoji: '🪐', name: 'Планета-плоскушка', rarity: 'rare', price: 3200000, weight: 4 },
-            { emoji: '🌈', name: 'Радуга-одноцветка', rarity: 'epic', price: 8500000, weight: 1.5 },
-            { emoji: '🌠', name: 'Звездопад-недопад', rarity: 'epic', price: 15000000, weight: 1 },
-            { emoji: '✨', name: 'Сияние-мигалка', rarity: 'mythic', price: 50000000, weight: 0.3 },
-            { emoji: '🔮', name: 'Оракул-неугадайка', rarity: 'mythic', price: 75000000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-пылесосик', rarity: 'legend', price: 350000000, weight: 0.02 }
+            { emoji: '👽', name: 'Пришелец-Крышка', rarity: 'common', price: 80000, weight: 50 },
+            { emoji: '🦄', name: 'Единорог-Пробка', rarity: 'common', price: 100000, weight: 45 },
+            { emoji: '🌌', name: 'Галактика-Банка', rarity: 'uncommon', price: 550000, weight: 15 },
+            { emoji: '⚡', name: 'Молния-Бутылка', rarity: 'uncommon', price: 850000, weight: 12 },
+            { emoji: '💫', name: 'Комета-Пакет', rarity: 'rare', price: 2200000, weight: 5 },
+            { emoji: '🪐', name: 'Планета-Коробка', rarity: 'rare', price: 3200000, weight: 4 },
+            { emoji: '🌈', name: 'Радуга-Пакет', rarity: 'epic', price: 8500000, weight: 1.5 },
+            { emoji: '🌠', name: 'Звездопад-Мешок', rarity: 'epic', price: 15000000, weight: 1 },
+            { emoji: '✨', name: 'Сияние-Чемодан', rarity: 'mythic', price: 50000000, weight: 0.3 },
+            { emoji: '🔮', name: 'Оракул-Сумка', rarity: 'mythic', price: 75000000, weight: 0.15 },
+            { emoji: '🕳', name: 'Чёрная дыра-Рюкзак', rarity: 'legend', price: 350000000, weight: 0.02 }
         ]},
         { id: 'meme', emoji: '😂', name: 'Мемный', price: 2000, items: [
-            { emoji: '🥒', name: 'Огурец-солёныш', rarity: 'common', price: 1200, weight: 50 },
-            { emoji: '🍞', name: 'Батон-предатель', rarity: 'common', price: 1400, weight: 45 },
-            { emoji: '🧅', name: 'Луковица-плакучка', rarity: 'uncommon', price: 3000, weight: 15 },
-            { emoji: '🥔', name: 'Картошка-лежалка', rarity: 'uncommon', price: 3500, weight: 12 },
-            { emoji: '🧦', name: 'Носок-предатель', rarity: 'rare', price: 8000, weight: 5 },
-            { emoji: '🍪', name: 'Печенька-разлучница', rarity: 'rare', price: 9000, weight: 4 },
-            { emoji: '🧸', name: 'Мишка-обнимашка', rarity: 'epic', price: 22000, weight: 1.5 },
-            { emoji: '🥁', name: 'Барабан-соседский', rarity: 'epic', price: 26000, weight: 1 },
-            { emoji: '🧻', name: 'Рулон-запасливец', rarity: 'mythic', price: 70000, weight: 0.3 },
-            { emoji: '🪣', name: 'Ведро-забывайка', rarity: 'mythic', price: 100000, weight: 0.15 },
-            { emoji: '👑', name: 'Корона-кривулька', rarity: 'legend', price: 300000, weight: 0.04 }
+            { emoji: '🥒', name: 'Огурец-Столешница', rarity: 'common', price: 1200, weight: 50 },
+            { emoji: '🍞', name: 'Батон-Табурет', rarity: 'common', price: 1400, weight: 45 },
+            { emoji: '🧅', name: 'Луковица-Кирпич', rarity: 'uncommon', price: 3000, weight: 15 },
+            { emoji: '🥔', name: 'Картошка-Шкаф', rarity: 'uncommon', price: 3500, weight: 12 },
+            { emoji: '🧦', name: 'Носок-Стена', rarity: 'rare', price: 8000, weight: 5 },
+            { emoji: '🍪', name: 'Печенье-Потолок', rarity: 'rare', price: 9000, weight: 4 },
+            { emoji: '🧸', name: 'Мишка-Плинтус', rarity: 'epic', price: 22000, weight: 1.5 },
+            { emoji: '🥁', name: 'Барабан-Гардина', rarity: 'epic', price: 26000, weight: 1 },
+            { emoji: '🧻', name: 'Рулон-Люстра', rarity: 'mythic', price: 70000, weight: 0.3 },
+            { emoji: '🪣', name: 'Ведро-Столешница', rarity: 'mythic', price: 100000, weight: 0.15 },
+            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'legend', price: 300000, weight: 0.04 }
         ]},
         { id: 'grandma', emoji: '👵', name: 'Бабушкин', price: 7000, items: [
-            { emoji: '🧦', name: 'Носок-вязаный', rarity: 'common', price: 4500, weight: 50 },
-            { emoji: '🍪', name: 'Печенька-домашняя', rarity: 'common', price: 5500, weight: 45 },
-            { emoji: '🥒', name: 'Огурец-солёныш', rarity: 'uncommon', price: 12000, weight: 15 },
-            { emoji: '🍞', name: 'Батон-предатель', rarity: 'uncommon', price: 14000, weight: 12 },
-            { emoji: '🥔', name: 'Картошка-лежалка', rarity: 'rare', price: 30000, weight: 5 },
-            { emoji: '🧅', name: 'Луковица-плакучка', rarity: 'rare', price: 35000, weight: 4 },
-            { emoji: '🧸', name: 'Мишка-обнимашка', rarity: 'epic', price: 90000, weight: 1.5 },
-            { emoji: '🪣', name: 'Ведро-забывайка', rarity: 'epic', price: 110000, weight: 1 },
-            { emoji: '🧻', name: 'Рулон-запасливец', rarity: 'mythic', price: 300000, weight: 0.3 },
-            { emoji: '👑', name: 'Корона-кривулька', rarity: 'mythic', price: 450000, weight: 0.15 },
-            { emoji: '🕳', name: 'Чёрная дыра-пылесосик', rarity: 'legend', price: 1500000, weight: 0.03 }
+            { emoji: '🧦', name: 'Носок-Столешница', rarity: 'common', price: 4500, weight: 50 },
+            { emoji: '🍪', name: 'Печенье-Табурет', rarity: 'common', price: 5500, weight: 45 },
+            { emoji: '🥒', name: 'Огурец-Кирпич', rarity: 'uncommon', price: 12000, weight: 15 },
+            { emoji: '🍞', name: 'Батон-Шкаф', rarity: 'uncommon', price: 14000, weight: 12 },
+            { emoji: '🥔', name: 'Картошка-Стена', rarity: 'rare', price: 30000, weight: 5 },
+            { emoji: '🧅', name: 'Луковица-Потолок', rarity: 'rare', price: 35000, weight: 4 },
+            { emoji: '🧸', name: 'Мишка-Плинтус', rarity: 'epic', price: 90000, weight: 1.5 },
+            { emoji: '🪣', name: 'Ведро-Гардина', rarity: 'epic', price: 110000, weight: 1 },
+            { emoji: '🧻', name: 'Рулон-Люстра', rarity: 'mythic', price: 300000, weight: 0.3 },
+            { emoji: '👑', name: 'Корона-Микроволновка', rarity: 'mythic', price: 450000, weight: 0.15 },
+            { emoji: '🕳', name: 'Чёрная дыра-Плита', rarity: 'legend', price: 1500000, weight: 0.03 }
         ]}
     ];
 
@@ -1169,7 +1110,6 @@
         renderUpgrader();
     }
 
-    // === АПГРЕЙДЕР ===
     function calcUpgradeChance() {
         if (!upgradeBet || !upgradeWant) return 0;
         if (upgradeWant.price <= upgradeBet.price) return 90;
@@ -1322,11 +1262,11 @@
                 inventory.push(upgradeWant);
                 addToHistory({ ...upgradeWant, name: upgradeWant.name + ' (апгрейд)' });
                 setUpgradeResult(`✅ Успех! Ты получил ${upgradeWant.emoji} ${upgradeWant.name}`, 'win');
-                showGamePopup(true, 'МОЛОДЕЦ!', `Ты получил ${upgradeWant.name}`);
+                showGamePopup(true, null, `Ты получил ${upgradeWant.name}`);
             } else {
                 addToHistory({ ...upgradeBet, name: upgradeBet.name + ' (сгорел)' });
                 setUpgradeResult(`❌ Неудача. Ты потерял ${upgradeBet.emoji} ${upgradeBet.name}`, 'lose');
-                showGamePopup(false, 'ТЫ ЛОХ', `Ты потерял ${upgradeBet.name}`);
+                showGamePopup(false, null, `Ты потерял ${upgradeBet.name}`);
             }
 
             renderInventory();
@@ -1345,7 +1285,7 @@
         el.className = 'upgrader-result' + (type ? ' ' + type : '');
     }
 
-    // === МОДАЛКА РЕЗУЛЬТАТА ИГРЫ ===
+    // === БОЛЬШИЕ СПИСКИ ФРАЗ ===
     const LOSE_PHRASES = [
         { text: 'ТЫ ЛОХ', emoji: '💀' },
         { text: 'ТЫ ДЕБИЛ', emoji: '🤡' },
@@ -1356,19 +1296,91 @@
         { text: 'ОПЯТЬ МИМО', emoji: '🙈' },
         { text: 'ФАК, ТЫ ПРОИГРАЛ', emoji: '💩' },
         { text: 'ТЫ ЖАЛОК', emoji: '🥴' },
-        { text: 'НЕ ТВОЙ ДЕНЬ', emoji: '👻' }
+        { text: 'НЕ ТВОЙ ДЕНЬ', emoji: '👻' },
+        { text: 'РОДИТЕЛИ В УЖАСЕ', emoji: '😱' },
+        { text: 'МАМА ПЛАЧЕТ', emoji: '😢' },
+        { text: 'ПАПА РАЗОЧАРОВАН', emoji: '😔' },
+        { text: 'БАБУШКА В ШОКЕ', emoji: '😵' },
+        { text: 'ТЫ ДНО', emoji: '🕳' },
+        { text: 'ТЫ НУБ', emoji: '🐣' },
+        { text: 'ТЫ БОМЖ', emoji: '🥺' },
+        { text: 'ТЫ НИЩИЙ', emoji: '🪙' },
+        { text: 'ХА-ХА-ХА', emoji: '😂' },
+        { text: 'ЛУЗЕР', emoji: '🏳' },
+        { text: 'ТЫ ОПОЗОРИЛСЯ', emoji: '🤦' },
+        { text: 'СМЕШНОЙ ТЫ', emoji: '🤣' },
+        { text: 'ТЫ ПРОИГРАЛ ВСЁ', emoji: '💸' },
+        { text: 'ТВОЯ МАМА ЗНАЕТ', emoji: '📞' },
+        { text: 'ТЫ ТУПОЙ', emoji: '🧱' },
+        { text: 'ТЫ КАК ПЕНЬ', emoji: '🪵' },
+        { text: 'ТЫ НОЛЬ', emoji: '0️⃣' },
+        { text: 'ТЫ ПУСТОЕ МЕСТО', emoji: '⬜' },
+        { text: 'ТЫ КАК ПРОБКА', emoji: '🍾' },
+        { text: 'ТЫ КАК НОСОК', emoji: '🧦' },
+        { text: 'ТЫ КАК БАТОН', emoji: '🍞' },
+        { text: 'ТЫ ПРОИГРАЛ СТОЛЕШНИЦЕ', emoji: '🪑' },
+        { text: 'ТЫ УПАЛ НА КИРПИЧ', emoji: '🧱' },
+        { text: 'ТЫ КАК ТАБУРЕТ', emoji: '🪑' },
+        { text: 'ТЫ ХУЖЕ ШКАФА', emoji: '🚪' },
+        { text: 'ТЫ КАК ПЛИНТУС', emoji: '📏' },
+        { text: 'ТЫ КАК ЛЮСТРА', emoji: '💡' },
+        { text: 'ТЫ КАК ГАРДИНА', emoji: '🪟' },
+        { text: 'ТЫ КАК ПОТОЛОК', emoji: '🏠' },
+        { text: 'ТЫ КАК СТЕНА', emoji: '🧱' }
     ];
+
     const WIN_PHRASES = [
         { text: 'МОЛОДЕЦ!', emoji: '🏆' },
         { text: 'ТЫ ПРОДАЛ СВОЮ МАМУ', emoji: '😈' },
+        { text: 'РОДИТЕЛИ В ПРЕКРАСНОМ СОСТОЯНИИ', emoji: '😎' },
         { text: 'РОДИТЕЛИ В ШОКЕ', emoji: '🤯' },
-        { text: 'ТЫ ГЕНИЙ', emoji: '🧠' },
-        { text: 'БОГАТЫЙ ХАХА', emoji: '💰' },
-        { text: 'ТЫ ВЫИГРАЛ!', emoji: '🎉' },
-        { text: 'ТАК ДЕРЖАТЬ!', emoji: '🔥' },
-        { text: 'УДАЧА НА ТВОЕЙ СТОРОНЕ', emoji: '🍀' },
+        { text: 'ВАУ, ТЫ ЛЕГЕНДА', emoji: '🌟' },
+        { text: 'ВСЁ КРУТО, ТЫ КОСМОС', emoji: '🌌' },
+        { text: 'МАМА ГОРДИТСЯ', emoji: '🥰' },
+        { text: 'ПАПА В ВОСТОРГЕ', emoji: '🤩' },
         { text: 'ТЫ ПРОДАЛ ОТЦА', emoji: '😎' },
-        { text: 'МАМА НЕ УЗНАЕТ', emoji: '🤫' }
+        { text: 'МАМА НЕ УЗНАЕТ', emoji: '🤫' },
+        { text: 'ВАУ-ВАУ-ВАУ', emoji: '🎉' },
+        { text: 'ТЫ ТОП', emoji: '🔝' },
+        { text: 'ВСЕ ЗАВИДУЮТ', emoji: '😏' },
+        { text: 'КРАСАВЧИК', emoji: '💅' },
+        { text: 'УМНИЦА', emoji: '🧠' },
+        { text: 'ГЕНИЙ', emoji: '🧠' },
+        { text: 'ЦАРЬ', emoji: '👑' },
+        { text: 'БОСС', emoji: '💼' },
+        { text: 'ХАРОШ', emoji: '🔥' },
+        { text: 'БОГАТЫЙ И КРАСИВЫЙ', emoji: '💰' },
+        { text: 'ТЫ ГЕНИЙ ЭТОГО МИРА', emoji: '🌍' },
+        { text: 'ВАУ, ТЫ КОСМОС', emoji: '🚀' },
+        { text: 'ВСЁ ПРОСТО ОГОНЬ', emoji: '🔥' },
+        { text: 'ТЫ КАК БОГ', emoji: '⚡' },
+        { text: 'ТЫ КАК ЗВЕЗДА', emoji: '⭐' },
+        { text: 'ТЫ КАК СОЛНЦЕ', emoji: '☀️' },
+        { text: 'ТЫ КАК ЛУНА', emoji: '🌙' },
+        { text: 'ТЫ КАК РАДУГА', emoji: '🌈' },
+        { text: 'ТЫ КАК МОЛНИЯ', emoji: '⚡' },
+        { text: 'ТЫ КАК ВУЛКАН', emoji: '🌋' },
+        { text: 'ТЫ КАК ЦУНАМИ', emoji: '🌊' },
+        { text: 'ТЫ КАК ТОРНАДО', emoji: '🌪' },
+        { text: 'ТЫ КАК УРАГАН', emoji: '🌀' },
+        { text: 'ТЫ КАК КОМЕТА', emoji: '☄️' },
+        { text: 'ТЫ КАК ГАЛАКТИКА', emoji: '🌌' },
+        { text: 'ТЫ КАК ВСЕЛЕННАЯ', emoji: '🪐' },
+        { text: 'ТЫ КАК ЧЁРНАЯ ДЫРА', emoji: '🕳' },
+        { text: 'ТЫ КАК СУПЕРНОВА', emoji: '💥' },
+        { text: 'ТЫ КАК БОЛЬШОЙ ВЗРЫВ', emoji: '💣' },
+        { text: 'ТЫ КАК ПРАЗДНИК', emoji: '🎊' },
+        { text: 'ТЫ КАК ФЕЙЕРВЕРК', emoji: '🎆' },
+        { text: 'ТЫ КАК САЛЮТ', emoji: '🎇' },
+        { text: 'ТЫ КАК ПАРАД', emoji: '🎺' },
+        { text: 'ТЫ КАК КОНЦЕРТ', emoji: '🎸' },
+        { text: 'ТЫ КАК РОК-ЗВЕЗДА', emoji: '🎤' },
+        { text: 'ТЫ КАК ЧЕМПИОН', emoji: '🥇' },
+        { text: 'ТЫ КАК ПОБЕДИТЕЛЬ', emoji: '🏅' },
+        { text: 'ТЫ КАК ЛЕГЕНДА', emoji: '📜' },
+        { text: 'ТЫ КАК МИФ', emoji: '🐉' },
+        { text: 'ТЫ КАК БОГАТЫРЬ', emoji: '🛡' },
+        { text: 'ТЫ КАК ГЕРОЙ', emoji: '🦸' }
     ];
 
     function showGamePopup(win, overrideTitle, sub) {
