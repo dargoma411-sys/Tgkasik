@@ -86,23 +86,15 @@
         font-size: 0.95rem;
     }
 
-    .balance .coin {
-        font-size: 1.05rem;
-    }
-
+    .balance .coin { font-size: 1.05rem; }
     .balance .amount {
         color: var(--accent-2);
         min-width: 52px;
         text-align: right;
     }
 
-    .balance.plus {
-        animation: balancePop 0.4s ease;
-    }
-
-    .balance.minus {
-        animation: balanceShake 0.4s ease;
-    }
+    .balance.plus { animation: balancePop 0.4s ease; }
+    .balance.minus { animation: balanceShake 0.4s ease; }
 
     @keyframes balancePop {
         0% { transform: scale(1); }
@@ -116,25 +108,61 @@
         75% { transform: translateX(4px); }
     }
 
+    /* === ВКЛАДКИ === */
+    .tabs {
+        display: flex;
+        gap: 6px;
+        padding: 12px 16px 0;
+        max-width: 720px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1;
+        padding: 10px;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+    }
+
+    .tab.active {
+        background: linear-gradient(135deg, var(--accent), #ff7b00);
+        color: #1a1200;
+        border-color: transparent;
+        box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35);
+    }
+
     /* === ОСНОВНОЙ ЭКРАН === */
     .main {
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px 16px 0;
+        padding: 16px;
         max-width: 720px;
         margin: 0 auto;
         width: 100%;
     }
 
+    .view { display: none; width: 100%; }
+    .view.active { display: block; }
+
     .case-title {
         text-align: center;
-        margin-bottom: 18px;
+        margin-bottom: 14px;
     }
 
     .case-title h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 800;
         letter-spacing: 0.5px;
         margin-bottom: 4px;
@@ -142,39 +170,92 @@
 
     .case-title p {
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.88rem;
     }
 
-    /* === КЕЙС === */
+    /* === ВЫБОР КЕЙСА === */
+    .case-picker {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .case-option {
+        background: var(--bg-2);
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .case-option.active {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px rgba(245, 166, 35, 0.3);
+        background: linear-gradient(160deg, #232838, #1a1e28);
+    }
+
+    .case-option .case-emoji {
+        font-size: 2rem;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .case-option .case-name {
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 4px;
+    }
+
+    .case-option .case-price {
+        font-size: 0.8rem;
+        color: var(--accent-2);
+        font-weight: 700;
+    }
+
+    .case-option .case-glow {
+        position: absolute;
+        inset: -30%;
+        background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 60%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .case-option.active .case-glow { opacity: 1; }
+
+    /* === ВИЗУАЛ КЕЙСА === */
     .case-visual {
         position: relative;
-        width: 200px;
-        height: 200px;
-        margin: 10px auto 22px;
+        width: 180px;
+        height: 180px;
+        margin: 8px auto 18px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     .case-visual .case-box {
-        width: 160px;
-        height: 160px;
+        width: 150px;
+        height: 150px;
         border-radius: 22px;
         background: linear-gradient(145deg, #232838, #171a23);
         border: 2px solid var(--line);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4.5rem;
+        font-size: 4rem;
         position: relative;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
         animation: caseFloat 3s ease-in-out infinite;
         transition: transform 0.3s;
     }
 
-    .case-visual .case-box.opening {
-        animation: caseShake 0.5s ease;
-    }
+    .case-visual .case-box.opening { animation: caseShake 0.5s ease; }
 
     @keyframes caseFloat {
         0%, 100% { transform: translateY(0); }
@@ -207,7 +288,7 @@
     .roulette-wrap {
         width: 100%;
         position: relative;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         border-radius: 16px;
         overflow: hidden;
         background: linear-gradient(180deg, #171a23, #12151c);
@@ -287,6 +368,12 @@
         line-height: 1.2;
     }
 
+    .roulette .item .price-tag {
+        font-size: 0.7rem;
+        color: var(--accent-2);
+        font-weight: 700;
+    }
+
     .roulette .item::before {
         content: '';
         position: absolute;
@@ -352,15 +439,8 @@
         box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35);
     }
 
-    .btn-primary:hover {
-        box-shadow: 0 10px 30px rgba(245, 166, 35, 0.55);
-    }
-
-    .btn-primary:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
+    .btn-primary:hover { box-shadow: 0 10px 30px rgba(245, 166, 35, 0.55); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
     .btn-secondary {
         background: var(--bg-3);
@@ -370,15 +450,10 @@
         padding: 16px 22px;
     }
 
-    .btn-secondary:hover {
-        background: #252a38;
-    }
+    .btn-secondary:hover { background: #252a38; }
 
     /* === ИСТОРИЯ === */
-    .history {
-        width: 100%;
-        margin-top: 8px;
-    }
+    .history { width: 100%; margin-top: 8px; }
 
     .history h3 {
         font-size: 0.9rem;
@@ -393,7 +468,7 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-        max-height: 220px;
+        max-height: 300px;
         overflow-y: auto;
         padding-right: 4px;
     }
@@ -435,6 +510,107 @@
         border: 1px dashed var(--line);
         border-radius: 12px;
     }
+
+    /* === ИНВЕНТАРЬ === */
+    .inventory-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 16px;
+        margin-bottom: 14px;
+    }
+
+    .inventory-summary .inv-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .inventory-summary .inv-value {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--accent-2);
+    }
+
+    .inventory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .inv-card {
+        background: linear-gradient(160deg, #1b1f2b, #14171f);
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 10px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s;
+    }
+
+    .inv-card.r-common { border-color: #3a4050; }
+    .inv-card.r-rare { border-color: var(--blue); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+    .inv-card.r-epic { border-color: var(--purple); box-shadow: 0 0 18px rgba(168, 85, 247, 0.25); }
+    .inv-card.r-legend {
+        border-color: var(--gold);
+        box-shadow: 0 0 22px rgba(245, 158, 11, 0.35);
+    }
+
+    .inv-card .inv-emoji {
+        font-size: 2.2rem;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .inv-card .inv-name {
+        font-size: 0.82rem;
+        font-weight: 700;
+        margin-bottom: 3px;
+    }
+
+    .inv-card .inv-rarity {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .inv-card .inv-rarity.r-common { color: var(--muted); }
+    .inv-card .inv-rarity.r-rare { color: var(--blue); }
+    .inv-card .inv-rarity.r-epic { color: var(--purple); }
+    .inv-card .inv-rarity.r-legend { color: var(--gold); }
+
+    .inv-card .inv-price {
+        font-size: 0.8rem;
+        color: var(--accent-2);
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .inv-card .inv-sell {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--green), #2e7d32);
+        color: white;
+        font-weight: 800;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.2s;
+    }
+
+    .inv-card .inv-sell:active { transform: scale(0.96); }
+    .inv-card .inv-sell:hover { box-shadow: 0 4px 14px rgba(76, 175, 80, 0.4); }
 
     /* === МОДАЛКА ВЫПАДЕНИЯ === */
     .drop-modal {
@@ -515,25 +691,48 @@
     .drop-card .drop-name {
         font-size: 1.4rem;
         font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .drop-card .drop-price {
+        font-size: 1rem;
+        color: var(--accent-2);
+        font-weight: 700;
         margin-bottom: 20px;
     }
 
-    .drop-card .drop-close {
-        width: 100%;
+    .drop-card .drop-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .drop-card .drop-btn {
+        flex: 1;
         padding: 14px;
         border: none;
         border-radius: 12px;
-        background: linear-gradient(135deg, var(--accent), #ff7b00);
-        color: #1a1200;
         font-weight: 800;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         letter-spacing: 0.5px;
         cursor: pointer;
         text-transform: uppercase;
         transition: all 0.2s;
     }
 
-    .drop-card .drop-close:active { transform: scale(0.97); }
+    .drop-card .drop-btn:active { transform: scale(0.97); }
+
+    .drop-card .drop-btn.keep {
+        background: var(--bg-3);
+        color: var(--text);
+        border: 1px solid var(--line);
+    }
+
+    .drop-card .drop-btn.sell {
+        background: linear-gradient(135deg, var(--green), #2e7d32);
+        color: white;
+    }
+
+    .drop-card .drop-btn.sell:hover { box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4); }
 
     /* === ФУТЕР === */
     .footer-note {
@@ -549,7 +748,8 @@
         .case-title h1 { font-size: 1.3rem; }
         .roulette .item { flex: 0 0 84px; height: 100px; }
         .roulette .item .emoji { font-size: 1.9rem; }
-        .btn { font-size: 0.9rem; padding: 14px; }
+        .btn { font-size: 0.85rem; padding: 14px 10px; }
+        .case-picker { grid-template-columns: repeat(2, 1fr); }
     }
 </style>
 </head>
@@ -567,37 +767,65 @@
         </div>
     </div>
 
+    <!-- ВКЛАДКИ -->
+    <div class="tabs">
+        <div class="tab active" data-view="cases" onclick="switchTab('cases')">Кейсы</div>
+        <div class="tab" data-view="inventory" onclick="switchTab('inventory')">Инвентарь</div>
+        <div class="tab" data-view="history" onclick="switchTab('history')">История</div>
+    </div>
+
     <!-- ОСНОВНОЙ ЭКРАН -->
     <div class="main">
 
-        <div class="case-title">
-            <h1>Открой кейс</h1>
-            <p>Испытай удачу — получи редкий предмет</p>
+        <!-- ВКЛАДКА: КЕЙСЫ -->
+        <div class="view active" id="view-cases">
+
+            <div class="case-title">
+                <h1>Открой кейс</h1>
+                <p>Испытай удачу — получи редкий предмет</p>
+            </div>
+
+            <!-- ВЫБОР КЕЙСА -->
+            <div class="case-picker" id="casePicker"></div>
+
+            <!-- ВИЗУАЛ КЕЙСА -->
+            <div class="case-visual">
+                <div class="glow"></div>
+                <div class="case-box" id="caseBox">🎁</div>
+            </div>
+
+            <!-- РУЛЕТКА -->
+            <div class="roulette-wrap">
+                <div class="roulette-marker"></div>
+                <div class="roulette" id="roulette"></div>
+            </div>
+
+            <!-- КНОПКИ -->
+            <div class="actions">
+                <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть</button>
+                <button class="btn btn-secondary" id="resetBtn" onclick="resetDemo()">↺</button>
+            </div>
+
         </div>
 
-        <!-- ВИЗУАЛ КЕЙСА -->
-        <div class="case-visual">
-            <div class="glow"></div>
-            <div class="case-box" id="caseBox">🎁</div>
+        <!-- ВКЛАДКА: ИНВЕНТАРЬ -->
+        <div class="view" id="view-inventory">
+            <div class="inventory-summary">
+                <span class="inv-label">Предметов: <span id="invCount">0</span></span>
+                <span class="inv-value">Общая стоимость: <span id="invTotal">0</span> 🪙</span>
+            </div>
+            <div class="inventory-grid" id="inventoryGrid">
+                <div class="empty-history" style="grid-column: 1/-1;">Инвентарь пуст — открой кейс</div>
+            </div>
         </div>
 
-        <!-- РУЛЕТКА -->
-        <div class="roulette-wrap">
-            <div class="roulette-marker"></div>
-            <div class="roulette" id="roulette"></div>
-        </div>
-
-        <!-- КНОПКИ -->
-        <div class="actions">
-            <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть за 100 🪙</button>
-            <button class="btn btn-secondary" id="resetBtn" onclick="resetDemo()">↺</button>
-        </div>
-
-        <!-- ИСТОРИЯ -->
-        <div class="history">
-            <h3>Последние открытия</h3>
-            <div class="history-list" id="historyList">
-                <div class="empty-history">Пока пусто — открой первый кейс</div>
+        <!-- ВКЛАДКА: ИСТОРИЯ -->
+        <div class="view" id="view-history">
+            <div class="history">
+                <h3>Последние открытия</h3>
+                <div class="history-list" id="historyList">
+                    <div class="empty-history">Пока пусто — открой первый кейс</div>
+                </div>
             </div>
         </div>
 
@@ -609,7 +837,11 @@
             <div class="drop-emoji" id="dropEmoji">🎁</div>
             <div class="drop-rarity" id="dropRarity">Обычный</div>
             <div class="drop-name" id="dropName">Предмет</div>
-            <button class="drop-close" onclick="closeDrop()">Забрать</button>
+            <div class="drop-price" id="dropPrice">+0 🪙</div>
+            <div class="drop-actions">
+                <button class="drop-btn keep" onclick="keepDrop()">Оставить</button>
+                <button class="drop-btn sell" onclick="sellDrop()">Продать</button>
+            </div>
         </div>
     </div>
 
@@ -618,26 +850,7 @@
     </div>
 
 <script>
-    // === ДАННЫЕ ===
-    const ITEMS = [
-        // Обычные (common) — 60%
-        { emoji: '🪙', name: 'Монета', rarity: 'common', weight: 30 },
-        { emoji: '🧦', name: 'Носок', rarity: 'common', weight: 15 },
-        { emoji: '🍪', name: 'Печенье', rarity: 'common', weight: 15 },
-        { emoji: '🎈', name: 'Шарик', rarity: 'common', weight: 10 },
-        { emoji: '📎', name: 'Скрепка', rarity: 'common', weight: 10 },
-        // Редкие (rare) — 25%
-        { emoji: '💎', name: 'Кристалл', rarity: 'rare', weight: 10 },
-        { emoji: '🎧', name: 'Наушники', rarity: 'rare', weight: 8 },
-        { emoji: '🎮', name: 'Геймпад', rarity: 'rare', weight: 7 },
-        // Эпические (epic) — 10%
-        { emoji: '🏆', name: 'Кубок', rarity: 'epic', weight: 5 },
-        { emoji: '👑', name: 'Корона', rarity: 'epic', weight: 5 },
-        // Легендарные (legend) — 5%
-        { emoji: '🐉', name: 'Дракон', rarity: 'legend', weight: 3 },
-        { emoji: '🚀', name: 'Ракета', rarity: 'legend', weight: 2 }
-    ];
-
+    // === РЕДКОСТИ ===
     const RARITY_LABELS = {
         common: 'Обычный',
         rare: 'Редкий',
@@ -645,55 +858,212 @@
         legend: 'Легендарный'
     };
 
-    const OPEN_COST = 100;
+    // === КЕЙСЫ ===
+    const CASES = [
+        {
+            id: 'starter',
+            emoji: '📦',
+            name: 'Стартовый',
+            price: 100,
+            items: [
+                { emoji: '🪙', name: 'Монета', rarity: 'common', price: 30, weight: 30 },
+                { emoji: '🧦', name: 'Носок', rarity: 'common', price: 20, weight: 20 },
+                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 25, weight: 20 },
+                { emoji: '📎', name: 'Скрепка', rarity: 'common', price: 15, weight: 15 },
+                { emoji: '🎈', name: 'Шарик', rarity: 'rare', price: 80, weight: 8 },
+                { emoji: '💎', name: 'Кристалл', rarity: 'rare', price: 120, weight: 5 },
+                { emoji: '🏆', name: 'Кубок', rarity: 'epic', price: 300, weight: 1.5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 800, weight: 0.5 }
+            ]
+        },
+        {
+            id: 'silver',
+            emoji: '🎁',
+            name: 'Серебряный',
+            price: 500,
+            items: [
+                { emoji: '🍪', name: 'Печенье', rarity: 'common', price: 25, weight: 20 },
+                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 60, weight: 15 },
+                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 90, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 15 },
+                { emoji: '🎮', name: 'Геймпад', rarity: 'rare', price: 320, weight: 15 },
+                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 700, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 900, weight: 7 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 2500, weight: 3 }
+            ]
+        },
+        {
+            id: 'gold',
+            emoji: '🏅',
+            name: 'Золотой',
+            price: 1500,
+            items: [
+                { emoji: '🔔', name: 'Колокольчик', rarity: 'common', price: 60, weight: 20 },
+                { emoji: '🧸', name: 'Мишка', rarity: 'common', price: 90, weight: 15 },
+                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 150, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 12 },
+                { emoji: '💻', name: 'Ноутбук', rarity: 'rare', price: 500, weight: 10 },
+                { emoji: '📱', name: 'Телефон', rarity: 'epic', price: 700, weight: 10 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 1500, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 5000, weight: 5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 8000, weight: 3 }
+            ]
+        },
+        {
+            id: 'diamond',
+            emoji: '💎',
+            name: 'Алмазный',
+            price: 5000,
+            items: [
+                { emoji: '💍', name: 'Кольцо', rarity: 'common', price: 150, weight: 20 },
+                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 500, weight: 15 },
+                { emoji: '🎧', name: 'Наушники', rarity: 'rare', price: 250, weight: 12 },
+                { emoji: '📱', name: 'Телефон', rarity: 'rare', price: 700, weight: 12 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'epic', price: 1500, weight: 15 },
+                { emoji: '🏎', name: 'Болид', rarity: 'epic', price: 3000, weight: 10 },
+                { emoji: '👑', name: 'Корона', rarity: 'legend', price: 5000, weight: 8 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'legend', price: 12000, weight: 5 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 20000, weight: 3 }
+            ]
+        },
+        {
+            id: 'legendary',
+            emoji: '🐉',
+            name: 'Легендарный',
+            price: 15000,
+            items: [
+                { emoji: '💻', name: 'Ноутбук', rarity: 'common', price: 500, weight: 20 },
+                { emoji: '📱', name: 'Телефон', rarity: 'common', price: 700, weight: 15 },
+                { emoji: '💎', name: 'Алмаз', rarity: 'rare', price: 1500, weight: 15 },
+                { emoji: '🏎', name: 'Болид', rarity: 'rare', price: 3000, weight: 12 },
+                { emoji: '👑', name: 'Корона', rarity: 'epic', price: 5000, weight: 12 },
+                { emoji: '🚀', name: 'Ракета', rarity: 'epic', price: 12000, weight: 10 },
+                { emoji: '🐉', name: 'Дракон', rarity: 'legend', price: 20000, weight: 8 },
+                { emoji: '🌟', name: 'Суперзвезда', rarity: 'legend', price: 50000, weight: 5 },
+                { emoji: '👽', name: 'Пришелец', rarity: 'legend', price: 100000, weight: 3 }
+            ]
+        }
+    ];
+
     const START_BALANCE = 1000;
+    const HISTORY_LIMIT = 30;
 
     let balance = START_BALANCE;
     let isOpening = false;
     let history = [];
+    let inventory = [];
+    let currentCaseId = CASES[0].id;
+    let pendingDrop = null;
 
-    // === ВЫБОР ПРЕДМЕТА ПО ВЕСУ ===
-    function pickRandomItem() {
-        const totalWeight = ITEMS.reduce((sum, item) => sum + item.weight, 0);
+    // === УТИЛИТЫ ===
+    function getCurrentCase() {
+        return CASES.find(c => c.id === currentCaseId) || CASES[0];
+    }
+
+    function pickRandomItem(caseObj) {
+        const items = caseObj.items;
+        const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
         let random = Math.random() * totalWeight;
-        for (const item of ITEMS) {
+        for (const item of items) {
             random -= item.weight;
             if (random <= 0) return item;
         }
-        return ITEMS[0];
+        return items[0];
     }
 
-    // === ГЕНЕРАЦИЯ ЛЕНТЫ ===
-    function generateRoulette() {
-        const roulette = document.getElementById('roulette');
-        roulette.innerHTML = '';
-        const winItem = pickRandomItem();
-        const winIndex = 45; // позиция выигрыша
+    function formatPrice(n) {
+        return n.toLocaleString('ru-RU');
+    }
 
+    // === ВКЛАДКИ ===
+    function switchTab(view) {
+        document.querySelectorAll('.tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.view === view);
+        });
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + view).classList.add('active');
+    }
+
+    // === ВЫБОР КЕЙСА ===
+    function renderCasePicker() {
+        const picker = document.getElementById('casePicker');
+        picker.innerHTML = CASES.map(c => `
+            <div class="case-option ${c.id === currentCaseId ? 'active' : ''}" onclick="selectCase('${c.id}')">
+                <div class="case-glow"></div>
+                <span class="case-emoji">${c.emoji}</span>
+                <div class="case-name">${c.name}</div>
+                <div class="case-price">${formatPrice(c.price)} 🪙</div>
+            </div>
+        `).join('');
+        updateOpenButton();
+    }
+
+    function selectCase(id) {
+        if (isOpening) return;
+        currentCaseId = id;
+        renderCasePicker();
+        resetRoulette();
+    }
+
+    // === РУЛЕТКА ===
+    function buildRouletteItem(item) {
+        return `
+            <div class="emoji">${item.emoji}</div>
+            <div class="label">${item.name}</div>
+            <div class="price-tag">${formatPrice(item.price)} 🪙</div>
+        `;
+    }
+
+    function resetRoulette() {
+        const roulette = document.getElementById('roulette');
+        const caseObj = getCurrentCase();
+        roulette.style.transition = 'none';
+        roulette.style.transform = 'translateX(0)';
+        roulette.innerHTML = '';
         for (let i = 0; i < 60; i++) {
-            const item = i === winIndex ? winItem : pickRandomItem();
+            const item = pickRandomItem(caseObj);
             const el = document.createElement('div');
             el.className = `item r-${item.rarity}`;
-            el.innerHTML = `
-                <div class="emoji">${item.emoji}</div>
-                <div class="label">${item.name}</div>
-            `;
+            el.innerHTML = buildRouletteItem(item);
             roulette.appendChild(el);
         }
+    }
 
+    function generateRoulette() {
+        const roulette = document.getElementById('roulette');
+        const caseObj = getCurrentCase();
+        roulette.innerHTML = '';
+        const winItem = pickRandomItem(caseObj);
+        const winIndex = 45;
+
+        for (let i = 0; i < 60; i++) {
+            const item = i === winIndex ? winItem : pickRandomItem(caseObj);
+            const el = document.createElement('div');
+            el.className = `item r-${item.rarity}`;
+            el.innerHTML = buildRouletteItem(item);
+            roulette.appendChild(el);
+        }
         return { winItem, winIndex };
     }
 
     // === ОТКРЫТИЕ КЕЙСА ===
+    function updateOpenButton() {
+        const btn = document.getElementById('openBtn');
+        const caseObj = getCurrentCase();
+        btn.textContent = `Открыть за ${formatPrice(caseObj.price)} 🪙`;
+    }
+
     function openCase() {
         if (isOpening) return;
-        if (balance < OPEN_COST) {
+        const caseObj = getCurrentCase();
+
+        if (balance < caseObj.price) {
             shakeBalance();
             return;
         }
 
         isOpening = true;
-        balance -= OPEN_COST;
+        balance -= caseObj.price;
         updateBalance('minus');
 
         const openBtn = document.getElementById('openBtn');
@@ -705,20 +1075,18 @@
 
         setTimeout(() => {
             caseBox.classList.remove('opening');
-            caseBox.textContent = '🎁';
+            caseBox.textContent = caseObj.emoji;
         }, 500);
 
         const { winItem, winIndex } = generateRoulette();
         const roulette = document.getElementById('roulette');
 
-        // Сброс позиции
         roulette.style.transition = 'none';
         roulette.style.transform = 'translateX(0)';
 
-        // Расчёт сдвига: центр экрана минус позиция выигрышного элемента
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                const itemWidth = 96 + 10; // ширина + gap
+                const itemWidth = 96 + 10;
                 const containerWidth = roulette.parentElement.offsetWidth;
                 const centerOffset = containerWidth / 2 - itemWidth / 2;
                 const targetX = -(winIndex * itemWidth) + centerOffset + (Math.random() * 40 - 20);
@@ -728,7 +1096,6 @@
             });
         });
 
-        // Показ результата
         setTimeout(() => {
             showDrop(winItem);
             addToHistory(winItem);
@@ -737,24 +1104,46 @@
         }, 6200);
     }
 
-    // === ПОКАЗ МОДАЛКИ ===
+    // === МОДАЛКА ===
     function showDrop(item) {
+        pendingDrop = item;
         const modal = document.getElementById('dropModal');
         const card = document.getElementById('dropCard');
         const emoji = document.getElementById('dropEmoji');
         const rarity = document.getElementById('dropRarity');
         const name = document.getElementById('dropName');
+        const price = document.getElementById('dropPrice');
 
         card.className = 'drop-card r-' + item.rarity;
         emoji.textContent = item.emoji;
         rarity.textContent = RARITY_LABELS[item.rarity];
         name.textContent = item.name;
+        price.textContent = `Стоимость: ${formatPrice(item.price)} 🪙`;
 
         modal.classList.add('show');
     }
 
+    function keepDrop() {
+        if (!pendingDrop) return;
+        inventory.push(pendingDrop);
+        pendingDrop = null;
+        renderInventory();
+        closeDrop();
+    }
+
+    function sellDrop() {
+        if (!pendingDrop) return;
+        balance += pendingDrop.price;
+        updateBalance('plus');
+        addToHistory({ ...pendingDrop, sold: true });
+        pendingDrop = null;
+        renderInventory();
+        closeDrop();
+    }
+
     function closeDrop() {
         document.getElementById('dropModal').classList.remove('show');
+        pendingDrop = null;
     }
 
     // === ИСТОРИЯ ===
@@ -762,7 +1151,7 @@
         const now = new Date();
         const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
         history.unshift({ ...item, time });
-        if (history.length > 20) history.pop();
+        if (history.length > HISTORY_LIMIT) history.pop();
         renderHistory();
     }
 
@@ -776,19 +1165,55 @@
             <div class="history-item">
                 <div class="h-emoji">${item.emoji}</div>
                 <div class="h-info">
-                    <div class="h-name">${item.name}</div>
-                    <div class="h-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]}</div>
+                    <div class="h-name">${item.name}${item.sold ? ' (продан)' : ''}</div>
+                    <div class="h-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]} · ${formatPrice(item.price)} 🪙</div>
                 </div>
                 <div class="h-time">${item.time}</div>
             </div>
         `).join('');
     }
 
+    // === ИНВЕНТАРЬ ===
+    function renderInventory() {
+        const grid = document.getElementById('inventoryGrid');
+        const count = document.getElementById('invCount');
+        const total = document.getElementById('invTotal');
+
+        count.textContent = inventory.length;
+        const sum = inventory.reduce((s, it) => s + it.price, 0);
+        total.textContent = formatPrice(sum);
+
+        if (inventory.length === 0) {
+            grid.innerHTML = '<div class="empty-history" style="grid-column: 1/-1;">Инвентарь пуст — открой кейс</div>';
+            return;
+        }
+
+        grid.innerHTML = inventory.map((item, index) => `
+            <div class="inv-card r-${item.rarity}">
+                <span class="inv-emoji">${item.emoji}</span>
+                <div class="inv-name">${item.name}</div>
+                <div class="inv-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]}</div>
+                <div class="inv-price">${formatPrice(item.price)} 🪙</div>
+                <button class="inv-sell" onclick="sellFromInventory(${index})">Продать</button>
+            </div>
+        `).join('');
+    }
+
+    function sellFromInventory(index) {
+        const item = inventory[index];
+        if (!item) return;
+        balance += item.price;
+        updateBalance('plus');
+        addToHistory({ ...item, sold: true });
+        inventory.splice(index, 1);
+        renderInventory();
+    }
+
     // === БАЛАНС ===
     function updateBalance(type) {
         const box = document.getElementById('balanceBox');
         const amount = document.getElementById('balanceAmount');
-        amount.textContent = balance;
+        amount.textContent = formatPrice(balance);
         box.classList.remove('plus', 'minus');
         void box.offsetWidth;
         if (type === 'plus') box.classList.add('plus');
@@ -807,34 +1232,25 @@
         if (isOpening) return;
         balance = START_BALANCE;
         history = [];
+        inventory = [];
+        pendingDrop = null;
         updateBalance();
         renderHistory();
-        document.getElementById('roulette').innerHTML = '';
+        renderInventory();
+        resetRoulette();
     }
 
     // === ИНИЦИАЛИЗАЦИЯ ===
     updateBalance();
+    renderCasePicker();
     renderHistory();
+    renderInventory();
+    resetRoulette();
 
     // Закрытие по фону
     document.getElementById('dropModal').addEventListener('click', (e) => {
-        if (e.target.id === 'dropModal') closeDrop();
+        if (e.target.id === 'dropModal') keepDrop();
     });
-
-    // Автогенерация ленты при старте (чтобы не было пусто)
-    (function initRoulette() {
-        const roulette = document.getElementById('roulette');
-        for (let i = 0; i < 60; i++) {
-            const item = pickRandomItem();
-            const el = document.createElement('div');
-            el.className = `item r-${item.rarity}`;
-            el.innerHTML = `
-                <div class="emoji">${item.emoji}</div>
-                <div class="label">${item.name}</div>
-            `;
-            roulette.appendChild(el);
-        }
-    })();
 </script>
 </body>
 </html>
