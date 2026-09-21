@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Case Drop</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+        --bg: #0f1117;
+        --bg-2: #171a23;
+        --bg-3: #1f232f;
+        --line: #2a2f3d;
+        --text: #e8ecf4;
+        --muted: #8a93a6;
+        --accent: #f5a623;
+        --accent-2: #ffcc4d;
+        --green: #4caf50;
+        --blue: #3b82f6;
+        --purple: #a855f7;
+        --gold: #f59e0b;
+        --red: #ef4444;
+    }
+
+    body {
+        background: radial-gradient(circle at 50% 0%, #1a1f2e 0%, #0f1117 60%);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        padding-bottom: 20px;
+    }
+
+    /* === ШАПКА === */
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        background: rgba(23, 26, 35, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 1.15rem;
+        letter-spacing: 1px;
+    }
+
+    .logo-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--accent), #ff7b00);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        box-shadow: 0 0 18px rgba(245, 166, 35, 0.5);
+    }
+
+    .balance {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .balance .coin {
+        font-size: 1.05rem;
+    }
+
+    .balance .amount {
+        color: var(--accent-2);
+        min-width: 52px;
+        text-align: right;
+    }
+
+    .balance.plus {
+        animation: balancePop 0.4s ease;
+    }
+
+    .balance.minus {
+        animation: balanceShake 0.4s ease;
+    }
+
+    @keyframes balancePop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.12); box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes balanceShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-4px); }
+        75% { transform: translateX(4px); }
+    }
+
+    /* === ОСНОВНОЙ ЭКРАН === */
+    .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 16px 0;
+        max-width: 720px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .case-title {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
+    .case-title h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .case-title p {
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    /* === КЕЙС === */
+    .case-visual {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 10px auto 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .case-visual .case-box {
+        width: 160px;
+        height: 160px;
+        border-radius: 22px;
+        background: linear-gradient(145deg, #232838, #171a23);
+        border: 2px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4.5rem;
+        position: relative;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+        animation: caseFloat 3s ease-in-out infinite;
+        transition: transform 0.3s;
+    }
+
+    .case-visual .case-box.opening {
+        animation: caseShake 0.5s ease;
+    }
+
+    @keyframes caseFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    @keyframes caseShake {
+        0%, 100% { transform: translateX(0) rotate(0); }
+        20% { transform: translateX(-6px) rotate(-3deg); }
+        40% { transform: translateX(6px) rotate(3deg); }
+        60% { transform: translateX(-6px) rotate(-3deg); }
+        80% { transform: translateX(6px) rotate(3deg); }
+    }
+
+    .case-visual .glow {
+        position: absolute;
+        inset: -20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(245, 166, 35, 0.35) 0%, transparent 70%);
+        animation: glowPulse 2.5s ease-in-out infinite;
+        z-index: -1;
+    }
+
+    @keyframes glowPulse {
+        0%, 100% { opacity: 0.5; transform: scale(0.95); }
+        50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* === РУЛЕТКА === */
+    .roulette-wrap {
+        width: 100%;
+        position: relative;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #171a23, #12151c);
+        border: 1px solid var(--line);
+        padding: 14px 0;
+    }
+
+    .roulette-marker {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 3px;
+        background: linear-gradient(180deg, transparent, var(--accent), transparent);
+        transform: translateX(-50%);
+        z-index: 10;
+        box-shadow: 0 0 12px var(--accent);
+    }
+
+    .roulette-marker::before,
+    .roulette-marker::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+    }
+
+    .roulette-marker::before {
+        top: -2px;
+        border-top: 9px solid var(--accent);
+    }
+
+    .roulette-marker::after {
+        bottom: -2px;
+        border-bottom: 9px solid var(--accent);
+    }
+
+    .roulette {
+        display: flex;
+        gap: 10px;
+        transition: transform 6s cubic-bezier(0.15, 0.9, 0.25, 1);
+        will-change: transform;
+        padding: 0 10px;
+    }
+
+    .roulette .item {
+        flex: 0 0 96px;
+        height: 110px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        position: relative;
+        background: #1b1f2b;
+        border: 2px solid var(--line);
+        overflow: hidden;
+    }
+
+    .roulette .item .emoji {
+        font-size: 2.2rem;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .roulette .item .label {
+        font-size: 0.65rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-align: center;
+        padding: 0 4px;
+        line-height: 1.2;
+    }
+
+    .roulette .item::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--muted);
+    }
+
+    .roulette .item.r-common::before { background: var(--muted); }
+    .roulette .item.r-rare::before { background: var(--blue); }
+    .roulette .item.r-epic::before { background: var(--purple); }
+    .roulette .item.r-legend::before { background: var(--gold); }
+
+    .roulette .item.r-common { box-shadow: inset 0 0 20px rgba(138, 147, 166, 0.08); }
+    .roulette .item.r-rare { box-shadow: inset 0 0 25px rgba(59, 130, 246, 0.18); }
+    .roulette .item.r-epic { box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.22); }
+    .roulette .item.r-legend {
+        box-shadow: inset 0 0 35px rgba(245, 158, 11, 0.3), 0 0 25px rgba(245, 158, 11, 0.25);
+        border-color: var(--gold);
+    }
+
+    .roulette .item.r-legend::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 30%, rgba(245, 158, 11, 0.35) 50%, transparent 70%);
+        animation: shine 1.8s linear infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* === КНОПКИ === */
+    .actions {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 16px;
+        border: none;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-transform: uppercase;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent), #ff7b00);
+        color: #1a1200;
+        box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35);
+    }
+
+    .btn-primary:hover {
+        box-shadow: 0 10px 30px rgba(245, 166, 35, 0.55);
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    .btn-secondary {
+        background: var(--bg-3);
+        color: var(--text);
+        border: 1px solid var(--line);
+        flex: 0 0 auto;
+        padding: 16px 22px;
+    }
+
+    .btn-secondary:hover {
+        background: #252a38;
+    }
+
+    /* === ИСТОРИЯ === */
+    .history {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .history h3 {
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 220px;
+        overflow-y: auto;
+        padding-right: 4px;
+    }
+
+    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .history-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 14px;
+        animation: historyIn 0.4s ease;
+    }
+
+    @keyframes historyIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .history-item .h-emoji { font-size: 1.6rem; }
+    .history-item .h-info { flex: 1; }
+    .history-item .h-name { font-size: 0.9rem; font-weight: 700; }
+    .history-item .h-rarity { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+    .history-item .h-rarity.r-common { color: var(--muted); }
+    .history-item .h-rarity.r-rare { color: var(--blue); }
+    .history-item .h-rarity.r-epic { color: var(--purple); }
+    .history-item .h-rarity.r-legend { color: var(--gold); }
+    .history-item .h-time { font-size: 0.72rem; color: var(--muted); }
+
+    .empty-history {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        padding: 20px;
+        border: 1px dashed var(--line);
+        border-radius: 12px;
+    }
+
+    /* === МОДАЛКА ВЫПАДЕНИЯ === */
+    .drop-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .drop-modal.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .drop-card {
+        background: linear-gradient(160deg, #1f232f, #14171f);
+        border: 2px solid var(--line);
+        border-radius: 22px;
+        padding: 36px 28px 28px;
+        text-align: center;
+        max-width: 340px;
+        width: 100%;
+        position: relative;
+        animation: dropIn 0.5s cubic-bezier(0.2, 1.2, 0.3, 1);
+    }
+
+    @keyframes dropIn {
+        from { opacity: 0; transform: scale(0.7) translateY(30px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .drop-card.r-common { border-color: var(--muted); box-shadow: 0 0 40px rgba(138, 147, 166, 0.25); }
+    .drop-card.r-rare { border-color: var(--blue); box-shadow: 0 0 50px rgba(59, 130, 246, 0.4); }
+    .drop-card.r-epic { border-color: var(--purple); box-shadow: 0 0 60px rgba(168, 85, 247, 0.5); }
+    .drop-card.r-legend {
+        border-color: var(--gold);
+        box-shadow: 0 0 80px rgba(245, 158, 11, 0.6);
+        animation: dropIn 0.5s cubic-bezier(0.2, 1.2, 0.3, 1), legendGlow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes legendGlow {
+        from { box-shadow: 0 0 60px rgba(245, 158, 11, 0.5); }
+        to { box-shadow: 0 0 100px rgba(245, 158, 11, 0.9); }
+    }
+
+    .drop-card .drop-emoji {
+        font-size: 5rem;
+        margin-bottom: 12px;
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+        animation: emojiPop 0.6s ease;
+    }
+
+    @keyframes emojiPop {
+        0% { transform: scale(0); }
+        60% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    .drop-card .drop-rarity {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+        margin-bottom: 6px;
+    }
+
+    .drop-card.r-common .drop-rarity { color: var(--muted); }
+    .drop-card.r-rare .drop-rarity { color: var(--blue); }
+    .drop-card.r-epic .drop-rarity { color: var(--purple); }
+    .drop-card.r-legend .drop-rarity { color: var(--gold); }
+
+    .drop-card .drop-name {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .drop-card .drop-close {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #ff7b00);
+        color: #1a1200;
+        font-weight: 800;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.2s;
+    }
+
+    .drop-card .drop-close:active { transform: scale(0.97); }
+
+    /* === ФУТЕР === */
+    .footer-note {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.72rem;
+        padding: 24px 20px 10px;
+        opacity: 0.6;
+    }
+
+    /* === АДАПТИВ === */
+    @media (max-width: 420px) {
+        .case-title h1 { font-size: 1.3rem; }
+        .roulette .item { flex: 0 0 84px; height: 100px; }
+        .roulette .item .emoji { font-size: 1.9rem; }
+        .btn { font-size: 0.9rem; padding: 14px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <div class="topbar">
+        <div class="logo">
+            <div class="logo-icon">🎁</div>
+            <span>CASE DROP</span>
+        </div>
+        <div class="balance" id="balanceBox">
+            <span class="coin">🪙</span>
+            <span class="amount" id="balanceAmount">1000</span>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ ЭКРАН -->
+    <div class="main">
+
+        <div class="case-title">
+            <h1>Открой кейс</h1>
+            <p>Испытай удачу — получи редкий предмет</p>
+        </div>
+
+        <!-- ВИЗУАЛ КЕЙСА -->
+        <div class="case-visual">
+            <div class="glow"></div>
+            <div class="case-box" id="caseBox">🎁</div>
+        </div>
+
+        <!-- РУЛЕТКА -->
+        <div class="roulette-wrap">
+            <div class="roulette-marker"></div>
+            <div class="roulette" id="roulette"></div>
+        </div>
+
+        <!-- КНОПКИ -->
+        <div class="actions">
+            <button class="btn btn-primary" id="openBtn" onclick="openCase()">Открыть за 100 🪙</button>
+            <button class="btn btn-secondary" id="resetBtn" onclick="resetDemo()">↺</button>
+        </div>
+
+        <!-- ИСТОРИЯ -->
+        <div class="history">
+            <h3>Последние открытия</h3>
+            <div class="history-list" id="historyList">
+                <div class="empty-history">Пока пусто — открой первый кейс</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- МОДАЛКА ВЫПАДЕНИЯ -->
+    <div class="drop-modal" id="dropModal">
+        <div class="drop-card" id="dropCard">
+            <div class="drop-emoji" id="dropEmoji">🎁</div>
+            <div class="drop-rarity" id="dropRarity">Обычный</div>
+            <div class="drop-name" id="dropName">Предмет</div>
+            <button class="drop-close" onclick="closeDrop()">Забрать</button>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Демо-версия · Все предметы виртуальные
+    </div>
+
+<script>
+    // === ДАННЫЕ ===
+    const ITEMS = [
+        // Обычные (common) — 60%
+        { emoji: '🪙', name: 'Монета', rarity: 'common', weight: 30 },
+        { emoji: '🧦', name: 'Носок', rarity: 'common', weight: 15 },
+        { emoji: '🍪', name: 'Печенье', rarity: 'common', weight: 15 },
+        { emoji: '🎈', name: 'Шарик', rarity: 'common', weight: 10 },
+        { emoji: '📎', name: 'Скрепка', rarity: 'common', weight: 10 },
+        // Редкие (rare) — 25%
+        { emoji: '💎', name: 'Кристалл', rarity: 'rare', weight: 10 },
+        { emoji: '🎧', name: 'Наушники', rarity: 'rare', weight: 8 },
+        { emoji: '🎮', name: 'Геймпад', rarity: 'rare', weight: 7 },
+        // Эпические (epic) — 10%
+        { emoji: '🏆', name: 'Кубок', rarity: 'epic', weight: 5 },
+        { emoji: '👑', name: 'Корона', rarity: 'epic', weight: 5 },
+        // Легендарные (legend) — 5%
+        { emoji: '🐉', name: 'Дракон', rarity: 'legend', weight: 3 },
+        { emoji: '🚀', name: 'Ракета', rarity: 'legend', weight: 2 }
+    ];
+
+    const RARITY_LABELS = {
+        common: 'Обычный',
+        rare: 'Редкий',
+        epic: 'Эпический',
+        legend: 'Легендарный'
+    };
+
+    const OPEN_COST = 100;
+    const START_BALANCE = 1000;
+
+    let balance = START_BALANCE;
+    let isOpening = false;
+    let history = [];
+
+    // === ВЫБОР ПРЕДМЕТА ПО ВЕСУ ===
+    function pickRandomItem() {
+        const totalWeight = ITEMS.reduce((sum, item) => sum + item.weight, 0);
+        let random = Math.random() * totalWeight;
+        for (const item of ITEMS) {
+            random -= item.weight;
+            if (random <= 0) return item;
+        }
+        return ITEMS[0];
+    }
+
+    // === ГЕНЕРАЦИЯ ЛЕНТЫ ===
+    function generateRoulette() {
+        const roulette = document.getElementById('roulette');
+        roulette.innerHTML = '';
+        const winItem = pickRandomItem();
+        const winIndex = 45; // позиция выигрыша
+
+        for (let i = 0; i < 60; i++) {
+            const item = i === winIndex ? winItem : pickRandomItem();
+            const el = document.createElement('div');
+            el.className = `item r-${item.rarity}`;
+            el.innerHTML = `
+                <div class="emoji">${item.emoji}</div>
+                <div class="label">${item.name}</div>
+            `;
+            roulette.appendChild(el);
+        }
+
+        return { winItem, winIndex };
+    }
+
+    // === ОТКРЫТИЕ КЕЙСА ===
+    function openCase() {
+        if (isOpening) return;
+        if (balance < OPEN_COST) {
+            shakeBalance();
+            return;
+        }
+
+        isOpening = true;
+        balance -= OPEN_COST;
+        updateBalance('minus');
+
+        const openBtn = document.getElementById('openBtn');
+        openBtn.disabled = true;
+
+        const caseBox = document.getElementById('caseBox');
+        caseBox.classList.add('opening');
+        caseBox.textContent = '📦';
+
+        setTimeout(() => {
+            caseBox.classList.remove('opening');
+            caseBox.textContent = '🎁';
+        }, 500);
+
+        const { winItem, winIndex } = generateRoulette();
+        const roulette = document.getElementById('roulette');
+
+        // Сброс позиции
+        roulette.style.transition = 'none';
+        roulette.style.transform = 'translateX(0)';
+
+        // Расчёт сдвига: центр экрана минус позиция выигрышного элемента
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const itemWidth = 96 + 10; // ширина + gap
+                const containerWidth = roulette.parentElement.offsetWidth;
+                const centerOffset = containerWidth / 2 - itemWidth / 2;
+                const targetX = -(winIndex * itemWidth) + centerOffset + (Math.random() * 40 - 20);
+
+                roulette.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.25, 1)';
+                roulette.style.transform = `translateX(${targetX}px)`;
+            });
+        });
+
+        // Показ результата
+        setTimeout(() => {
+            showDrop(winItem);
+            addToHistory(winItem);
+            isOpening = false;
+            openBtn.disabled = false;
+        }, 6200);
+    }
+
+    // === ПОКАЗ МОДАЛКИ ===
+    function showDrop(item) {
+        const modal = document.getElementById('dropModal');
+        const card = document.getElementById('dropCard');
+        const emoji = document.getElementById('dropEmoji');
+        const rarity = document.getElementById('dropRarity');
+        const name = document.getElementById('dropName');
+
+        card.className = 'drop-card r-' + item.rarity;
+        emoji.textContent = item.emoji;
+        rarity.textContent = RARITY_LABELS[item.rarity];
+        name.textContent = item.name;
+
+        modal.classList.add('show');
+    }
+
+    function closeDrop() {
+        document.getElementById('dropModal').classList.remove('show');
+    }
+
+    // === ИСТОРИЯ ===
+    function addToHistory(item) {
+        const now = new Date();
+        const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        history.unshift({ ...item, time });
+        if (history.length > 20) history.pop();
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const list = document.getElementById('historyList');
+        if (history.length === 0) {
+            list.innerHTML = '<div class="empty-history">Пока пусто — открой первый кейс</div>';
+            return;
+        }
+        list.innerHTML = history.map(item => `
+            <div class="history-item">
+                <div class="h-emoji">${item.emoji}</div>
+                <div class="h-info">
+                    <div class="h-name">${item.name}</div>
+                    <div class="h-rarity r-${item.rarity}">${RARITY_LABELS[item.rarity]}</div>
+                </div>
+                <div class="h-time">${item.time}</div>
+            </div>
+        `).join('');
+    }
+
+    // === БАЛАНС ===
+    function updateBalance(type) {
+        const box = document.getElementById('balanceBox');
+        const amount = document.getElementById('balanceAmount');
+        amount.textContent = balance;
+        box.classList.remove('plus', 'minus');
+        void box.offsetWidth;
+        if (type === 'plus') box.classList.add('plus');
+        if (type === 'minus') box.classList.add('minus');
+    }
+
+    function shakeBalance() {
+        const box = document.getElementById('balanceBox');
+        box.classList.remove('minus');
+        void box.offsetWidth;
+        box.classList.add('minus');
+    }
+
+    // === СБРОС ===
+    function resetDemo() {
+        if (isOpening) return;
+        balance = START_BALANCE;
+        history = [];
+        updateBalance();
+        renderHistory();
+        document.getElementById('roulette').innerHTML = '';
+    }
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    updateBalance();
+    renderHistory();
+
+    // Закрытие по фону
+    document.getElementById('dropModal').addEventListener('click', (e) => {
+        if (e.target.id === 'dropModal') closeDrop();
+    });
+
+    // Автогенерация ленты при старте (чтобы не было пусто)
+    (function initRoulette() {
+        const roulette = document.getElementById('roulette');
+        for (let i = 0; i < 60; i++) {
+            const item = pickRandomItem();
+            const el = document.createElement('div');
+            el.className = `item r-${item.rarity}`;
+            el.innerHTML = `
+                <div class="emoji">${item.emoji}</div>
+                <div class="label">${item.name}</div>
+            `;
+            roulette.appendChild(el);
+        }
+    })();
+</script>
+</body>
+</html>
