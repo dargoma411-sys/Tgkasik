@@ -1,14 +1,15 @@
 import { kv } from '@vercel/kv';
 import crypto from 'crypto';
 
-function safeJsonParse(str) {
+function safeJsonParse(str, fallback = null) {
   try {
-    if (!str) return null;
-    const parsed = JSON.parse(str);
-    return parsed;
+    if (!str || typeof str !== 'string') return fallback;
+    const trimmed = str.trim();
+    if (!trimmed) return fallback;
+    return JSON.parse(trimmed);
   } catch (e) {
     console.log('[register] JSON.parse error:', e.message, 'raw:', JSON.stringify(str).slice(0, 100));
-    return null;
+    return fallback;
   }
 }
 
@@ -17,23 +18,19 @@ function verifyTelegram(initData, botToken) {
     const params = new URLSearchParams(initData);
     const hash = params.get('hash');
     if (!hash) return null;
-
     const rawUser = params.get('user');
     if (!rawUser) return null;
-
     params.delete('hash');
     const dataCheckString = [...params.entries()]
       .map(([k, v]) => `${k}=${v}`)
       .sort()
       .join('\n');
-
     const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest();
     const calcHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
     if (calcHash !== hash) {
       console.log('[register] hash mismatch');
       return null;
     }
-
     return safeJsonParse(rawUser);
   } catch (e) {
     console.log('[register] verifyTelegram error:', e.message);
@@ -97,7 +94,7 @@ export default async function handler(req, res) {
       name,
       photo,
       balance: 1000,
-      inv: JSON.stringify([]),
+      inv: '[]',
       lastClaimAt: 0,
       updatedAt: Date.now()
     });
@@ -107,8 +104,18 @@ export default async function handler(req, res) {
     console.log('[register] updated existing player', id);
   }
 
-  const player = await kv.hgetall(key);
-  player.inv = JSON.parse(player.inv || '[]');
+  let player;
+  try {
+    player = await kv.hgetall(key);
+  } catch (e) {
+    console.log('[register] hgetall error:', e.message);
+    return res.status(500).json({ error: 'db error' });
+  }
+
+  console.log('[register] player raw:', JSON.stringify(player).slice(0, 200));
+
+  if (!player) player = {};
+  player.inv = safeJsonParse(player.inv, []);
 
   return res.json({ player });
 }
