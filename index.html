@@ -1251,7 +1251,12 @@
 
       function getLuckFactor(caseId) {
         const r = getCaseProfitRatio(caseId);
+        // Даже минимальный плюс (даже 1 монета) уже режет удачу.
+        // При r <= 0 — обычные шансы.
+        // При r > 0 — резкое падение.
         if (r <= 0) return 1;
+        // Небольшой бонус к "жёсткости" при малом плюсе:
+        // даже при r = 0.01 (плюс на 1%) фактор уже ниже 1
         const f = 1 / (1 + r * LUCK_K);
         return Math.max(LUCK_MIN, f);
       }
