@@ -5,10 +5,17 @@ const COOLDOWN_MS = 30 * 60 * 1000;
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { id } = req.body || {};
+  const { id, balance } = req.body || {};
   if (!id) return res.status(400).json({ error: 'no id' });
 
-  // Считаем ранг по всем игрокам
+  const key = `player:${id}`;
+
+  // Если клиент прислал актуальный баланс — обновим его в базе,
+  // чтобы ранг считался по свежим данным.
+  if (typeof balance === 'number' && balance >= 0 && isFinite(balance)) {
+    await kv.hset(key, { balance: Math.floor(balance), updatedAt: Date.now() });
+  }
+
   const keys = await kv.keys('player:*');
   const pipe = kv.pipeline();
   keys.forEach(k => pipe.hgetall(k));
@@ -22,10 +29,10 @@ export default async function handler(req, res) {
   const rank = players.findIndex(p => p.id === id);
 
   if (rank < 0 || rank > 2) {
-    return res.status(400).json({ error: 'not in top-3' });
+    return res.status(400).json({ error: 'not in top-3', rank: rank + 1 });
   }
 
-  const player = await kv.hgetall(`player:${id}`);
+  const player = await kv.hgetall(key);
   if (!player) return res.status(404).json({ error: 'no player' });
 
   const now = Date.now();
@@ -36,12 +43,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'cooldown', remainingMs: remaining });
   }
 
-  const balance = Number(player.balance || 0);
+  const currentBalance = Number(player.balance || 0);
   const pct = [0.25, 0.12, 0.06][rank];
-  const reward = Math.floor(balance * pct);
-  const newBalance = balance + reward;
+  const reward = Math.floor(currentBalance * pct);
+  const newBalance = currentBalance + reward;
 
-  await kv.hset(`player:${id}`, {
+  await kv.hset(key, {
     balance: newBalance,
     lastClaimAt: now,
     updatedAt: now
