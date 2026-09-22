@@ -66,6 +66,23 @@ header.top {
 .balance.shake { animation: shake 0.4s; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
 
+/* Fauset button */
+.faucet-wrap { margin-bottom: 12px; display: none; }
+.faucet-wrap.show { display: block; animation: fadeUp 0.4s ease; }
+.faucet-btn {
+  width: 100%; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 14px;
+  border: none; cursor: pointer; color: #001;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 0 24px rgba(251,191,36,0.6);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  animation: pulseGold 2s infinite;
+}
+.faucet-btn:disabled { opacity: 0.6; cursor: not-allowed; animation: none; }
+@keyframes pulseGold {
+  0%,100% { box-shadow: 0 0 24px rgba(251,191,36,0.6); }
+  50% { box-shadow: 0 0 40px rgba(251,191,36,0.95); }
+}
+
 nav.tabs {
   display: flex; gap: 6px; overflow-x: auto; padding: 6px; margin-bottom: 14px;
   background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
@@ -309,16 +326,13 @@ h2 .accent { color: var(--cyan); }
 .popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 .popup.bad { background: linear-gradient(135deg, rgba(220,38,38,0.95), rgba(120,20,20,0.95)); box-shadow: 0 0 40px rgba(220,38,38,0.8); }
 
-.mult-badge {
-  position: absolute; top: 6px; right: 6px; padding: 3px 8px; border-radius: 8px;
-  background: rgba(34,211,238,0.9); color: #001; font-size: 11px; font-weight: 800;
-}
-.mult-badge.green { background: rgba(34,197,94,0.9); }
-
-/* Admin */
 .admin-input { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(20,10,40,0.8); color: var(--text); font-size: 13px; margin-bottom: 8px; outline: none; }
 .admin-input:focus { border-color: var(--cyan); }
 select.admin-input { cursor: pointer; }
+.admin-hint { font-size: 11px; color: var(--muted); margin-bottom: 10px; line-height: 1.35; }
+.admin-status { padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-bottom: 12px; text-align: center; }
+.admin-status.ok { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.5); color: #86efac; }
+.admin-status.no { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.5); color: #fca5a5; }
 
 .toast {
   position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(30px);
@@ -349,6 +363,10 @@ select.admin-input { cursor: pointer; }
     <div class="logo">◈ CASE DROP</div>
     <div class="balance" id="balance"><span>💰</span><span id="balanceVal">1000</span></div>
   </header>
+
+  <div class="faucet-wrap" id="faucetWrap">
+    <button class="faucet-btn" id="faucetBtn">🎁 Получить 1000 монет</button>
+  </div>
 
   <nav class="tabs" id="tabs">
     <button class="tab active" data-view="cases">🎰 Кейсы</button>
@@ -503,7 +521,6 @@ const RARITY_CHANCE = {
   common: 0.55, uncommon: 0.24, rare: 0.12, epic: 0.06, mythic: 0.025, legendary: 0.005
 };
 
-// ~30 кейсов
 const CASES = [
   { id:'farm',     name:'Фарм',              emoji:'🌾', price:10 },
   { id:'starter',  name:'Стартовый',         emoji:'📦', price:50 },
@@ -556,7 +573,6 @@ function generateCaseItems(caseObj, idx) {
   const items = [];
   const rarities = Object.keys(RARITY);
   const price = caseObj.price;
-  // Базовое распределение: несколько предметов на кейс
   const counts = { common: 3, uncommon: 3, rare: 2, epic: 2, mythic: 1, legendary: 1 };
   let s = idx * 1000 + caseObj.id.length * 7;
   rarities.forEach(r => {
@@ -565,7 +581,6 @@ function generateCaseItems(caseObj, idx) {
       s += 1;
       const rnd = seededRandom(s);
       const rnd2 = seededRandom(s + 0.5);
-      // Множитель цены от кейса
       const mult = { common: 0.3, uncommon: 0.7, rare: 1.8, epic: 4, mythic: 12, legendary: 40 }[r];
       const variance = 0.6 + rnd2 * 0.9;
       const itemPrice = Math.max(1, Math.round(price * mult * variance));
@@ -584,10 +599,11 @@ CASES.forEach((c, i) => { c.items = generateCaseItems(c, i); });
 /* ============ STATE ============ */
 let state = {
   balance: 1000,
-  inventory: [],   // {id, name, emoji, price, rarity, uid}
-  history: [],     // {name, emoji, price, rarity, time}
+  inventory: [],
+  history: [],
   selectedCase: null,
-  lastRewardDate: ''
+  lastRewardDate: '',
+  lastFaucetTime: 0
 };
 
 function save() {
@@ -643,7 +659,54 @@ function shakeBalance() {
 
 function updateBalance() {
   $('#balanceVal').textContent = fmt(state.balance);
+  updateFaucet();
 }
+
+/* ============ FAUCET (получить 1000) ============ */
+const FAUCET_COOLDOWN = 60 * 1000; // 1 минута
+
+function updateFaucet() {
+  const wrap = $('#faucetWrap');
+  const btn = $('#faucetBtn');
+  // показываем только если баланс < 500
+  if (state.balance >= 500) {
+    wrap.classList.remove('show');
+    return;
+  }
+  wrap.classList.add('show');
+  const now = Date.now();
+  const elapsed = now - (state.lastFaucetTime || 0);
+  if (elapsed >= FAUCET_COOLDOWN) {
+    btn.disabled = false;
+    btn.textContent = '🎁 Получить 1000 монет';
+  } else {
+    const left = Math.ceil((FAUCET_COOLDOWN - elapsed) / 1000);
+    btn.disabled = true;
+    btn.textContent = `⏳ Подожди ${left} сек`;
+  }
+}
+
+// Обновляем счётчик каждую секунду
+setInterval(updateFaucet, 1000);
+
+$('#faucetBtn').onclick = () => {
+  if (state.balance >= 500) {
+    toast('Кнопка доступна только при балансе < 500', 'bad');
+    return;
+  }
+  const now = Date.now();
+  if (now - (state.lastFaucetTime || 0) < FAUCET_COOLDOWN) {
+    toast('Подожди ещё немного', 'bad');
+    return;
+  }
+  state.balance += 1000;
+  state.lastFaucetTime = now;
+  save();
+  updateBalance();
+  shakeBalance();
+  popup('+1000', false);
+  toast('Получено 1000 монет!', 'good');
+};
 
 /* ============ RENDER: CASES ============ */
 function renderCases() {
@@ -667,6 +730,18 @@ function selectCase(id) {
   const c = CASES.find(x => x.id === id);
   $('#selectedCaseName').textContent = c.name;
   updateOpenButtons();
+  // обновляем превью рулетки
+  const track = $('#rouletteTrack');
+  track.style.transition = 'none';
+  track.style.transform = 'translateX(0px)';
+  const items = [];
+  for (let i = 0; i < 20; i++) items.push(rollItem(c));
+  track.innerHTML = items.map(it => `
+    <div class="roulette-item border-${it.rarity}">
+      <div class="it-emoji">${it.emoji}</div>
+      <div class="it-name rarity-${it.rarity}">${it.name}</div>
+    </div>
+  `).join('');
 }
 
 function updateOpenButtons() {
@@ -684,7 +759,6 @@ function rollRarity() {
   const r = Math.random();
   let acc = 0;
   const order = ['common','uncommon','rare','epic','mythic','legendary'];
-  // boost legendary/mythic slightly at higher value
   for (const k of order) {
     acc += RARITY_CHANCE[k];
     if (r < acc) return k;
@@ -712,13 +786,11 @@ async function openCases(count) {
   save();
   updateBalance(); updateOpenButtons();
 
-  // build roulette
   const track = $('#rouletteTrack');
   const items = [];
-  const ITEM_W = 120; // 110 + 5 margin each side
+  const ITEM_W = 120;
   const totalStrip = 60;
   for (let i = 0; i < totalStrip; i++) items.push(rollItem(c));
-  // target
   const winIndex = 50;
   const winners = [];
   for (let i = 0; i < count; i++) winners.push(rollItem(c));
@@ -744,7 +816,6 @@ async function openCases(count) {
 
   await new Promise(r => setTimeout(r, 6000));
 
-  // process
   let totalWin = 0;
   winners.forEach(w => {
     const uid = 'i' + Date.now() + Math.random().toString(36).slice(2,6);
@@ -755,7 +826,6 @@ async function openCases(count) {
   if (state.history.length > 40) state.history.length = 40;
   save();
 
-  // Show modal for last winner
   showItemModal(winners[winners.length-1], count === 1 ? false : true, winners);
   popup(GOOD_POPUPS[Math.floor(Math.random()*GOOD_POPUPS.length)], false);
 
@@ -799,9 +869,7 @@ function showItemModal(item, multi, all) {
   if (keep) keep.onclick = () => { $('#itemModal').classList.remove('show'); renderInventory(); };
   const sell = $('#mSell');
   if (sell) sell.onclick = () => {
-    // sell just this item (last one added)
     const inv = state.inventory;
-    // find last matching
     for (let i = inv.length - 1; i >= 0; i--) {
       if (inv[i].name === item.name && inv[i].price === item.price && inv[i].rarity === item.rarity) {
         state.balance += inv[i].price;
@@ -924,10 +992,8 @@ function pickFromInventory(cb) {
 }
 
 function pickTarget(cb) {
-  // Собираем все предметы из всех кейсов, дороже выбранного
   const all = [];
   CASES.forEach(c => c.items.forEach(it => all.push(it)));
-  // uniq by name+price
   const seen = new Set();
   const uniq = [];
   all.forEach(it => { const k = it.name+it.price; if (!seen.has(k)) { seen.add(k); uniq.push(it); }});
@@ -966,7 +1032,6 @@ $('#upgBtn').onclick = () => {
   btn.disabled = true;
   btn.textContent = 'Крутим... ⏳';
   setTimeout(() => {
-    // remove left item from inventory
     const idx = state.inventory.findIndex(x => x.uid === upgLeft.uid);
     if (idx !== -1) state.inventory.splice(idx, 1);
     if (success) {
@@ -987,27 +1052,23 @@ $('#upgBtn').onclick = () => {
 };
 
 /* ============ MINI GAMES ============ */
-let gameState = null;
-
 function renderGameSelector() {
   $$('#gameSelector .btn').forEach(b => {
     b.onclick = () => startGame(b.dataset.game);
-    b.classList.remove('gold'); // reset
   });
 }
 
 function gamePanel(html) { $('#gamePanel').innerHTML = html; }
 
 function startGame(type) {
-  if (type === 'mines5') startMines(5, 5, 25);
-  else if (type === 'mines3') startMines(3, 3, 33);
+  if (type === 'mines5') startMines(5, 5);
+  else if (type === 'mines3') startMines(3, 3);
   else if (type === 'dice') startDice();
   else if (type === 'coin') startCoin();
   else if (type === 'braider') startBraider();
 }
 
-/* --- MINES --- */
-function startMines(size, mines, multiplierStart) {
+function startMines(size, mines) {
   const totalCells = size * size;
   const mineSet = new Set();
   while (mineSet.size < mines) mineSet.add(Math.floor(Math.random() * totalCells));
@@ -1051,7 +1112,6 @@ function startMines(size, mines, multiplierStart) {
     if (mineSet.has(i)) {
       cell.classList.add('revealed', 'bomb'); cell.textContent = '💣';
       over = true;
-      // reveal all
       $('#mBoard').querySelectorAll('.cell').forEach((c, idx) => {
         if (mineSet.has(idx) && !c.classList.contains('revealed')) { c.classList.add('revealed','bomb'); c.textContent='💣'; }
       });
@@ -1075,6 +1135,7 @@ function startMines(size, mines, multiplierStart) {
     state.balance += win;
     save(); updateBalance(); shakeBalance();
     state.history.unshift({ name: `Сапёр x${multiplier.toFixed(2)}`, emoji: '💣', price: win, rarity: win > bet*3 ? 'legendary' : 'epic', time: Date.now() });
+    if (state.history.length > 40) state.history.length = 40;
     save(); renderHistory();
     popup('+ ' + fmt(win), false);
     over = true;
@@ -1084,7 +1145,6 @@ function startMines(size, mines, multiplierStart) {
   draw();
 }
 
-/* --- DICE --- */
 function startDice() {
   function draw(d1='?', d2='?', rolling=false, msg='') {
     gamePanel(`
@@ -1142,7 +1202,6 @@ function startDice() {
   draw();
 }
 
-/* --- COIN --- */
 function startCoin() {
   function draw(face='?', flipping=false, msg='') {
     gamePanel(`
@@ -1187,7 +1246,6 @@ function startCoin() {
   draw();
 }
 
-/* --- BRAIDER (4x4, 4 bombs) --- */
 function startBraider() {
   const size = 4, total = 16, mines = 4;
   const mineSet = new Set();
@@ -1230,7 +1288,6 @@ function startBraider() {
     }
     cell.classList.add('revealed','safe'); cell.textContent = '✅';
     revealed++;
-    // Брейдер — самый прибыльный: большой множитель
     mult = Math.pow(2.2, revealed) * 0.9;
     $('#bMult').textContent = '×' + mult.toFixed(2);
     $('#bSafe').textContent = revealed + '/' + safeTotal;
@@ -1293,13 +1350,11 @@ $('#claimReward').onclick = () => {
   if (!pct) { toast('Ты не в топ-3 — награды нет', 'bad'); return; }
   const leaderBalance = all[0].balance;
   const reward = Math.round(leaderBalance * pct);
-  // либо деньгами, либо дорогим подарком — 50/50
   if (Math.random() < 0.5) {
     state.balance += reward;
     popup('+ ' + fmt(reward), false);
     toast(`Награда за ${myRank+1} место: 💰 ${fmt(reward)}`, 'good');
   } else {
-    // случайный дорогой предмет
     const expensive = [];
     CASES.slice(-8).forEach(c => c.items.forEach(it => expensive.push(it)));
     const gift = expensive[Math.floor(Math.random() * expensive.length)];
@@ -1312,79 +1367,124 @@ $('#claimReward').onclick = () => {
   save(); updateBalance(); renderInventory(); shakeBalance();
 };
 
-/* ============ ADMIN ============ */
+/* ============ ADMIN (FIXED) ============ */
 function renderAdmin() {
   const c = $('#adminContent');
   const allItems = [];
   CASES.forEach(cs => cs.items.forEach(it => allItems.push({ ...it, case: cs.name })));
-  // unique by name+price
   const seen = new Set(); const uniq = [];
   allItems.forEach(it => { const k = it.name+'|'+it.price; if (!seen.has(k)) { seen.add(k); uniq.push(it); }});
   uniq.sort((a,b) => a.price - b.price);
 
+  const isAdmin = (userId === ADMIN_ID);
+
   c.innerHTML = `
-    <div class="admin-input" style="background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.4);margin-bottom:12px">
-      Твой TG ID: <b>${userId}</b> ${userId === ADMIN_ID ? '✅ админ' : ''}
+    <div class="admin-status ${isAdmin ? 'ok' : 'no'}">
+      ${isAdmin ? '✅ Доступ разрешён' : '❌ Доступ только у администратора'}<br>
+      Твой TG ID: <b>${userId}</b>
     </div>
-    <h2 style="font-size:13px">💰 Добавить монеты</h2>
-    <input class="admin-input" id="admIdAdd" placeholder="Telegram ID игрока" value="${userId}">
-    <input class="admin-input" id="admSumAdd" type="number" placeholder="Сумма" value="1000000">
-    <button class="btn" id="admAddBtn" style="width:100%;margin-bottom:16px">Добавить</button>
+    ${isAdmin ? `
+      <div class="admin-hint">
+        💡 Если TG ID совпадает с твоим — изменения применятся к тебе сразу.<br>
+        Если указан другой ID — данные запишутся в его localStorage (сработает, когда он откроет приложение на этом же устройстве/браузере).
+      </div>
 
-    <h2 style="font-size:13px">➖ Убрать монеты</h2>
-    <input class="admin-input" id="admIdRem" placeholder="Telegram ID игрока" value="${userId}">
-    <input class="admin-input" id="admSumRem" type="number" placeholder="Сумма" value="1000">
-    <button class="btn danger" id="admRemBtn" style="width:100%;margin-bottom:16px">Убрать</button>
+      <h2 style="font-size:13px;margin-top:14px">💰 Добавить монеты</h2>
+      <input class="admin-input" id="admIdAdd" placeholder="Telegram ID игрока" value="${userId}">
+      <input class="admin-input" id="admSumAdd" type="number" placeholder="Сумма" value="1000000">
+      <button class="btn" id="admAddBtn" style="width:100%;margin-bottom:16px">➕ Добавить</button>
 
-    <h2 style="font-size:13px">🎁 Выдать подарок</h2>
-    <input class="admin-input" id="admIdGift" placeholder="Telegram ID игрока" value="${userId}">
-    <select class="admin-input" id="admGift">
-      ${uniq.map((it, i) => `<option value="${i}">${it.emoji} ${it.name} — 💰 ${fmt(it.price)} [${RARITY[it.rarity].name}]</option>`).join('')}
-    </select>
-    <button class="btn gold" id="admGiftBtn" style="width:100%">Выдать</button>
+      <h2 style="font-size:13px">➖ Убрать монеты</h2>
+      <input class="admin-input" id="admIdRem" placeholder="Telegram ID игрока" value="${userId}">
+      <input class="admin-input" id="admSumRem" type="number" placeholder="Сумма" value="1000">
+      <button class="btn danger" id="admRemBtn" style="width:100%;margin-bottom:16px">➖ Убрать</button>
+
+      <h2 style="font-size:13px">🎁 Выдать подарок</h2>
+      <input class="admin-input" id="admIdGift" placeholder="Telegram ID игрока" value="${userId}">
+      <select class="admin-input" id="admGift">
+        ${uniq.map((it, i) => `<option value="${i}">${it.emoji} ${it.name} — 💰 ${fmt(it.price)} [${RARITY[it.rarity].name}]</option>`).join('')}
+      </select>
+      <button class="btn gold" id="admGiftBtn" style="width:100%">🎁 Выдать подарок</button>
+    ` : ''}
   `;
 
-  function applyToTarget(tgId, fn) {
-    if (tgId === userId) { fn(); save(); updateBalance(); renderInventory(); shakeBalance(); return true; }
-    // применяем к локальному стейту другого игрока
+  if (!isAdmin) return;
+
+  // Helper: получить объект состояния для указанного TG ID
+  // Если это текущий игрок — берём живой state
+  // Иначе — читаем/создаём из localStorage
+  function getStateFor(tgId) {
+    if (tgId === userId) {
+      return { ref: state, saveFn: () => { save(); updateBalance(); renderInventory(); shakeBalance(); } };
+    }
+    const key = 'casedrop_' + tgId;
+    let st;
     try {
-      const key = 'casedrop_' + tgId;
       const raw = localStorage.getItem(key);
-      const st = raw ? JSON.parse(raw) : { balance: 1000, inventory: [], history: [], selectedCase: null, lastRewardDate: '' };
-      fn(st);
-      localStorage.setItem(key, JSON.stringify(st));
-      return true;
-    } catch(e) { return false; }
+      st = raw ? JSON.parse(raw) : null;
+    } catch(e) { st = null; }
+    if (!st) {
+      st = {
+        balance: 1000,
+        inventory: [],
+        history: [],
+        selectedCase: null,
+        lastRewardDate: '',
+        lastFaucetTime: 0
+      };
+    }
+    // нормализация полей
+    if (typeof st.balance !== 'number') st.balance = 1000;
+    if (!Array.isArray(st.inventory)) st.inventory = [];
+    if (!Array.isArray(st.history)) st.history = [];
+    if (typeof st.lastFaucetTime !== 'number') st.lastFaucetTime = 0;
+    if (typeof st.lastRewardDate !== 'string') st.lastRewardDate = '';
+
+    return {
+      ref: st,
+      saveFn: () => {
+        try { localStorage.setItem(key, JSON.stringify(st)); } catch(e) {}
+      }
+    };
   }
 
   $('#admAddBtn').onclick = () => {
     const tgId = $('#admIdAdd').value.trim();
-    const sum = Math.max(0, parseInt($('#admSumAdd').value) || 0);
-    if (!tgId || !sum) return toast('Заполни поля', 'bad');
-    applyToTarget(tgId, (st) => { st.balance = (st.balance || 0) + sum; });
-    toast(`+${fmt(sum)} → ${tgId}`, 'good');
+    const sum = Math.max(0, Math.floor(Number($('#admSumAdd').value) || 0));
+    if (!tgId) return toast('Укажи Telegram ID', 'bad');
+    if (!sum) return toast('Укажи сумму', 'bad');
+    const { ref, saveFn } = getStateFor(tgId);
+    ref.balance += sum;
+    saveFn();
+    toast(`✅ +${fmtFull(sum)} → ${tgId}`, 'good');
     popup('+ ' + fmt(sum), false);
   };
+
   $('#admRemBtn').onclick = () => {
     const tgId = $('#admIdRem').value.trim();
-    const sum = Math.max(0, parseInt($('#admSumRem').value) || 0);
-    if (!tgId || !sum) return toast('Заполни поля', 'bad');
-    applyToTarget(tgId, (st) => { st.balance = Math.max(0, (st.balance || 0) - sum); });
-    toast(`-${fmt(sum)} → ${tgId}`, 'good');
+    const sum = Math.max(0, Math.floor(Number($('#admSumRem').value) || 0));
+    if (!tgId) return toast('Укажи Telegram ID', 'bad');
+    if (!sum) return toast('Укажи сумму', 'bad');
+    const { ref, saveFn } = getStateFor(tgId);
+    ref.balance = Math.max(0, ref.balance - sum);
+    saveFn();
+    toast(`✅ −${fmtFull(sum)} → ${tgId}`, 'good');
   };
+
   $('#admGiftBtn').onclick = () => {
     const tgId = $('#admIdGift').value.trim();
-    const idx = +$('#admGift').value;
+    const idx = Number($('#admGift').value);
     const it = uniq[idx];
-    if (!tgId || !it) return toast('Заполни поля', 'bad');
-    applyToTarget(tgId, (st) => {
-      if (!st.inventory) st.inventory = [];
-      st.inventory.push({ ...it, uid: 'a' + Date.now() + Math.random().toString(36).slice(2,6) });
-      if (!st.history) st.history = [];
-      st.history.unshift({ name: it.name, emoji: it.emoji, price: it.price, rarity: it.rarity, time: Date.now() });
-    });
-    toast(`Подарок выдан → ${tgId}`, 'good');
-    popup('🎁 Отправлено', false);
+    if (!tgId) return toast('Укажи Telegram ID', 'bad');
+    if (!it) return toast('Выбери предмет', 'bad');
+    const { ref, saveFn } = getStateFor(tgId);
+    const uid = 'a' + Date.now() + Math.random().toString(36).slice(2,6);
+    ref.inventory.push({ ...it, uid });
+    ref.history.unshift({ name: it.name, emoji: it.emoji, price: it.price, rarity: it.rarity, time: Date.now() });
+    if (ref.history.length > 40) ref.history.length = 40;
+    saveFn();
+    toast(`🎁 Подарок выдан → ${tgId}`, 'good');
+    popup('🎁 Выдано!', false);
   };
 }
 
@@ -1413,6 +1513,7 @@ $('#open10').onclick = () => openCases(10);
 /* ============ INIT ============ */
 load();
 if (!state.selectedCase) state.selectedCase = CASES[0].id;
+if (typeof state.lastFaucetTime !== 'number') state.lastFaucetTime = 0;
 if (userId === ADMIN_ID) $('#adminTab').style.display = '';
 updateBalance();
 renderCases();
@@ -1423,49 +1524,11 @@ renderUpgrader();
 renderGameSelector();
 renderLeaderboard();
 updateOpenButtons();
-
-// preload roulette
-(function initRoulette() {
-  const c = CASES.find(x => x.id === state.selectedCase);
-  const track = $('#rouletteTrack');
-  const items = [];
-  for (let i = 0; i < 20; i++) items.push(rollItem(c));
-  track.innerHTML = items.map(it => `
-    <div class="roulette-item border-${it.rarity}">
-      <div class="it-emoji">${it.emoji}</div>
-      <div class="it-name rarity-${it.rarity}">${it.name}</div>
-    </div>
-  `).join('');
-})();
-
-// Re-select case updates roulette preview
-const origSelect = selectCase;
-selectCase = function(id) {
-  origSelect(id);
-  const c = CASES.find(x => x.id === id);
-  const track = $('#rouletteTrack');
-  track.style.transition = 'none';
-  track.style.transform = 'translateX(0px)';
-  const items = [];
-  for (let i = 0; i < 20; i++) items.push(rollItem(c));
-  track.innerHTML = items.map(it => `
-    <div class="roulette-item border-${it.rarity}">
-      <div class="it-emoji">${it.emoji}</div>
-      <div class="it-name rarity-${it.rarity}">${it.name}</div>
-    </div>
-  `).join('');
-};
-
-// Открываем кейс по клику на карточку (обновляем визуал)
-document.addEventListener('click', (e) => {
-  const card = e.target.closest('.case-card');
-  if (card) {
-    // уже обрабатывается через onclick
-  }
-});
+updateFaucet();
 
 console.log('%c◈ CASE DROP NEON ◈', 'color:#a855f7;font-size:18px;font-weight:bold');
 console.log('User:', userName, '(', userId, ')');
+if (userId === ADMIN_ID) console.log('%c⚙️ Режим администратора активен', 'color:#22d3ee;font-weight:bold');
 </script>
 </body>
 </html>
