@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   await kv.hset(key, {
     balance: 1000,
     inv: '[]',
+    caseStats: '{}',
     lastClaimAt: 0,
     updatedAt: Date.now()
   });
