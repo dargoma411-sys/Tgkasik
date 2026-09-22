@@ -42,13 +42,20 @@
     button, input, select { font: inherit; color: inherit; }
     button { cursor: pointer; border: none; background: none; }
 
-    #app { max-width: 960px; margin: 0 auto; padding: 0 16px calc(80px + env(safe-area-inset-bottom)); }
+    #app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 68px 16px calc(80px + env(safe-area-inset-bottom));
+    }
 
-    /* === TOPBAR === */
+    /* === TOPBAR (FIXED) === */
     .topbar {
-      position: sticky; top: 0; z-index: 40;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 40;
       display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; padding: 14px 16px; margin: 0 -16px;
+      gap: 16px;
+      padding: 14px 16px;
       background: #080c16;
       border-bottom: 1px solid var(--border);
     }
@@ -75,7 +82,7 @@
 
     /* === VIEWS === */
     .view { display: none; }
-    .view.active { display: block; padding-top: 16px; animation: fadeIn .15s ease; }
+    .view.active { display: block; animation: fadeIn .15s ease; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* === CARDS === */
@@ -589,15 +596,15 @@
 <body>
   <div id="toastWrap" class="toast-wrap"></div>
 
-  <div id="app">
-    <header class="topbar">
-      <div class="logo">Case Go <span>CASES</span></div>
-      <div class="balance-pill">
-        <span id="balanceText">1 000</span>
-        <span class="coin">🪙</span>
-      </div>
-    </header>
+  <header class="topbar">
+    <div class="logo">Case Go <span>CASES</span></div>
+    <div class="balance-pill">
+      <span id="balanceText">1 000</span>
+      <span class="coin">🪙</span>
+    </div>
+  </header>
 
+  <div id="app">
     <main>
       <section id="view-home" class="view active">
         <div class="cat-tabs" id="catTabs">
@@ -619,7 +626,8 @@
             <button type="button" class="chip sort-chip" data-sort="rarity">По редкости</button>
           </div>
           <div class="row gap wrap" style="margin-top:12px;">
-            <button id="sellFiltered" type="button" class="btn danger full">Продать всё</button>
+            <button id="sellFiltered" type="button" class="btn danger full" style="flex:2 1 200px;">Продать всё</button>
+            <button id="resetAccount" type="button" class="btn ghost small" style="flex:1 1 100px;">Сбросить</button>
           </div>
           <div id="invCount" class="muted" style="margin-top:10px;font-size:12px;"></div>
         </div>
@@ -1181,6 +1189,38 @@
           else if (kind === 'heavy') TG.HapticFeedback.impactOccurred('heavy');
           else TG.HapticFeedback.impactOccurred('light');
         } catch (_) {}
+      }
+
+      async function resetAccount() {
+        const ok = confirm('Сбросить аккаунт? Будут удалены все подарки, валюты станет 1000, история очистится. Действие необратимо.');
+        if (!ok) return;
+
+        state.balance = 1000n;
+        state.inventory = [];
+        state.discovered = {};
+        state.casesShown = 30;
+        state.invShown = 50;
+
+        scheduleSave();
+        updateBalance();
+        renderInventory();
+        renderCollection();
+
+        if (S.playerId) {
+          try {
+            await fetch('/api/reset', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: S.playerId })
+            });
+          } catch (e) {
+            console.warn('reset fail', e);
+          }
+          API.sync();
+        }
+
+        toast('Аккаунт сброшен', 'success');
+        haptic('warning');
       }
 
       const API = {
@@ -2185,6 +2225,7 @@
         });
 
         $('#sellFiltered').addEventListener('click', sellFilteredInventory);
+        $('#resetAccount').addEventListener('click', resetAccount);
 
         $('#inventoryList').addEventListener('click', e => {
           const btn = e.target.closest('[data-sell]');
@@ -2315,7 +2356,6 @@
 
         bindEvents();
 
-        // ФОРС-СИНК при заходе, даже если register упал
         if (S.playerId) {
           API.sync();
         }
