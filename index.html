@@ -66,7 +66,6 @@ header.top {
 .balance.shake { animation: shake 0.4s; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
 
-/* Fauset button */
 .faucet-wrap { margin-bottom: 12px; display: none; }
 .faucet-wrap.show { display: block; animation: fadeUp 0.4s ease; }
 .faucet-btn {
@@ -132,7 +131,7 @@ h2 .accent { color: var(--cyan); }
 }
 .roulette-track {
   position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center;
-  transition: transform 6s cubic-bezier(0.12, 0.85, 0.2, 1);
+  transition: transform 7s cubic-bezier(0.10, 0.85, 0.12, 1);
   will-change: transform;
 }
 .roulette-item {
@@ -142,6 +141,13 @@ h2 .accent { color: var(--cyan); }
 }
 .roulette-item .it-emoji { font-size: 26px; }
 .roulette-item .it-name { font-size: 10px; text-align: center; font-weight: 600; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+.roulette-item.hype {
+  animation: hypePulse 0.5s infinite alternate;
+}
+@keyframes hypePulse {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.6) drop-shadow(0 0 12px currentColor); }
+}
 .roulette-pointer {
   position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 3px; height: 100%;
   background: linear-gradient(180deg, var(--cyan), var(--pink)); box-shadow: 0 0 16px var(--cyan); z-index: 3;
@@ -234,7 +240,6 @@ h2 .accent { color: var(--cyan); }
 .picker-item .pn { font-size: 10px; text-align: center; font-weight: 600; line-height: 1.15; }
 .picker-item .pp { font-size: 10px; color: var(--gold); font-weight: 700; }
 
-/* Mini games */
 .game-board { display: grid; gap: 6px; margin: 12px auto; }
 .board-5 { grid-template-columns: repeat(5, 1fr); max-width: 320px; }
 .board-3 { grid-template-columns: repeat(3, 1fr); max-width: 240px; }
@@ -272,13 +277,26 @@ h2 .accent { color: var(--cyan); }
 .game-stats .stat .v { font-size: 17px; font-weight: 800; color: var(--cyan); }
 .game-stats .stat .l { color: var(--muted); font-size: 10px; margin-top: 2px; }
 
-.bet-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
-.bet-row label { font-size: 12px; color: var(--muted); }
-.bet-row input {
-  flex: 1; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
-  background: rgba(20,10,40,0.8); color: var(--text); font-size: 14px; font-weight: 700; outline: none;
+/* Bet quick-pick */
+.bet-panel {
+  padding: 10px 12px; border-radius: 12px; background: rgba(20,10,40,0.6);
+  border: 1px solid var(--border); margin-bottom: 12px;
 }
-.bet-row input:focus { border-color: var(--cyan); }
+.bet-panel .bet-current {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.bet-panel .bet-current .lbl { font-size: 12px; color: var(--muted); }
+.bet-panel .bet-current .val { font-size: 18px; font-weight: 800; color: var(--gold); }
+.bet-quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bet-quick button {
+  padding: 9px 4px; border-radius: 10px; font-size: 12px; font-weight: 700;
+  border: 1px solid var(--border); background: rgba(40,20,80,0.6); color: var(--text);
+  cursor: pointer; transition: all 0.15s;
+}
+.bet-quick button:hover { background: rgba(168,85,247,0.3); border-color: var(--purple); }
+.bet-quick button:active { transform: scale(0.95); }
+.bet-quick button.max { background: linear-gradient(135deg, var(--gold), #f59e0b); color: #1a0a2e; border: none; }
+.bet-quick button.max:hover { filter: brightness(1.1); }
 
 .leaderboard { display: flex; flex-direction: column; gap: 5px; }
 .lb-row {
@@ -293,7 +311,6 @@ h2 .accent { color: var(--cyan); }
 .lb-name { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lb-bal { color: var(--gold); font-weight: 700; }
 
-/* Modals */
 .modal-bg {
   position: fixed; inset: 0; background: rgba(5,0,15,0.85); backdrop-filter: blur(8px);
   display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px;
@@ -344,10 +361,6 @@ select.admin-input { cursor: pointer; }
 .toast.good { border-color: var(--r-uncommon); }
 .toast.bad { border-color: #ef4444; }
 
-.loading { text-align: center; padding: 40px 10px; color: var(--muted); }
-.spinner { width: 34px; height: 34px; border: 3px solid rgba(168,85,247,0.3); border-top-color: var(--cyan); border-radius: 50%; margin: 0 auto 12px; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
 @media (max-width: 480px) {
   .cases-grid { grid-template-columns: repeat(2, 1fr); }
   .logo { font-size: 14px; }
@@ -378,7 +391,6 @@ select.admin-input { cursor: pointer; }
     <button class="tab" data-view="admin" id="adminTab" style="display:none">⚙️ Админ</button>
   </nav>
 
-  <!-- CASES -->
   <section class="view active" id="view-cases">
     <div class="panel">
       <h2>Выбери <span class="accent">кейс</span></h2>
@@ -401,7 +413,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- INVENTORY -->
   <section class="view" id="view-inventory">
     <div class="panel">
       <h2>🎒 Инвентарь <span class="accent" id="invValue"></span></h2>
@@ -409,7 +420,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- HISTORY -->
   <section class="view" id="view-history">
     <div class="panel">
       <h2>📜 История открытий</h2>
@@ -417,7 +427,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- UPGRADE -->
   <section class="view" id="view-upgrade">
     <div class="panel">
       <h2>⬆️ Апгрейдер</h2>
@@ -435,7 +444,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- GAMES -->
   <section class="view" id="view-games">
     <div class="panel">
       <h2>🎮 Мини-игры</h2>
@@ -452,7 +460,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- LEADERS -->
   <section class="view" id="view-leaders">
     <div class="panel">
       <h2>🏆 Топ игроков</h2>
@@ -461,7 +468,6 @@ select.admin-input { cursor: pointer; }
     </div>
   </section>
 
-  <!-- ADMIN -->
   <section class="view" id="view-admin">
     <div class="panel">
       <h2>⚙️ Админ-панель</h2>
@@ -470,7 +476,6 @@ select.admin-input { cursor: pointer; }
   </section>
 </div>
 
-<!-- MODALS -->
 <div class="modal-bg" id="itemModal">
   <div class="modal" id="itemModalContent"></div>
 </div>
@@ -487,7 +492,6 @@ select.admin-input { cursor: pointer; }
 <script>
 'use strict';
 
-/* ============ TELEGRAM ============ */
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#0a0416'); tg.setBackgroundColor('#0a0416'); } catch(e){} }
 const ADMIN_ID = '8485687789';
@@ -498,14 +502,27 @@ if (tg?.initDataUnsafe?.user) {
   userName = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || 'Игрок';
 }
 
-/* ============ DATA ============ */
+/* ============ RARITY ============ */
 const RARITY = {
-  common:    { name: 'Обычный',    cls: 'common',    color: '#9ca3af' },
-  uncommon:  { name: 'Необычный',  cls: 'uncommon',  color: '#22c55e' },
-  rare:      { name: 'Редкий',     cls: 'rare',      color: '#3b82f6' },
-  epic:      { name: 'Эпический',  cls: 'epic',      color: '#a855f7' },
-  mythic:    { name: 'Мифический', cls: 'mythic',    color: '#ec4899' },
-  legendary: { name: 'Легендарный',cls: 'legendary', color: '#fbbf24' }
+  common:    { name: 'Обычный',    color: '#9ca3af' },
+  uncommon:  { name: 'Необычный',  color: '#22c55e' },
+  rare:      { name: 'Редкий',     color: '#3b82f6' },
+  epic:      { name: 'Эпический',  color: '#a855f7' },
+  mythic:    { name: 'Мифический', color: '#ec4899' },
+  legendary: { name: 'Легендарный',color: '#fbbf24' }
+};
+
+/* ============ ПОВЫШЕННЫЕ ШАНСЫ ДРОПА ============
+   Было:  common 0.55 / uncommon 0.24 / rare 0.12 / epic 0.06 / mythic 0.025 / legendary 0.005
+   Стало: гораздо щедрее — реже обычка, чаще всё остальное
+*/
+const RARITY_CHANCE = {
+  common:    0.32,   // 32%  (было 55%)
+  uncommon:  0.28,   // 28%  (было 24%)
+  rare:      0.22,   // 22%  (было 12%)
+  epic:      0.11,   // 11%  (было 6%)
+  mythic:    0.05,   // 5%   (было 2.5%)
+  legendary: 0.02    // 2%   (было 0.5%) — в 4 раза чаще!
 };
 
 const EMOJIS = {
@@ -515,10 +532,6 @@ const EMOJIS = {
   epic: ['🔮','💜','🌌','🦄','🧿','🎆','🥇','⚡'],
   mythic: ['💖','🌸','🎀','👑','🌺','💗','🦩','🎀'],
   legendary: ['👑','🏆','⚜️','🌟','💫','🌠','🦁','🔱']
-};
-
-const RARITY_CHANCE = {
-  common: 0.55, uncommon: 0.24, rare: 0.12, epic: 0.06, mythic: 0.025, legendary: 0.005
 };
 
 const CASES = [
@@ -596,7 +609,6 @@ function generateCaseItems(caseObj, idx) {
 
 CASES.forEach((c, i) => { c.items = generateCaseItems(c, i); });
 
-/* ============ STATE ============ */
 let state = {
   balance: 1000,
   inventory: [],
@@ -616,7 +628,6 @@ function load() {
   } catch(e){}
 }
 
-/* ============ UTILS ============ */
 function fmt(n) {
   if (n >= 1e15) return (n/1e15).toFixed(2) + 'Q';
   if (n >= 1e12) return (n/1e12).toFixed(2) + 'T';
@@ -625,9 +636,7 @@ function fmt(n) {
   if (n >= 1e3) return (n/1e3).toFixed(2) + 'K';
   return Math.round(n).toString();
 }
-function fmtFull(n) {
-  return Math.round(n).toLocaleString('ru-RU');
-}
+function fmtFull(n) { return Math.round(n).toLocaleString('ru-RU'); }
 function $(s) { return document.querySelector(s); }
 function $$(s) { return document.querySelectorAll(s); }
 
@@ -662,17 +671,13 @@ function updateBalance() {
   updateFaucet();
 }
 
-/* ============ FAUCET (получить 1000) ============ */
-const FAUCET_COOLDOWN = 60 * 1000; // 1 минута
+/* ============ FAUCET ============ */
+const FAUCET_COOLDOWN = 60 * 1000;
 
 function updateFaucet() {
   const wrap = $('#faucetWrap');
   const btn = $('#faucetBtn');
-  // показываем только если баланс < 500
-  if (state.balance >= 500) {
-    wrap.classList.remove('show');
-    return;
-  }
+  if (state.balance >= 500) { wrap.classList.remove('show'); return; }
   wrap.classList.add('show');
   const now = Date.now();
   const elapsed = now - (state.lastFaucetTime || 0);
@@ -685,30 +690,20 @@ function updateFaucet() {
     btn.textContent = `⏳ Подожди ${left} сек`;
   }
 }
-
-// Обновляем счётчик каждую секунду
 setInterval(updateFaucet, 1000);
 
 $('#faucetBtn').onclick = () => {
-  if (state.balance >= 500) {
-    toast('Кнопка доступна только при балансе < 500', 'bad');
-    return;
-  }
+  if (state.balance >= 500) { toast('Кнопка доступна только при балансе < 500', 'bad'); return; }
   const now = Date.now();
-  if (now - (state.lastFaucetTime || 0) < FAUCET_COOLDOWN) {
-    toast('Подожди ещё немного', 'bad');
-    return;
-  }
+  if (now - (state.lastFaucetTime || 0) < FAUCET_COOLDOWN) { toast('Подожди ещё немного', 'bad'); return; }
   state.balance += 1000;
   state.lastFaucetTime = now;
-  save();
-  updateBalance();
-  shakeBalance();
+  save(); updateBalance(); shakeBalance();
   popup('+1000', false);
   toast('Получено 1000 монет!', 'good');
 };
 
-/* ============ RENDER: CASES ============ */
+/* ============ RENDER CASES ============ */
 function renderCases() {
   const grid = $('#casesGrid');
   grid.innerHTML = CASES.map(c => `
@@ -730,12 +725,15 @@ function selectCase(id) {
   const c = CASES.find(x => x.id === id);
   $('#selectedCaseName').textContent = c.name;
   updateOpenButtons();
-  // обновляем превью рулетки
+  buildRoulettePreview(c);
+}
+
+function buildRoulettePreview(c) {
   const track = $('#rouletteTrack');
   track.style.transition = 'none';
   track.style.transform = 'translateX(0px)';
   const items = [];
-  for (let i = 0; i < 20; i++) items.push(rollItem(c));
+  for (let i = 0; i < 24; i++) items.push(rollItem(c));
   track.innerHTML = items.map(it => `
     <div class="roulette-item border-${it.rarity}">
       <div class="it-emoji">${it.emoji}</div>
@@ -773,8 +771,23 @@ function rollItem(caseObj) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+// Получить дорогой предмет из кейса — для «тизера» в рулетке
+function rollHypeItem(caseObj) {
+  // Только epic / mythic / legendary
+  const hypePool = caseObj.items.filter(i => i.rarity === 'epic' || i.rarity === 'mythic' || i.rarity === 'legendary');
+  if (!hypePool.length) return null;
+  // Вес: легендарка реже
+  const weighted = [];
+  hypePool.forEach(it => {
+    const w = it.rarity === 'legendary' ? 1 : it.rarity === 'mythic' ? 3 : 6;
+    for (let i = 0; i < w; i++) weighted.push(it);
+  });
+  return weighted[Math.floor(Math.random() * weighted.length)];
+}
+
 /* ============ ROULETTE ANIM ============ */
 let opening = false;
+
 async function openCases(count) {
   if (opening) return;
   const c = CASES.find(x => x.id === state.selectedCase);
@@ -790,31 +803,56 @@ async function openCases(count) {
   const items = [];
   const ITEM_W = 120;
   const totalStrip = 60;
-  for (let i = 0; i < totalStrip; i++) items.push(rollItem(c));
+
+  // Строим ленту: большинство — обычные, но вставляем «дорогие тизеры»
+  // Так игрок видит, как рядом пролетают крутые предметы, но выигрывает то, что выигрывает
+  for (let i = 0; i < totalStrip; i++) {
+    items.push(rollItem(c));
+  }
+
+  // Вставим 6-8 «тизерных» дорогих предметов в стратегических местах
+  const hypeCount = 6 + Math.floor(Math.random() * 4);
+  const hypePositions = new Set();
+  while (hypePositions.size < hypeCount) {
+    const pos = 5 + Math.floor(Math.random() * (totalStrip - 15));
+    hypePositions.add(pos);
+  }
+
   const winIndex = 50;
+  hypePositions.delete(winIndex);
+  hypePositions.delete(winIndex + 1);
+  hypePositions.delete(winIndex - 1);
+  hypePositions.delete(winIndex + 2);
+
   const winners = [];
   for (let i = 0; i < count; i++) winners.push(rollItem(c));
   items[winIndex] = winners[0];
   items[winIndex + 2] = winners[1 % count] || winners[0];
 
+  hypePositions.forEach(pos => {
+    const hype = rollHypeItem(c);
+    if (hype) items[pos] = hype;
+  });
+
   track.style.transition = 'none';
   track.style.transform = 'translateX(0px)';
-  track.innerHTML = items.map(it => `
-    <div class="roulette-item border-${it.rarity}">
+  track.innerHTML = items.map((it, i) => {
+    const isHype = hypePositions.has(i);
+    return `<div class="roulette-item border-${it.rarity}${isHype ? ' hype' : ''}">
       <div class="it-emoji">${it.emoji}</div>
       <div class="it-name rarity-${it.rarity}">${it.name}</div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   const container = track.parentElement;
   const containerW = container.clientWidth;
   const targetX = -(winIndex * ITEM_W + ITEM_W/2 - containerW/2);
 
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-  track.style.transition = 'transform 6s cubic-bezier(0.12, 0.85, 0.2, 1)';
+  track.style.transition = 'transform 7s cubic-bezier(0.10, 0.85, 0.12, 1)';
   track.style.transform = `translateX(${targetX}px)`;
 
-  await new Promise(r => setTimeout(r, 6000));
+  await new Promise(r => setTimeout(r, 7000));
 
   let totalWin = 0;
   winners.forEach(w => {
@@ -883,7 +921,7 @@ function showItemModal(item, multi, all) {
   };
 }
 
-/* ============ RENDER: INVENTORY ============ */
+/* ============ INVENTORY ============ */
 function renderInventory() {
   const grid = $('#inventoryGrid');
   const total = state.inventory.reduce((s,i) => s + i.price, 0);
@@ -917,7 +955,7 @@ function renderInventory() {
   });
 }
 
-/* ============ RENDER: HISTORY ============ */
+/* ============ HISTORY ============ */
 function renderHistory() {
   const list = $('#historyList');
   if (!state.history.length) {
@@ -1018,7 +1056,6 @@ function pickTarget(cb) {
 }
 
 $('#pickCancel').onclick = () => $('#pickModal').classList.remove('show');
-
 $('#upgLeft').onclick = () => pickFromInventory(it => { upgLeft = it; renderUpgrader(); });
 $('#upgRight').onclick = () => pickTarget(it => { upgRight = it; renderUpgrader(); });
 $('#upgClearL').onclick = () => { upgLeft = null; renderUpgrader(); };
@@ -1051,6 +1088,39 @@ $('#upgBtn').onclick = () => {
   }, 1500);
 };
 
+/* ============ QUICK BET PANEL ============ */
+// Возвращает HTML панели быстрых ставок
+function betPanelHTML(inputId, currentBet) {
+  return `
+    <div class="bet-panel">
+      <div class="bet-current">
+        <span class="lbl">Ставка:</span>
+        <span class="val" id="${inputId}_val">💰 ${fmt(currentBet)}</span>
+      </div>
+      <div class="bet-quick" data-target="${inputId}">
+        <button data-pct="10">10%</button>
+        <button data-pct="20">20%</button>
+        <button data-pct="50">50%</button>
+        <button data-pct="100" class="max">MAX</button>
+      </div>
+    </div>
+  `;
+}
+
+// Вешает обработчики на панель быстрых ставок
+function bindBetPanel(inputId, onChange) {
+  const panel = document.querySelector(`.bet-quick[data-target="${inputId}"]`);
+  if (!panel) return;
+  panel.querySelectorAll('button').forEach(btn => {
+    btn.onclick = () => {
+      const pct = Number(btn.dataset.pct) / 100;
+      const bet = Math.max(1, Math.floor(state.balance * pct));
+      if (bet <= 0) { toast('Недостаточно монет', 'bad'); return; }
+      if (onChange) onChange(bet);
+    };
+  });
+}
+
 /* ============ MINI GAMES ============ */
 function renderGameSelector() {
   $$('#gameSelector .btn').forEach(b => {
@@ -1068,11 +1138,13 @@ function startGame(type) {
   else if (type === 'braider') startBraider();
 }
 
+/* --- MINES с быстрыми ставками --- */
 function startMines(size, mines) {
   const totalCells = size * size;
   const mineSet = new Set();
   while (mineSet.size < mines) mineSet.add(Math.floor(Math.random() * totalCells));
-  let revealed = 0, multiplier = 1, bet = 0, playing = false, over = false;
+  let revealed = 0, multiplier = 1, bet = Math.max(1, Math.min(10, state.balance));
+  let playing = false, over = false;
   const safeTotal = totalCells - mines;
 
   function draw() {
@@ -1082,17 +1154,21 @@ function startMines(size, mines) {
       <div class="game-stats">
         <div class="stat"><div class="v" id="mMult">×${multiplier.toFixed(2)}</div><div class="l">Множитель</div></div>
         <div class="stat"><div class="v" id="mSafe">${revealed}/${safeTotal}</div><div class="l">Открыто</div></div>
-        <div class="stat"><div class="v" id="mWin">0</div><div class="l">Выигрыш</div></div>
+        <div class="stat"><div class="v" id="mWin">${fmt(Math.round(bet * multiplier))}</div><div class="l">Выигрыш</div></div>
       </div>
-      <div class="bet-row"><label>Ставка:</label><input type="number" id="mBet" value="${bet||10}" min="1"></div>
+      ${betPanelHTML('mBet', bet)}
       <div class="game-board board-${size}" id="mBoard">${cellsHtml}</div>
       <button class="btn" id="mCash" style="width:100%;margin-top:10px" disabled>💰 Забрать</button>
     `);
-    const board = $('#mBoard');
-    board.querySelectorAll('.cell').forEach(cell => {
+    $('#mBoard').querySelectorAll('.cell').forEach(cell => {
       cell.onclick = () => clickCell(+cell.dataset.i, cell);
     });
     $('#mCash').onclick = cashOut;
+    bindBetPanel('mBet', (newBet) => {
+      bet = newBet;
+      $('#mBet_val').textContent = '💰 ' + fmt(bet);
+      $('#mWin').textContent = fmt(Math.round(bet * multiplier));
+    });
   }
 
   function updateStats() {
@@ -1104,7 +1180,6 @@ function startMines(size, mines) {
   function clickCell(i, cell) {
     if (over || cell.classList.contains('revealed')) return;
     if (!playing) {
-      bet = Math.max(1, parseInt($('#mBet').value) || 10);
       if (state.balance < bet) { toast('Недостаточно монет', 'bad'); return; }
       state.balance -= bet; save(); updateBalance();
       playing = true;
@@ -1145,7 +1220,10 @@ function startMines(size, mines) {
   draw();
 }
 
+/* --- DICE с быстрыми ставками --- */
 function startDice() {
+  let bet = Math.max(1, Math.min(10, state.balance));
+
   function draw(d1='?', d2='?', rolling=false, msg='') {
     gamePanel(`
       <h2>🎲 Кости</h2>
@@ -1154,7 +1232,7 @@ function startDice() {
         <div class="die ${rolling?'rolling':''}">${d2}</div>
       </div>
       ${msg ? `<div class="chance-info">${msg}</div>` : ''}
-      <div class="bet-row"><label>Ставка:</label><input type="number" id="dBet" value="10" min="1"></div>
+      ${betPanelHTML('dBet', bet)}
       <div class="btn-row">
         <button class="btn cyan" data-pick="low">Меньше 7 (×2)</button>
         <button class="btn gold" data-pick="seven">Ровно 7 (×5)</button>
@@ -1164,9 +1242,13 @@ function startDice() {
     $$('#gamePanel [data-pick]').forEach(b => {
       b.onclick = () => roll(b.dataset.pick);
     });
+    bindBetPanel('dBet', (newBet) => {
+      bet = newBet;
+      $('#dBet_val').textContent = '💰 ' + fmt(bet);
+    });
   }
+
   function roll(pick) {
-    const bet = Math.max(1, parseInt($('#dBet').value) || 10);
     if (state.balance < bet) { toast('Недостаточно монет', 'bad'); return; }
     state.balance -= bet; save(); updateBalance();
     let ticks = 0;
@@ -1199,16 +1281,20 @@ function startDice() {
       }
     }, 90);
   }
+
   draw();
 }
 
+/* --- COIN с быстрыми ставками --- */
 function startCoin() {
+  let bet = Math.max(1, Math.min(10, state.balance));
+
   function draw(face='?', flipping=false, msg='') {
     gamePanel(`
       <h2>🪙 Монетка</h2>
       <div class="coin-flip ${flipping?'flipping':''}">${flipping ? '🪙' : face}</div>
       ${msg ? `<div class="chance-info">${msg}</div>` : ''}
-      <div class="bet-row"><label>Ставка:</label><input type="number" id="cBet" value="10" min="1"></div>
+      ${betPanelHTML('cBet', bet)}
       <div class="btn-row">
         <button class="btn cyan" data-side="heads">Орёл (×1.95)</button>
         <button class="btn gold" data-side="tails">Решка (×1.95)</button>
@@ -1217,9 +1303,13 @@ function startCoin() {
     $$('#gamePanel [data-side]').forEach(b => {
       b.onclick = () => flip(b.dataset.side);
     });
+    bindBetPanel('cBet', (newBet) => {
+      bet = newBet;
+      $('#cBet_val').textContent = '💰 ' + fmt(bet);
+    });
   }
+
   function flip(pick) {
-    const bet = Math.max(1, parseInt($('#cBet').value) || 10);
     if (state.balance < bet) { toast('Недостаточно монет', 'bad'); return; }
     state.balance -= bet; save(); updateBalance();
     draw('?', true);
@@ -1243,14 +1333,17 @@ function startCoin() {
       draw(face, false, msg);
     }, 900);
   }
+
   draw();
 }
 
+/* --- BRAIDER с быстрыми ставками --- */
 function startBraider() {
   const size = 4, total = 16, mines = 4;
   const mineSet = new Set();
   while (mineSet.size < mines) mineSet.add(Math.floor(Math.random()*total));
-  let revealed = 0, mult = 1, bet = 0, playing = false, over = false;
+  let revealed = 0, mult = 1, bet = Math.max(1, Math.min(10, state.balance));
+  let playing = false, over = false;
   const safeTotal = total - mines;
 
   function draw() {
@@ -1259,19 +1352,24 @@ function startBraider() {
       <div class="game-stats">
         <div class="stat"><div class="v" id="bMult">×${mult.toFixed(2)}</div><div class="l">Множитель</div></div>
         <div class="stat"><div class="v" id="bSafe">${revealed}/${safeTotal}</div><div class="l">Открыто</div></div>
-        <div class="stat"><div class="v" id="bWin">0</div><div class="l">Выигрыш</div></div>
+        <div class="stat"><div class="v" id="bWin">${fmt(Math.round(bet * mult))}</div><div class="l">Выигрыш</div></div>
       </div>
-      <div class="bet-row"><label>Ставка:</label><input type="number" id="bBet" value="${bet||10}" min="1"></div>
+      ${betPanelHTML('bBet', bet)}
       <div class="game-board board-4" id="bBoard">${Array.from({length:total},(_,i)=>`<div class="cell" data-i="${i}"></div>`).join('')}</div>
       <button class="btn danger" id="bCash" style="width:100%;margin-top:10px" disabled>💰 Забрать</button>
     `);
     $('#bBoard').querySelectorAll('.cell').forEach(c => c.onclick = () => click(+c.dataset.i, c));
     $('#bCash').onclick = cashOut;
+    bindBetPanel('bBet', (newBet) => {
+      bet = newBet;
+      $('#bBet_val').textContent = '💰 ' + fmt(bet);
+      $('#bWin').textContent = fmt(Math.round(bet * mult));
+    });
   }
+
   function click(i, cell) {
     if (over || cell.classList.contains('revealed')) return;
     if (!playing) {
-      bet = Math.max(1, parseInt($('#bBet').value) || 10);
       if (state.balance < bet) { toast('Недостаточно монет', 'bad'); return; }
       state.balance -= bet; save(); updateBalance();
       playing = true;
@@ -1295,6 +1393,7 @@ function startBraider() {
     $('#bCash').disabled = false;
     if (revealed >= safeTotal) cashOut();
   }
+
   function cashOut() {
     if (!playing || over) return;
     const win = Math.round(bet * mult);
@@ -1306,6 +1405,7 @@ function startBraider() {
     over = true;
     setTimeout(draw, 800);
   }
+
   draw();
 }
 
@@ -1367,7 +1467,7 @@ $('#claimReward').onclick = () => {
   save(); updateBalance(); renderInventory(); shakeBalance();
 };
 
-/* ============ ADMIN (FIXED) ============ */
+/* ============ ADMIN ============ */
 function renderAdmin() {
   const c = $('#adminContent');
   const allItems = [];
@@ -1410,9 +1510,6 @@ function renderAdmin() {
 
   if (!isAdmin) return;
 
-  // Helper: получить объект состояния для указанного TG ID
-  // Если это текущий игрок — берём живой state
-  // Иначе — читаем/создаём из localStorage
   function getStateFor(tgId) {
     if (tgId === userId) {
       return { ref: state, saveFn: () => { save(); updateBalance(); renderInventory(); shakeBalance(); } };
@@ -1424,16 +1521,8 @@ function renderAdmin() {
       st = raw ? JSON.parse(raw) : null;
     } catch(e) { st = null; }
     if (!st) {
-      st = {
-        balance: 1000,
-        inventory: [],
-        history: [],
-        selectedCase: null,
-        lastRewardDate: '',
-        lastFaucetTime: 0
-      };
+      st = { balance: 1000, inventory: [], history: [], selectedCase: null, lastRewardDate: '', lastFaucetTime: 0 };
     }
-    // нормализация полей
     if (typeof st.balance !== 'number') st.balance = 1000;
     if (!Array.isArray(st.inventory)) st.inventory = [];
     if (!Array.isArray(st.history)) st.history = [];
@@ -1442,9 +1531,7 @@ function renderAdmin() {
 
     return {
       ref: st,
-      saveFn: () => {
-        try { localStorage.setItem(key, JSON.stringify(st)); } catch(e) {}
-      }
+      saveFn: () => { try { localStorage.setItem(key, JSON.stringify(st)); } catch(e) {} }
     };
   }
 
@@ -1526,8 +1613,9 @@ renderLeaderboard();
 updateOpenButtons();
 updateFaucet();
 
-console.log('%c◈ CASE DROP NEON ◈', 'color:#a855f7;font-size:18px;font-weight:bold');
+console.log('%c◈ CASE DROP NEON v3 ◈', 'color:#a855f7;font-size:18px;font-weight:bold');
 console.log('User:', userName, '(', userId, ')');
+console.log('Rarity chances:', RARITY_CHANCE);
 if (userId === ADMIN_ID) console.log('%c⚙️ Режим администратора активен', 'color:#22d3ee;font-weight:bold');
 </script>
 </body>
