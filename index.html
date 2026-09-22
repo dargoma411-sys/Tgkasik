@@ -871,14 +871,14 @@
       const $ = (sel, root = document) => root.querySelector(sel);
       const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-      const LS_KEY = 'casego_save_v10';
+      const LS_KEY = 'casego_save_v11';
       const ICON = '🪙';
       const START_BALANCE = 1000n;
       const CASE_COUNT = 120;
       const FIRST_CASE_COST = 50n;
       const LAST_CASE_COST = 10n ** 24n;
 
-      // ==== РЕДКОСТИ: необычный дороже кейса, остальные как было ====
+      // ==== РЕДКОСТИ ====
       const RARITIES = [
         { id: 'common',    name: 'Обычный',     color: '#94a3b8', glow: 'rgba(148,163,184,.15)', weight: 55.00, chance: 55,   min: 0.72,   max: 0.92,   preview: 0.80 },
         { id: 'uncommon',  name: 'Необычный',   color: '#22c55e', glow: 'rgba(34,197,94,.15)',   weight: 25.00, chance: 25,   min: 1.30,   max: 1.50,   preview: 1.40 },
@@ -887,6 +887,11 @@
         { id: 'legendary', name: 'Легендарный', color: '#f59e0b', glow: 'rgba(245,158,11,.22)',  weight: 2.00,  chance: 2,    min: 65.0,   max: 75.0,   preview: 70.0 },
         { id: 'secret',    name: 'Секретный',   color: '#ff3b8b', glow: 'rgba(255,59,139,.25)',  weight: 0.50,  chance: 0.5,  min: 1000,   max: 1100,   preview: 1050 }
       ];
+
+      // ==== ДИНАМИЧЕСКАЯ УДАЧА ====
+      const LUCK_K = 1.2;
+      const LUCK_MIN = 0.15;
+      const LUCK_APPLIES_TO = ['rare', 'mythic', 'legendary', 'secret'];
 
       const RARITY_MAP = Object.fromEntries(RARITIES.map(r => [r.id, r]));
       const TOTAL_WEIGHT = RARITIES.reduce((s, r) => s + r.weight, 0);
@@ -1029,6 +1034,7 @@
           balance: START_BALANCE,
           inventory: [],
           discovered: {},
+          caseStats: {},
           casesShown: 30,
           invShown: 50,
           playerId: null,
@@ -1070,6 +1076,7 @@
               }))
             : [];
           base.discovered = p.discovered && typeof p.discovered === 'object' ? p.discovered : {};
+          base.caseStats = p.caseStats && typeof p.caseStats === 'object' ? p.caseStats : {};
           base.casesShown = Math.max(10, Math.min(CASE_COUNT, Number(p.casesShown) || 30));
           base.invShown = Math.max(10, Number(p.invShown) || 50);
           base.playerId = p.playerId || null;
@@ -1092,6 +1099,7 @@
               rarity: g.rarity, value: g.value.toString(), ts: g.ts
             })),
             discovered: state.discovered,
+            caseStats: state.caseStats,
             casesShown: state.casesShown,
             invShown,
             playerId: S.playerId,
@@ -1232,6 +1240,32 @@
         } catch (_) {}
       }
 
+      // ==== ДИНАМИЧЕСКАЯ УДАЧА: функции ====
+      function getCaseProfitRatio(caseId) {
+        const s = state.caseStats[caseId];
+        if (!s || !s.spent || s.spent <= 0) return 0;
+        const spent = Number(s.spent);
+        const won = Number(s.won || 0);
+        return (won - spent) / spent;
+      }
+
+      function getLuckFactor(caseId) {
+        const r = getCaseProfitRatio(caseId);
+        if (r <= 0) return 1;
+        const f = 1 / (1 + r * LUCK_K);
+        return Math.max(LUCK_MIN, f);
+      }
+
+      function trackCaseSpend(caseId, amount) {
+        if (!state.caseStats[caseId]) state.caseStats[caseId] = { spent: 0, won: 0 };
+        state.caseStats[caseId].spent += Number(amount);
+      }
+
+      function trackCaseWin(caseId, amount) {
+        if (!state.caseStats[caseId]) state.caseStats[caseId] = { spent: 0, won: 0 };
+        state.caseStats[caseId].won += Number(amount);
+      }
+
       // ==== CONFETTI ====
       function fireConfetti() {
         const canvas = $('#confettiCanvas');
@@ -1299,6 +1333,7 @@
         state.balance = 1000n;
         state.inventory = [];
         state.discovered = {};
+        state.caseStats = {};
         state.casesShown = 30;
         state.invShown = 50;
 
@@ -1349,6 +1384,7 @@
               body: JSON.stringify({
                 id: S.playerId,
                 balance: Number(state.balance),
+                caseStats: state.caseStats,
                 inv: state.inventory.slice(0, 500).map(g => ({
                   uid: g.uid, typeId: g.typeId, emoji: g.emoji, name: g.name,
                   rarity: g.rarity, value: Number(g.value), ts: g.ts
@@ -1414,21 +1450,26 @@
         };
       }
 
-      function randomRarity() {
-        let x = Math.random() * TOTAL_WEIGHT;
-        for (const r of RARITIES) {
-          if (x < r.weight) return r;
-          x -= r.weight;
-        }
-        return RARITIES[0];
-      }
-
+      // ==== rollGiftForCase с учётом удачи ====
       function rollGiftForCase(c) {
-        const r = randomRarity();
-        const types = TYPES_BY_RARITY[r.id];
+        const luck = getLuckFactor(c.id);
+        const adjusted = RARITIES.map(r => {
+          if (LUCK_APPLIES_TO.includes(r.id)) return r.weight * luck;
+          return r.weight;
+        });
+
+        const total = adjusted.reduce((s, w) => s + w, 0);
+        let x = Math.random() * total;
+        let chosen = RARITIES[0];
+        for (let i = 0; i < RARITIES.length; i++) {
+          if (x < adjusted[i]) { chosen = RARITIES[i]; break; }
+          x -= adjusted[i];
+        }
+
+        const types = TYPES_BY_RARITY[chosen.id];
         const type = types[Math.floor(Math.random() * types.length)];
-        const mult = r.min + Math.random() * (r.max - r.min);
-        return makeGift(type, bigMulFloat(c.cost, mult), r.id);
+        const mult = chosen.min + Math.random() * (chosen.max - chosen.min);
+        return makeGift(type, bigMulFloat(c.cost, mult), chosen.id);
       }
 
       function previewCost(rarity, caseCost) {
@@ -1520,12 +1561,15 @@
         if (state.balance < total) { toast('Недостаточно средств', 'error'); haptic('error'); return; }
 
         state.balance -= total;
+        trackCaseSpend(c.id, Number(total));
+
         const results = [];
         for (let i = 0; i < qty; i++) {
           const gift = rollGiftForCase(c);
           results.push(gift);
           state.inventory.unshift(gift);
           discover(gift.typeId);
+          trackCaseWin(c.id, Number(gift.value));
         }
 
         scheduleSave();
@@ -2294,10 +2338,8 @@
           }
         });
 
-        // Одна кнопка: продать всё или продать выбранное
         $('#sellResultAction').addEventListener('click', () => {
           if (resultSel.size === 0) {
-            // Продать всё
             const ids = new Set(opening.results.map(g => g.uid));
             let sum = 0n;
             opening.results.forEach(g => sum += g.value);
@@ -2311,7 +2353,6 @@
             toast(`Продано все на ${formatBigInt(sum)}${ICON}`, 'success');
             haptic('win');
           } else {
-            // Продать выбранное
             let sum = 0n;
             const ids = new Set();
             resultSel.forEach(idx => {
@@ -2330,7 +2371,6 @@
           }
         });
 
-        // Клик по карточке — выбор
         $('#resultGrid').addEventListener('change', e => {
           const inp = e.target.closest('.res-check');
           if (!inp) return;
@@ -2485,6 +2525,9 @@
               value: toBigInt(g.value ?? 1),
               ts: Number(g.ts) || Date.now()
             }));
+          }
+          if (reg.player.caseStats && typeof reg.player.caseStats === 'object') {
+            state.caseStats = reg.player.caseStats;
           }
           scheduleSave();
           updateBalance();
