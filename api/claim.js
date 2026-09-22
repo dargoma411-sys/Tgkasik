@@ -21,10 +21,11 @@ export default async function handler(req, res) {
 
   const players = rows
     .map(r => ({ id: r?.id, balance: Number(r?.balance || 0) }))
-    .filter(p => p.id);
+    .filter(p => p.id !== undefined && p.id !== null);
 
   players.sort((a, b) => b.balance - a.balance);
-  const rank = players.findIndex(p => p.id === id);
+
+  const rank = players.findIndex(p => String(p.id) === String(id));
 
   if (rank < 0 || rank > 2) {
     return res.status(400).json({ error: 'not in top-3', rank: rank + 1 });
