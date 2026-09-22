@@ -889,6 +889,7 @@
       ];
 
       // ==== ДИНАМИЧЕСКАЯ УДАЧА ====
+            // ==== ДИНАМИЧЕСКАЯ УДАЧА ====
       const LUCK_K = 3;
       const LUCK_MIN = 0.05;
       const LUCK_APPLIES_TO = ['uncommon', 'rare', 'mythic', 'legendary', 'secret'];
@@ -1251,12 +1252,8 @@
 
       function getLuckFactor(caseId) {
         const r = getCaseProfitRatio(caseId);
-        // Даже минимальный плюс (даже 1 монета) уже режет удачу.
-        // При r <= 0 — обычные шансы.
-        // При r > 0 — резкое падение.
+        // Даже минимальный плюс режет удачу. При r <= 0 — обычные шансы.
         if (r <= 0) return 1;
-        // Небольшой бонус к "жёсткости" при малом плюсе:
-        // даже при r = 0.01 (плюс на 1%) фактор уже ниже 1
         const f = 1 / (1 + r * LUCK_K);
         return Math.max(LUCK_MIN, f);
       }
@@ -1456,10 +1453,18 @@
       }
 
       // ==== rollGiftForCase с учётом удачи ====
+            // ==== rollGiftForCase с учётом удачи ====
+            // ==== rollGiftForCase: базовый ролл с автоматическим учётом удачи ====
+      // Используется для фейков в рулетке (spinOnce)
       function rollGiftForCase(c) {
-        const luck = getLuckFactor(c.id);
+        return rollGiftForCaseWithLuck(c, getLuckFactor(c.id));
+      }
+
+      // ==== rollGiftForCaseWithLuck: ролл с явно переданным luckFactor ====
+      // Используется при открытии пачки — один luck на всю пачку
+      function rollGiftForCaseWithLuck(c, luckFactor) {
         const adjusted = RARITIES.map(r => {
-          if (LUCK_APPLIES_TO.includes(r.id)) return r.weight * luck;
+          if (LUCK_APPLIES_TO.includes(r.id)) return r.weight * luckFactor;
           return r.weight;
         });
 
@@ -1566,16 +1571,23 @@
         if (state.balance < total) { toast('Недостаточно средств', 'error'); haptic('error'); return; }
 
         state.balance -= total;
-        trackCaseSpend(c.id, Number(total));
+
+        // ВАРИАНТ A: один luckFactor на всю пачку, рассчитанный
+        // по состоянию ДО открытия. Все роллы используют один и тот же.
+        const luckFactor = getLuckFactor(c.id);
 
         const results = [];
         for (let i = 0; i < qty; i++) {
-          const gift = rollGiftForCase(c);
+          const gift = rollGiftForCaseWithLuck(c, luckFactor);
           results.push(gift);
           state.inventory.unshift(gift);
           discover(gift.typeId);
-          trackCaseWin(c.id, Number(gift.value));
         }
+
+        // Статистику кейса обновляем ПОСЛЕ всех роллов — чтобы
+        // внутри пачки удача не пересчитывалась.
+        trackCaseSpend(c.id, Number(total));
+        results.forEach(g => trackCaseWin(c.id, Number(g.value)));
 
         scheduleSave();
         scheduleSync();
@@ -1583,7 +1595,6 @@
         closeCaseModal();
         runOpening(c, results);
       }
-
       function renderWheelItems(items) {
         $('#wheelStrip').innerHTML = items.map(g => {
           const r = RARITY_MAP[g.rarity] || RARITIES[0];
@@ -1602,8 +1613,8 @@
           if (opening.skip) { resolve(); return; }
           const viewport = $('#wheelViewport');
           const strip = $('#wheelStrip');
-          const PRE = 27;
-          const POST = 5;
+          const PRE = opening.results.length > 5 ? 15 : 27;
+          const POST = opening.results.length > 5 ? 3 : 5;
           const WINNER_INDEX = PRE;
           const items = [];
           for (let i = 0; i < PRE; i++) items.push(rollGiftForCase(opening.case));
