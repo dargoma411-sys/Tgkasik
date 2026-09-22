@@ -18,6 +18,16 @@ function verifyTelegram(initData, botToken) {
   } catch { return null; }
 }
 
+function safeParseUser(initData) {
+  try {
+    if (!initData) return null;
+    const params = new URLSearchParams(initData);
+    const raw = params.get('user');
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch { return null; }
+}
+
 export default async function handler(req, res) {
   console.log('[register] called', req.method);
 
@@ -32,12 +42,8 @@ export default async function handler(req, res) {
   if (botToken && initData) user = verifyTelegram(initData, botToken);
 
   if (!user && initData) {
-    try {
-      const params = new URLSearchParams(initData);
-      user = JSON.parse(params.get('user') || 'null');
-    } catch (e) {
-      console.log('[register] parse error:', e.message);
-    }
+    user = safeParseUser(initData);
+    if (!user) console.log('[register] parse failed, no user field');
   }
 
   if (!user) {
