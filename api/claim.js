@@ -10,8 +10,6 @@ export default async function handler(req, res) {
 
   const key = `player:${id}`;
 
-  // Если клиент прислал актуальный баланс — обновим его в базе,
-  // чтобы ранг считался по свежим данным.
   if (typeof balance === 'number' && balance >= 0 && isFinite(balance)) {
     await kv.hset(key, { balance: Math.floor(balance), updatedAt: Date.now() });
   }
