@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Case Drop — Neon Edition</title>
+<title>Case Drop — Neon Edition v5</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -55,11 +55,15 @@ body::after {
 #app { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 12px 12px 90px; }
 
 header.top {
+  position: sticky;
+  top: 8px;
+  z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 14px; margin-bottom: 12px;
-  background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(160deg, rgba(30, 15, 60, 0.95), rgba(15, 5, 35, 0.95));
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--border); border-radius: 16px;
-  box-shadow: 0 0 20px rgba(168,85,247,0.25);
+  box-shadow: 0 8px 32px rgba(168,85,247,0.4), 0 0 0 1px rgba(168,85,247,0.15) inset;
 }
 .logo { font-weight: 800; font-size: 16px; letter-spacing: 0.5px; background: linear-gradient(90deg, var(--purple), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .balance { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; padding: 6px 12px; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.4); border-radius: 10px; color: var(--gold); }
@@ -229,6 +233,70 @@ h2 .accent { color: var(--cyan); }
 .chance-info { text-align: center; padding: 10px; border-radius: 10px; background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.3); margin-bottom: 12px; font-size: 13px; }
 .chance-info .big { font-size: 22px; font-weight: 800; color: var(--cyan); }
 
+/* ===== FORTUNE WHEEL ===== */
+.wheel-container {
+  position: relative;
+  width: 220px; height: 220px;
+  margin: 20px auto;
+  display: none;
+}
+.wheel-container.show { display: block; }
+.wheel {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1);
+  background: conic-gradient(
+    #ef4444 0deg 330deg,
+    #22c55e 330deg 360deg
+  );
+  box-shadow: 0 0 40px rgba(168,85,247,0.6), inset 0 0 20px rgba(0,0,0,0.6);
+  border: 4px solid var(--purple);
+}
+.wheel-pointer-top {
+  position: absolute;
+  top: -22px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  color: var(--gold);
+  filter: drop-shadow(0 0 10px var(--gold));
+  z-index: 5;
+}
+.wheel-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 20px;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(168,85,247,0.9);
+  z-index: 3;
+}
+.wheel-result {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 12px;
+  animation: zoomIn 0.4s;
+}
+.wheel-result.win {
+  color: #22c55e;
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.6);
+  box-shadow: 0 0 24px rgba(34,197,94,0.5);
+}
+.wheel-result.lose {
+  color: #ef4444;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.6);
+  box-shadow: 0 0 24px rgba(239,68,68,0.5);
+}
+
 .item-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; max-height: 340px; overflow-y: auto; padding: 4px; }
 .picker-item {
   padding: 8px; border-radius: 10px; background: rgba(20,10,40,0.8); border: 2px solid;
@@ -277,7 +345,6 @@ h2 .accent { color: var(--cyan); }
 .game-stats .stat .v { font-size: 17px; font-weight: 800; color: var(--cyan); }
 .game-stats .stat .l { color: var(--muted); font-size: 10px; margin-top: 2px; }
 
-/* Bet quick-pick */
 .bet-panel {
   padding: 10px 12px; border-radius: 12px; background: rgba(20,10,40,0.6);
   border: 1px solid var(--border); margin-bottom: 12px;
@@ -416,6 +483,10 @@ select.admin-input { cursor: pointer; }
   <section class="view" id="view-inventory">
     <div class="panel">
       <h2>🎒 Инвентарь <span class="accent" id="invValue"></span></h2>
+      <div class="btn-row" style="margin-bottom:12px">
+        <button class="btn gold" id="sellAllInv" style="flex:1">💸 Продать всё</button>
+        <button class="btn danger" id="sellWorstInv" style="flex:1">🗑 Продать обычку</button>
+      </div>
       <div class="items-grid" id="inventoryGrid"></div>
     </div>
   </section>
@@ -436,7 +507,15 @@ select.admin-input { cursor: pointer; }
         <div class="upg-slot" id="upgRight"><div class="empty-label">Выбери<br>цель</div></div>
       </div>
       <div class="chance-info" id="upgChance">Шанс: <span class="big">—</span></div>
-      <button class="btn" id="upgBtn" style="width:100%" disabled>Апгрейднуть</button>
+
+      <div class="wheel-container" id="wheelContainer">
+        <div class="wheel-pointer-top">▼</div>
+        <div class="wheel" id="wheel"></div>
+        <div class="wheel-center">🎯</div>
+      </div>
+      <div id="wheelResult"></div>
+
+      <button class="btn" id="upgBtn" style="width:100%" disabled>Крутить колесо 🎡</button>
       <div class="btn-row" style="margin-top:10px">
         <button class="btn gray btn-sm" id="upgClearL">Убрать слева</button>
         <button class="btn gray btn-sm" id="upgClearR">Убрать справа</button>
@@ -492,6 +571,7 @@ select.admin-input { cursor: pointer; }
 <script>
 'use strict';
 
+/* ============ TELEGRAM ============ */
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#0a0416'); tg.setBackgroundColor('#0a0416'); } catch(e){} }
 const ADMIN_ID = '8485687789';
@@ -512,18 +592,38 @@ const RARITY = {
   legendary: { name: 'Легендарный',color: '#fbbf24' }
 };
 
-/* ============ ПОВЫШЕННЫЕ ШАНСЫ ДРОПА ============
-   Было:  common 0.55 / uncommon 0.24 / rare 0.12 / epic 0.06 / mythic 0.025 / legendary 0.005
-   Стало: гораздо щедрее — реже обычка, чаще всё остальное
-*/
-const RARITY_CHANCE = {
-  common:    0.32,   // 32%  (было 55%)
-  uncommon:  0.28,   // 28%  (было 24%)
-  rare:      0.22,   // 22%  (было 12%)
-  epic:      0.11,   // 11%  (было 6%)
-  mythic:    0.05,   // 5%   (было 2.5%)
-  legendary: 0.02    // 2%   (было 0.5%) — в 4 раза чаще!
+/* ============ ШАНСЫ ДРОПА v5 ============ */
+const RARITY_CHANCE_BASE = {
+  common:    0.18,   // 18%
+  uncommon:  0.26,   // 26%
+  rare:      0.28,   // 28%
+  epic:      0.15,   // 15%
+  mythic:    0.09,   // 9%
+  legendary: 0.04    // 4%
 };
+
+function getRarityChances(caseObj) {
+  if (!caseObj) return RARITY_CHANCE_BASE;
+  const idx = CASES.indexOf(caseObj);
+  let boost = 0;
+  if (idx >= 40) boost = 0.80;
+  else if (idx >= 25) boost = 0.55;
+  else if (idx >= 12) boost = 0.30;
+  else boost = 0;
+
+  const boosted = {
+    common:    RARITY_CHANCE_BASE.common * (1 - boost * 0.5),
+    uncommon:  RARITY_CHANCE_BASE.uncommon * (1 - boost * 0.4),
+    rare:      RARITY_CHANCE_BASE.rare * (1 + boost * 0.3),
+    epic:      RARITY_CHANCE_BASE.epic * (1 + boost * 0.8),
+    mythic:    RARITY_CHANCE_BASE.mythic * (1 + boost * 1.2),
+    legendary: RARITY_CHANCE_BASE.legendary * (1 + boost * 2.0)
+  };
+  const sum = Object.values(boosted).reduce((a,b) => a+b, 0);
+  const normalized = {};
+  for (const k in boosted) normalized[k] = boosted[k] / sum;
+  return normalized;
+}
 
 const EMOJIS = {
   common: ['🪨','🍞','📎','🧦','🥔','🧱','📰','🥫'],
@@ -564,7 +664,27 @@ const CASES = [
   { id:'godly',    name:'Божественный+',     emoji:'🙏', price:600000000000 },
   { id:'titan',    name:'Титанический',      emoji:'🗿', price:1500000000000 },
   { id:'omega',    name:'Омега',             emoji:'Ω',  price:4000000000000 },
-  { id:'sextillion',name:'Секстиллионный',   emoji:'💥', price:100000000000000 }
+  { id:'sextillion',name:'Секстиллионный',   emoji:'💥', price:100000000000000 },
+  { id:'hypernova',   name:'Гипернова',          emoji:'💫', price:250000000000000 },
+  { id:'singularity', name:'Сингулярность',      emoji:'🌀', price:600000000000000 },
+  { id:'multiverse',  name:'Мультивселенная',    emoji:'🌐', price:1500000000000000 },
+  { id:'omnipotent',  name:'Всемогущий',         emoji:'⚡', price:4000000000000000 },
+  { id:'primordial',  name:'Первородный',        emoji:'🌋', price:10000000000000000 },
+  { id:'aeon',        name:'Эон',                emoji:'🕰️', price:25000000000000000 },
+  { id:'reality',     name:'Реальность',         emoji:'🎭', price:60000000000000000 },
+  { id:'absolution',  name:'Абсолют',            emoji:'💠', price:150000000000000000 },
+  { id:'zenith',      name:'Зенит',              emoji:'🔆', price:400000000000000000 },
+  { id:'apocalypse',  name:'Апокалипсис',        emoji:'☠️', price:1000000000000000000 },
+  { id:'genesis',     name:'Генезис',            emoji:'🌟', price:2500000000000000000 },
+  { id:'eternum',     name:'Этернум',            emoji:'♾️', price:6000000000000000000 },
+  { id:'supreme',     name:'Верховный',          emoji:'👁️', price:15000000000000000000 },
+  { id:'transcendent',name:'Трансцендентный',    emoji:'🔯', price:40000000000000000000 },
+  { id:'infinitum',   name:'Инфинитум',          emoji:'🧬', price:1e20 },
+  { id:'quantumGod',  name:'Квантовый Бог',      emoji:'🎇', price:2.5e20 },
+  { id:'hyperGod',    name:'Гипер-Бог',          emoji:'🛸', price:6e20 },
+  { id:'ultraGod',    name:'Ультра-Бог',         emoji:'👽', price:1.5e21 },
+  { id:'beyond',      name:'За Гранью',          emoji:'🌠', price:4e21 },
+  { id:'theEnd',      name:'Конец Времён',       emoji:'⌛', price:1e22 }
 ];
 
 const PREFIX = ['Ржавый','Простой','Обычный','Хороший','Крутой','Эпичный','Мифический','Божественный','Абсолютный','Космический','Вневременной','Секретный'];
@@ -703,7 +823,7 @@ $('#faucetBtn').onclick = () => {
   toast('Получено 1000 монет!', 'good');
 };
 
-/* ============ RENDER CASES ============ */
+/* ============ CASES RENDER ============ */
 function renderCases() {
   const grid = $('#casesGrid');
   grid.innerHTML = CASES.map(c => `
@@ -753,30 +873,28 @@ function updateOpenButtons() {
 }
 
 /* ============ RARITY ROLL ============ */
-function rollRarity() {
+function rollRarity(caseObj) {
+  const chances = getRarityChances(caseObj);
   const r = Math.random();
   let acc = 0;
   const order = ['common','uncommon','rare','epic','mythic','legendary'];
   for (const k of order) {
-    acc += RARITY_CHANCE[k];
+    acc += chances[k];
     if (r < acc) return k;
   }
   return 'legendary';
 }
 
 function rollItem(caseObj) {
-  let rarity = rollRarity();
+  let rarity = rollRarity(caseObj);
   let pool = caseObj.items.filter(i => i.rarity === rarity);
   if (!pool.length) pool = caseObj.items;
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// Получить дорогой предмет из кейса — для «тизера» в рулетке
 function rollHypeItem(caseObj) {
-  // Только epic / mythic / legendary
   const hypePool = caseObj.items.filter(i => i.rarity === 'epic' || i.rarity === 'mythic' || i.rarity === 'legendary');
   if (!hypePool.length) return null;
-  // Вес: легендарка реже
   const weighted = [];
   hypePool.forEach(it => {
     const w = it.rarity === 'legendary' ? 1 : it.rarity === 'mythic' ? 3 : 6;
@@ -785,7 +903,7 @@ function rollHypeItem(caseObj) {
   return weighted[Math.floor(Math.random() * weighted.length)];
 }
 
-/* ============ ROULETTE ANIM ============ */
+/* ============ ROULETTE ============ */
 let opening = false;
 
 async function openCases(count) {
@@ -804,13 +922,8 @@ async function openCases(count) {
   const ITEM_W = 120;
   const totalStrip = 60;
 
-  // Строим ленту: большинство — обычные, но вставляем «дорогие тизеры»
-  // Так игрок видит, как рядом пролетают крутые предметы, но выигрывает то, что выигрывает
-  for (let i = 0; i < totalStrip; i++) {
-    items.push(rollItem(c));
-  }
+  for (let i = 0; i < totalStrip; i++) items.push(rollItem(c));
 
-  // Вставим 6-8 «тизерных» дорогих предметов в стратегических местах
   const hypeCount = 6 + Math.floor(Math.random() * 4);
   const hypePositions = new Set();
   while (hypePositions.size < hypeCount) {
@@ -888,6 +1001,7 @@ function showItemModal(item, multi, all) {
       <div class="m-price" style="margin-bottom:14px">Всего: 💰 ${fmtFull(all.reduce((s,i)=>s+i.price,0))}</div>
       <div class="modal-actions">
         <button class="btn" id="mKeep">Забрать всё</button>
+        <button class="btn gold" id="mSellAll">Продать всё 💰</button>
       </div>
     `;
   } else {
@@ -917,6 +1031,25 @@ function showItemModal(item, multi, all) {
     }
     save(); updateBalance(); renderInventory(); shakeBalance();
     popup('+ ' + fmt(item.price), false);
+    $('#itemModal').classList.remove('show');
+  };
+  const sellAll = $('#mSellAll');
+  if (sellAll) sellAll.onclick = () => {
+    let total = 0;
+    all.forEach(target => {
+      for (let i = state.inventory.length - 1; i >= 0; i--) {
+        const it = state.inventory[i];
+        if (it.name === target.name && it.price === target.price && it.rarity === target.rarity) {
+          total += it.price;
+          state.inventory.splice(i, 1);
+          break;
+        }
+      }
+    });
+    state.balance += total;
+    save(); updateBalance(); renderInventory(); shakeBalance();
+    popup('+ ' + fmt(total), false);
+    toast(`Продано на 💰 ${fmt(total)}`, 'good');
     $('#itemModal').classList.remove('show');
   };
 }
@@ -955,6 +1088,27 @@ function renderInventory() {
   });
 }
 
+$('#sellAllInv').onclick = () => {
+  if (!state.inventory.length) { toast('Инвентарь пуст', 'bad'); return; }
+  const total = state.inventory.reduce((s,i) => s + i.price, 0);
+  state.balance += total;
+  state.inventory = [];
+  save(); updateBalance(); renderInventory(); shakeBalance();
+  popup('+ ' + fmt(total), false);
+  toast(`Продано всё на 💰 ${fmt(total)}`, 'good');
+};
+
+$('#sellWorstInv').onclick = () => {
+  const worst = state.inventory.filter(i => i.rarity === 'common' || i.rarity === 'uncommon');
+  if (!worst.length) { toast('Нет обычных/необычных предметов', 'bad'); return; }
+  const total = worst.reduce((s,i) => s + i.price, 0);
+  state.balance += total;
+  state.inventory = state.inventory.filter(i => i.rarity !== 'common' && i.rarity !== 'uncommon');
+  save(); updateBalance(); renderInventory(); shakeBalance();
+  popup('+ ' + fmt(total), false);
+  toast(`Продано ${worst.length} шт на 💰 ${fmt(total)}`, 'good');
+};
+
 /* ============ HISTORY ============ */
 function renderHistory() {
   const list = $('#historyList');
@@ -975,8 +1129,21 @@ function renderHistory() {
   }).join('');
 }
 
-/* ============ UPGRADER ============ */
+/* ============ UPGRADER (with Fortune Wheel) ============ */
 let upgLeft = null, upgRight = null;
+let wheelSpinning = false;
+
+// Улучшенная формула шанса — щедрее
+function calcUpgradeChance(leftPrice, rightPrice) {
+  if (!leftPrice || !rightPrice || leftPrice >= rightPrice) return 0;
+  const ratio = leftPrice / rightPrice;
+  // Было: Math.pow(ratio, 1.5) * 0.85
+  // Стало: менее крутой штраф + бонус + потолок
+  let chance = Math.pow(ratio, 1.1) * 1.15;
+  // Бонус: не даём шансу упасть ниже 12% при ratio > 0.05
+  if (ratio > 0.05) chance = Math.max(chance, 0.12);
+  return Math.min(0.90, chance);
+}
 
 function renderUpgrader() {
   const L = $('#upgLeft'), R = $('#upgRight');
@@ -998,11 +1165,9 @@ function renderUpgrader() {
     R.className = 'upg-slot';
     R.innerHTML = '<div class="empty-label">Выбери<br>цель</div>';
   }
-  const chance = (upgLeft && upgRight)
-    ? Math.min(0.95, Math.pow(upgLeft.price / upgRight.price, 1.5) * 0.85)
-    : 0;
+  const chance = (upgLeft && upgRight) ? calcUpgradeChance(upgLeft.price, upgRight.price) : 0;
   $('#upgChance').innerHTML = `Шанс: <span class="big">${(chance*100).toFixed(2)}%</span>`;
-  $('#upgBtn').disabled = !(upgLeft && upgRight && upgLeft.price < upgRight.price);
+  $('#upgBtn').disabled = !(upgLeft && upgRight && upgLeft.price < upgRight.price) || wheelSpinning;
 }
 
 function pickFromInventory(cb) {
@@ -1056,40 +1221,88 @@ function pickTarget(cb) {
 }
 
 $('#pickCancel').onclick = () => $('#pickModal').classList.remove('show');
-$('#upgLeft').onclick = () => pickFromInventory(it => { upgLeft = it; renderUpgrader(); });
-$('#upgRight').onclick = () => pickTarget(it => { upgRight = it; renderUpgrader(); });
-$('#upgClearL').onclick = () => { upgLeft = null; renderUpgrader(); };
-$('#upgClearR').onclick = () => { upgRight = null; renderUpgrader(); };
+$('#upgLeft').onclick = () => { if (wheelSpinning) return; pickFromInventory(it => { upgLeft = it; renderUpgrader(); }); };
+$('#upgRight').onclick = () => { if (wheelSpinning) return; pickTarget(it => { upgRight = it; renderUpgrader(); }); };
+$('#upgClearL').onclick = () => { if (wheelSpinning) return; upgLeft = null; renderUpgrader(); };
+$('#upgClearR').onclick = () => { if (wheelSpinning) return; upgRight = null; renderUpgrader(); };
 
 $('#upgBtn').onclick = () => {
+  if (wheelSpinning) return;
   if (!upgLeft || !upgRight) return;
-  const chance = Math.min(0.95, Math.pow(upgLeft.price / upgRight.price, 1.5) * 0.85);
+  const chance = calcUpgradeChance(upgLeft.price, upgRight.price);
   const success = Math.random() < chance;
-  const btn = $('#upgBtn');
-  btn.disabled = true;
-  btn.textContent = 'Крутим... ⏳';
+  wheelSpinning = true;
+  $('#upgBtn').disabled = true;
+
+  // Показываем колесо
+  const wheel = $('#wheel');
+  const wheelContainer = $('#wheelContainer');
+  const wheelResult = $('#wheelResult');
+  wheelResult.innerHTML = '';
+  wheelContainer.classList.add('show');
+
+  // Сбрасываем трансформ без анимации
+  wheel.style.transition = 'none';
+  wheel.style.transform = 'rotate(0deg)';
+
+  // Прокрутка: при успехе — попадаем в зелёную зону (330°–360° от верха по часовой)
+  // Поскольку указатель сверху и углы в conic-gradient считаются от верха по часовой,
+  // чтобы указатель попал в зелёную зону (330°–360°), нужно чтобы текущий угол был ~-345° или эквивалент 15°.
+  // Проще: рассчитываем финальный угол так, чтобы после прокрутки указатель попал в нужную зону.
+
+  // Случайное смещение внутри зоны
+  const greenStart = 330, greenEnd = 360;
+  const redStart = 0, redEnd = 330;
+
+  const targetAngleInside = success
+    ? greenStart + Math.random() * (greenEnd - greenStart)   // 330..360 (зелёная)
+    : redStart + Math.random() * (redEnd - redStart);        // 0..330 (красная)
+
+  // Полных оборотов: 5-8
+  const fullSpins = 5 + Math.floor(Math.random() * 4);
+  // Итоговый угол = 360 * fullSpins + (360 - targetAngleInside)
+  // Почему 360 - targetAngleInside: conic-gradient начинается сверху и по часовой,
+  // при повороте элемента по часовой указатель "смотрит" на угол (360 - rotation % 360).
+  const rotation = 360 * fullSpins + (360 - targetAngleInside);
+
+  requestAnimationFrame(() => {
+    wheel.style.transition = 'transform 4s cubic-bezier(0.15, 0.85, 0.15, 1)';
+    wheel.style.transform = `rotate(${rotation}deg)`;
+  });
+
   setTimeout(() => {
+    // Убираем из инвентаря левый предмет
     const idx = state.inventory.findIndex(x => x.uid === upgLeft.uid);
     if (idx !== -1) state.inventory.splice(idx, 1);
+
     if (success) {
       const newItem = { ...upgRight, uid: 'u' + Date.now() + Math.random().toString(36).slice(2,6) };
       state.inventory.push(newItem);
       state.history.unshift({ name: newItem.name, emoji: newItem.emoji, price: newItem.price, rarity: newItem.rarity, time: Date.now() });
       if (state.history.length > 40) state.history.length = 40;
       popup('УСПЕХ! 🎉', false);
-      showItemModal(newItem, false, [newItem]);
+      toast(`🎉 Апгрейд успешен! Получен ${newItem.name}`, 'good');
+      wheelResult.innerHTML = `<div class="wheel-result win">✅ УСПЕХ! +${newItem.name}</div>`;
+      shakeBalance();
     } else {
       popup('ПРОВАЛ 💀', true);
       toast('Апгрейд провален — предмет потерян', 'bad');
+      wheelResult.innerHTML = `<div class="wheel-result lose">❌ ПРОВАЛ</div>`;
     }
+
     upgLeft = null; upgRight = null;
-    save(); renderUpgrader(); renderInventory(); renderHistory();
-    btn.textContent = 'Апгрейднуть';
-  }, 1500);
+    wheelSpinning = false;
+    save(); renderUpgrader(); renderInventory(); renderHistory(); updateBalance();
+
+    // Скрываем колесо через 2.5 сек
+    setTimeout(() => {
+      wheelContainer.classList.remove('show');
+      wheelResult.innerHTML = '';
+    }, 2500);
+  }, 4200);
 };
 
-/* ============ QUICK BET PANEL ============ */
-// Возвращает HTML панели быстрых ставок
+/* ============ BET PANEL ============ */
 function betPanelHTML(inputId, currentBet) {
   return `
     <div class="bet-panel">
@@ -1107,7 +1320,6 @@ function betPanelHTML(inputId, currentBet) {
   `;
 }
 
-// Вешает обработчики на панель быстрых ставок
 function bindBetPanel(inputId, onChange) {
   const panel = document.querySelector(`.bet-quick[data-target="${inputId}"]`);
   if (!panel) return;
@@ -1138,7 +1350,7 @@ function startGame(type) {
   else if (type === 'braider') startBraider();
 }
 
-/* --- MINES с быстрыми ставками --- */
+/* --- MINES --- */
 function startMines(size, mines) {
   const totalCells = size * size;
   const mineSet = new Set();
@@ -1220,7 +1432,7 @@ function startMines(size, mines) {
   draw();
 }
 
-/* --- DICE с быстрыми ставками --- */
+/* --- DICE --- */
 function startDice() {
   let bet = Math.max(1, Math.min(10, state.balance));
 
@@ -1285,9 +1497,10 @@ function startDice() {
   draw();
 }
 
-/* --- COIN с быстрыми ставками --- */
+/* --- COIN (исправлена) --- */
 function startCoin() {
   let bet = Math.max(1, Math.min(10, state.balance));
+  let busy = false;
 
   function draw(face='?', flipping=false, msg='') {
     gamePanel(`
@@ -1296,8 +1509,8 @@ function startCoin() {
       ${msg ? `<div class="chance-info">${msg}</div>` : ''}
       ${betPanelHTML('cBet', bet)}
       <div class="btn-row">
-        <button class="btn cyan" data-side="heads">Орёл (×1.95)</button>
-        <button class="btn gold" data-side="tails">Решка (×1.95)</button>
+        <button class="btn cyan" data-side="heads" ${busy?'disabled':''}>Орёл (×1.95)</button>
+        <button class="btn gold" data-side="tails" ${busy?'disabled':''}>Решка (×1.95)</button>
       </div>
     `);
     $$('#gamePanel [data-side]').forEach(b => {
@@ -1310,9 +1523,13 @@ function startCoin() {
   }
 
   function flip(pick) {
+    if (busy) return;
     if (state.balance < bet) { toast('Недостаточно монет', 'bad'); return; }
-    state.balance -= bet; save(); updateBalance();
+    busy = true;
+    state.balance -= bet;
+    save(); updateBalance();
     draw('?', true);
+
     setTimeout(() => {
       const result = Math.random() < 0.5 ? 'heads' : 'tails';
       const face = result === 'heads' ? '👑' : '⭐';
@@ -1322,14 +1539,17 @@ function startCoin() {
         state.balance += w;
         state.history.unshift({ name: `Монетка ${result==='heads'?'орёл':'решка'}`, emoji: '🪙', price: w, rarity: 'epic', time: Date.now() });
         if (state.history.length > 40) state.history.length = 40;
-        msg = `Выигрыш +${fmt(w)} 🎉`;
+        save();
+        msg = `✅ Выигрыш +${fmt(w)} 🎉`;
         popup('+ ' + fmt(w), false);
         shakeBalance();
       } else {
-        msg = 'Проиграл 💀';
+        msg = '❌ Проиграл 💀';
         popup(BAD_POPUPS[Math.floor(Math.random()*BAD_POPUPS.length)], true);
       }
-      save(); updateBalance(); renderHistory();
+      busy = false;
+      updateBalance();
+      renderHistory();
       draw(face, false, msg);
     }, 900);
   }
@@ -1337,7 +1557,7 @@ function startCoin() {
   draw();
 }
 
-/* --- BRAIDER с быстрыми ставками --- */
+/* --- BRAIDER --- */
 function startBraider() {
   const size = 4, total = 16, mines = 4;
   const mineSet = new Set();
@@ -1613,9 +1833,10 @@ renderLeaderboard();
 updateOpenButtons();
 updateFaucet();
 
-console.log('%c◈ CASE DROP NEON v3 ◈', 'color:#a855f7;font-size:18px;font-weight:bold');
+console.log('%c◈ CASE DROP NEON v5 ◈', 'color:#a855f7;font-size:18px;font-weight:bold');
 console.log('User:', userName, '(', userId, ')');
-console.log('Rarity chances:', RARITY_CHANCE);
+console.log('Всего кейсов:', CASES.length);
+console.log('Base rarity chances:', RARITY_CHANCE_BASE);
 if (userId === ADMIN_ID) console.log('%c⚙️ Режим администратора активен', 'color:#22d3ee;font-weight:bold');
 </script>
 </body>
