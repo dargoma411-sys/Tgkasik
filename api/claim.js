@@ -1,6 +1,6 @@
 import { kv } from '@vercel/kv';
 
-const COOLDOWN_MS = 30 * 60 * 1000; // 30 минут
+const COOLDOWN_MS = 30 * 60 * 1000;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
@@ -8,8 +8,20 @@ export default async function handler(req, res) {
   const { id } = req.body || {};
   if (!id) return res.status(400).json({ error: 'no id' });
 
-  const rank = await kv.zrevrank('leaderboard', id);
-  if (rank === null || rank > 2) {
+  // Считаем ранг по всем игрокам
+  const keys = await kv.keys('player:*');
+  const pipe = kv.pipeline();
+  keys.forEach(k => pipe.hgetall(k));
+  const rows = await pipe.exec();
+
+  const players = rows
+    .map(r => ({ id: r?.id, balance: Number(r?.balance || 0) }))
+    .filter(p => p.id);
+
+  players.sort((a, b) => b.balance - a.balance);
+  const rank = players.findIndex(p => p.id === id);
+
+  if (rank < 0 || rank > 2) {
     return res.status(400).json({ error: 'not in top-3' });
   }
 
@@ -21,10 +33,7 @@ export default async function handler(req, res) {
   const remaining = COOLDOWN_MS - (now - lastClaimAt);
 
   if (remaining > 0) {
-    return res.status(400).json({
-      error: 'cooldown',
-      remainingMs: remaining
-    });
+    return res.status(400).json({ error: 'cooldown', remainingMs: remaining });
   }
 
   const balance = Number(player.balance || 0);
@@ -37,8 +46,6 @@ export default async function handler(req, res) {
     lastClaimAt: now,
     updatedAt: now
   });
-
-  await kv.zadd('leaderboard', { score: newBalance, member: id });
 
   return res.json({ ok: true, reward, rank, newBalance, nextClaimAt: now + COOLDOWN_MS });
 }
