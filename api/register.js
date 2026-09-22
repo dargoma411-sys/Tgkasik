@@ -1,21 +1,44 @@
 import { kv } from '@vercel/kv';
 import crypto from 'crypto';
 
+function safeJsonParse(str) {
+  try {
+    if (!str) return null;
+    const parsed = JSON.parse(str);
+    return parsed;
+  } catch (e) {
+    console.log('[register] JSON.parse error:', e.message, 'raw:', JSON.stringify(str).slice(0, 100));
+    return null;
+  }
+}
+
 function verifyTelegram(initData, botToken) {
   try {
     const params = new URLSearchParams(initData);
     const hash = params.get('hash');
     if (!hash) return null;
+
+    const rawUser = params.get('user');
+    if (!rawUser) return null;
+
     params.delete('hash');
     const dataCheckString = [...params.entries()]
       .map(([k, v]) => `${k}=${v}`)
       .sort()
       .join('\n');
+
     const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest();
     const calcHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
-    if (calcHash !== hash) return null;
-    return JSON.parse(params.get('user') || 'null');
-  } catch { return null; }
+    if (calcHash !== hash) {
+      console.log('[register] hash mismatch');
+      return null;
+    }
+
+    return safeJsonParse(rawUser);
+  } catch (e) {
+    console.log('[register] verifyTelegram error:', e.message);
+    return null;
+  }
 }
 
 function safeParseUser(initData) {
@@ -24,7 +47,7 @@ function safeParseUser(initData) {
     const params = new URLSearchParams(initData);
     const raw = params.get('user');
     if (!raw) return null;
-    return JSON.parse(raw);
+    return safeJsonParse(raw);
   } catch { return null; }
 }
 
@@ -39,11 +62,14 @@ export default async function handler(req, res) {
   let user = null;
 
   const botToken = process.env.BOT_TOKEN;
-  if (botToken && initData) user = verifyTelegram(initData, botToken);
+  if (botToken && initData) {
+    console.log('[register] BOT_TOKEN present, verifying');
+    user = verifyTelegram(initData, botToken);
+  }
 
   if (!user && initData) {
+    console.log('[register] falling back to unverified parse');
     user = safeParseUser(initData);
-    if (!user) console.log('[register] parse failed, no user field');
   }
 
   if (!user) {
