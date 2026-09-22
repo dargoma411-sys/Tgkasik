@@ -3,7 +3,7 @@ import { kv } from '@vercel/kv';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
 
-  const { id, balance, inv } = req.body || {};
+  const { id, balance, inv, caseStats } = req.body || {};
   if (!id) return res.status(400).json({ error: 'no id' });
   if (typeof balance !== 'number' || balance < 0 || !isFinite(balance)) {
     return res.status(400).json({ error: 'bad balance' });
@@ -11,10 +11,12 @@ export default async function handler(req, res) {
 
   const key = `player:${id}`;
   const safeInv = Array.isArray(inv) ? inv.slice(0, 500) : [];
+  const safeStats = caseStats && typeof caseStats === 'object' ? caseStats : {};
 
   await kv.hset(key, {
     balance: Math.floor(balance),
     inv: JSON.stringify(safeInv),
+    caseStats: JSON.stringify(safeStats),
     updatedAt: Date.now()
   });
 
