@@ -18,10 +18,5 @@ export default async function handler(req, res) {
     updatedAt: Date.now()
   });
 
-  await kv.zadd('leaderboard', {
-    score: Math.floor(balance),
-    member: id
-  });
-
   return res.json({ ok: true });
 }
