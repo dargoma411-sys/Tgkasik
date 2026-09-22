@@ -691,13 +691,13 @@
       const FIRST_CASE_COST = 50n;
       const LAST_CASE_COST = 10n ** 24n;
 
-      const RARITIES = [
-        { id: 'common',    name: 'Обычный',     color: '#94a3b8', glow: 'rgba(148,163,184,.18)', weight: 43.80, chance: 30,   min: 0.45, max: 0.85,  preview: 0.65 },
-        { id: 'uncommon',  name: 'Необычный',   color: '#22c55e', glow: 'rgba(34,197,94,.20)',   weight: 29.20, chance: 20,   min: 0.85, max: 1.05,  preview: 0.95 },
-        { id: 'rare',      name: 'Редкий',      color: '#3b82f6', glow: 'rgba(59,130,246,.22)',  weight: 14.60, chance: 10,   min: 1.15, max: 1.55,  preview: 1.35 },
-        { id: 'mythic',    name: 'Мифический',  color: '#a855f7', glow: 'rgba(168,85,247,.24)',  weight: 7.30,  chance: 5,    min: 2.00, max: 2.40,  preview: 2.20 },
-        { id: 'legendary', name: 'Легендарный', color: '#f59e0b', glow: 'rgba(245,158,11,.26)',  weight: 3.65,  chance: 2.5,  min: 9.50, max: 12.0,  preview: 10.5 },
-        { id: 'secret',    name: 'Секретный',   color: '#ff3b8b', glow: 'rgba(255,59,139,.30)',  weight: 1.45,  chance: 1,    min: 950,  max: 1200,  preview: 1000 }
+            const RARITIES = [
+        { id: 'common',    name: 'Обычный',     color: '#94a3b8', glow: 'rgba(148,163,184,.18)', weight: 55.00, chance: 40,   min: 0.25, max: 0.55,  preview: 0.40 },
+        { id: 'uncommon',  name: 'Необычный',   color: '#22c55e', glow: 'rgba(34,197,94,.20)',   weight: 25.00, chance: 30,   min: 0.55, max: 0.80,  preview: 0.70 },
+        { id: 'rare',      name: 'Редкий',      color: '#3b82f6', glow: 'rgba(59,130,246,.22)',  weight: 12.00, chance: 10,   min: 1.00, max: 1.40,  preview: 1.20 },
+        { id: 'mythic',    name: 'Мифический',  color: '#a855f7', glow: 'rgba(168,85,247,.24)',  weight: 5.50,  chance: 5,    min: 1.80, max: 2.20,  preview: 2.00 },
+        { id: 'legendary', name: 'Легендарный', color: '#f59e0b', glow: 'rgba(245,158,11,.26)',  weight: 2.00,  chance: 2.5,  min: 8.00, max: 10.0,  preview: 9.00 },
+        { id: 'secret',    name: 'Секретный',   color: '#ff3b8b', glow: 'rgba(255,59,139,.30)',  weight: 0.50,  chance: 1,    min: 800,  max: 1000,  preview: 900 }
       ];
 
       const RARITY_MAP = Object.fromEntries(RARITIES.map(r => [r.id, r]));
