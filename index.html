@@ -64,6 +64,8 @@ body::before{
   background:linear-gradient(135deg,var(--accent),var(--accent-3));color:#fff;border-color:transparent;
   box-shadow:0 8px 26px rgba(124,92,255,.45), inset 0 0 14px rgba(255,255,255,.16);
 }
+.tab.admin-tab{background:linear-gradient(135deg,#ff4d5e,#c62838);color:#fff}
+.tab.admin-tab.active{background:linear-gradient(135deg,#ffb020,#c9800a);box-shadow:0 8px 26px rgba(255,176,32,.45)}
 
 /* ---------- LAYOUT ---------- */
 .main{flex:1;display:flex;flex-direction:column;align-items:center;padding:18px 16px;max-width:780px;margin:0 auto;width:100%;position:relative;z-index:1}
@@ -406,6 +408,24 @@ body::before{
 .lead-refresh{padding:10px 16px;border:none;border-radius:12px;font-weight:900;font-size:.72rem;cursor:pointer;text-transform:uppercase;background:rgba(31,36,56,.9);color:var(--text);border:1px solid var(--line-2)}
 .lead-refresh:hover{border-color:var(--accent)}
 
+/* ---------- ADMIN ---------- */
+.admin-panel{background:linear-gradient(160deg,rgba(31,36,56,.9),rgba(12,14,24,.9));border:2px solid var(--red);border-radius:22px;padding:20px;box-shadow:0 0 40px rgba(255,77,94,.25)}
+.admin-title{font-size:1.2rem;font-weight:900;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.admin-group{background:rgba(16,19,31,.7);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.admin-group h3{font-size:.9rem;font-weight:900;margin-bottom:12px;color:var(--accent-2)}
+.admin-input{width:100%;background:rgba(8,10,18,.9);border:1px solid var(--line-2);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.9rem;font-weight:700;outline:none;margin-bottom:8px;transition:.2s}
+.admin-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,77,94,.15)}
+.admin-btn{width:100%;padding:13px;border:none;border-radius:12px;font-weight:900;font-size:.85rem;cursor:pointer;text-transform:uppercase;transition:.22s;margin-bottom:6px}
+.admin-btn:active{transform:scale(.97)}
+.admin-btn.danger{background:linear-gradient(135deg,var(--red),#c62838);color:#fff;box-shadow:0 8px 24px rgba(255,77,94,.35)}
+.admin-btn.warning{background:linear-gradient(135deg,var(--gold),#c9800a);color:#1a1200;box-shadow:0 8px 24px rgba(255,176,32,.35)}
+.admin-btn.green{background:linear-gradient(135deg,var(--green),#12b866);color:#04170d;box-shadow:0 8px 24px rgba(34,224,122,.35)}
+.admin-btn.blue{background:linear-gradient(135deg,var(--blue),#2554c7);color:#fff;box-shadow:0 8px 24px rgba(74,140,255,.35)}
+.admin-result{text-align:center;font-size:.82rem;font-weight:800;min-height:20px;margin-top:6px}
+.admin-result.ok{color:var(--green)}
+.admin-result.err{color:var(--red)}
+.gift-select{width:100%;background:rgba(8,10,18,.9);border:1px solid var(--line-2);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.9rem;font-weight:700;outline:none;margin-bottom:8px}
+
 /* ---------- FOOTER ---------- */
 .footer-note{text-align:center;color:var(--muted);font-size:.72rem;padding:26px 20px 10px;opacity:.55;position:relative;z-index:1}
 
@@ -429,13 +449,14 @@ body::before{
 <div class="balance" id="balanceBox"><span>🪙</span><span class="amount" id="balanceAmount">1 000</span></div>
 </div>
 
-<div class="tabs">
+<div class="tabs" id="mainTabs">
 <div class="tab active" data-view="cases" onclick="switchTab('cases')">Кейсы</div>
 <div class="tab" data-view="inventory" onclick="switchTab('inventory')">Инвентарь</div>
 <div class="tab" data-view="history" onclick="switchTab('history')">История</div>
 <div class="tab" data-view="upgrader" onclick="switchTab('upgrader')">Апгрейдер</div>
 <div class="tab" data-view="games" onclick="switchTab('games')">Игры</div>
 <div class="tab" data-view="leaderboard" onclick="switchTab('leaderboard')">Топ</div>
+<div class="tab admin-tab" id="adminTab" style="display:none" data-view="admin" onclick="switchTab('admin')">⚙ Админ</div>
 </div>
 
 <div class="main">
@@ -517,10 +538,40 @@ body::before{
 
 <div class="view" id="view-leaderboard">
 <div class="lead-header">
-<div><h2>🏆 Топ игроков</h2><div class="lead-sub">Призы: 1 место — 25%, 2 — 12%, 3 — 6% от баланса лидера, либо подарок</div></div>
+<div><h2>🏆 Топ игроков</h2><div class="lead-sub">Призы: 1 место — 25%, 2 — 12%, 3 — 6% от баланса лидера. Награду можно забрать раз в день.</div></div>
 <button class="lead-refresh" onclick="refreshLeaderboard()">Обновить</button>
 </div>
 <div class="leaderboard" id="leaderboard"></div>
+</div>
+
+<!-- ========== ADMIN VIEW ========== -->
+<div class="view" id="view-admin">
+<div class="admin-panel">
+<div class="admin-title">⚙ Админ-панель <span style="font-size:.7rem;color:var(--muted);font-weight:600">(только для ID 8485687789)</span></div>
+
+<div class="admin-group">
+<h3>💰 Управление балансом игрока</h3>
+<input type="text" class="admin-input" id="adminTgId" placeholder="Telegram ID игрока (например, 123456789)" autocomplete="off">
+<input type="number" class="admin-input" id="adminAmount" placeholder="Сумма монет" min="1" step="1">
+<button class="admin-btn green" onclick="adminAddCoins()">➕ Добавить монеты</button>
+<button class="admin-btn danger" onclick="adminRemoveCoins()">➖ Убрать монеты</button>
+<div class="admin-result" id="adminBalanceResult"></div>
+</div>
+
+<div class="admin-group">
+<h3>🎁 Выдать подарок</h3>
+<input type="text" class="admin-input" id="adminGiftTgId" placeholder="Telegram ID получателя" autocomplete="off">
+<select class="gift-select" id="adminGiftItem"></select>
+<button class="admin-btn blue" onclick="adminGiveGift()">🎁 Выдать предмет</button>
+<div class="admin-result" id="adminGiftResult"></div>
+</div>
+
+<div class="admin-group">
+<h3>⚠️ Опасные действия</h3>
+<button class="admin-btn warning" onclick="adminResetAll()">🔄 Обнулить ВСЕ деньги и инвентарь</button>
+<div class="admin-result" id="adminResetResult"></div>
+</div>
+</div>
 </div>
 
 </div>
@@ -555,8 +606,11 @@ body::before{
 const RARITY_LABELS={common:'Обычный',uncommon:'Необычный',rare:'Редкий',epic:'Эпический',mythic:'Мифический',legend:'Легендарный'};
 const RARITY_STARS={common:1,uncommon:2,rare:3,epic:4,mythic:5,legend:6};
 const START_BALANCE=1000,HISTORY_LIMIT=40,SAVE_KEY='caseDropSave_v2';
+const ADMIN_TG_ID='8485687789';
+const REWARD_SAVE_KEY='caseDropRewardDate';
+const FAKE_PLAYERS_KEY='caseDropFakePlayers';
 
-/* ==================== CASES (расширено) ==================== */
+/* ==================== CASES (отсортированы по цене) ==================== */
 const CASES=[
 {id:'farm',emoji:'🌾',name:'Фарм',price:10,items:[
 {e:'❌',n:'Ничего',r:'common',p:0,w:600},{e:'🪙',n:'Монетка-Пустышка',r:'common',p:5,w:200},
@@ -603,12 +657,26 @@ const CASES=[
 {e:'🛠',n:'Ключ-Пушка',r:'epic',p:15000,w:35},{e:'⚙️',n:'Шестерёнка-Судьбы',r:'epic',p:18000,w:25},
 {e:'🔧',n:'Отвёртка-Убийца',r:'mythic',p:50000,w:10},{e:'🪜',n:'Стремянка-Карьерист',r:'legend',p:200000,w:3}
 ]},
+{id:'summer',emoji:'🌴',name:'Летний',price:1400,items:[
+{e:'🩴',n:'Шлёпки-Пляж',r:'common',p:850,w:340},{e:'🧴',n:'Крем-Загар',r:'common',p:1000,w:270},
+{e:'🕶',n:'Очки-Солнце',r:'common',p:1300,w:190},{e:'🍹',n:'Коктейль-Чилл',r:'uncommon',p:2800,w:150},
+{e:'🏄',n:'Доска-Волна',r:'rare',p:6500,w:80},{e:'🐠',n:'Рыбка-Немо',r:'rare',p:8500,w:60},
+{e:'🌊',n:'Волна-Гигант',r:'epic',p:20000,w:35},{e:'🦈',n:'Акула-Улыбка',r:'epic',p:26000,w:25},
+{e:'🏝',n:'Остров-Мечта',r:'mythic',p:95000,w:10},{e:'🌞',n:'Солнце-Жара',r:'legend',p:380000,w:3}
+]},
 {id:'gold',emoji:'🏅',name:'Золотой',price:1500,items:[
 {e:'🥁',n:'Барабан-Вайб',r:'common',p:900,w:350},{e:'🎧',n:'Наушники-Чилл',r:'common',p:1000,w:280},
 {e:'🎮',n:'Геймпад-Краш',r:'common',p:1500,w:200},{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:3000,w:150},
 {e:'💻',n:'Ноутбук-Пушка',r:'rare',p:7000,w:80},{e:'📷',n:'Фотик-Агонь',r:'rare',p:8000,w:60},
 {e:'🕹',n:'Джойстик-Улёт',r:'epic',p:18000,w:35},{e:'🎸',n:'Гитара-Свага',r:'epic',p:22000,w:25},
 {e:'🛹',n:'Скейт-Хайп',r:'mythic',p:60000,w:10},{e:'🎳',n:'Боулинг-Легенда',r:'legend',p:250000,w:3}
+]},
+{id:'halloween',emoji:'🎃',name:'Хэллоуин',price:1800,items:[
+{e:'🍬',n:'Конфета-Тыква',r:'common',p:1100,w:340},{e:'🕸',n:'Паутина-Страх',r:'common',p:1300,w:270},
+{e:'🦇',n:'Летучая-Мышь',r:'common',p:1600,w:190},{e:'👻',n:'Призрак-Милый',r:'uncommon',p:3400,w:150},
+{e:'🧟',n:'Зомби-Сосед',r:'rare',p:8000,w:80},{e:'🧛',n:'Вампир-Стиль',r:'rare',p:10000,w:60},
+{e:'🕷',n:'Паук-Гигант',r:'epic',p:24000,w:35},{e:'⚰️',n:'Гроб-Дизайнер',r:'epic',p:30000,w:25},
+{e:'🎃',n:'Тыква-Король',r:'mythic',p:110000,w:10},{e:'💀',n:'Смерть-С косой',r:'legend',p:420000,w:3}
 ]},
 {id:'meme',emoji:'😂',name:'Мемный',price:2000,items:[
 {e:'🥒',n:'Огурец-Свага',r:'common',p:1200,w:350},{e:'🍞',n:'Батон-Краш',r:'common',p:1400,w:280},
@@ -617,6 +685,13 @@ const CASES=[
 {e:'🧸',n:'Мишка-Пушка',r:'epic',p:22000,w:35},{e:'🥁',n:'Барабан-Улёт',r:'epic',p:26000,w:25},
 {e:'🧻',n:'Рулон-Хайп',r:'mythic',p:70000,w:10},{e:'👑',n:'Корона-Кривулька',r:'legend',p:300000,w:3}
 ]},
+{id:'cyber',emoji:'🤖',name:'Киберпанк',price:2200,items:[
+{e:'🔌',n:'Провод-Неон',r:'common',p:1300,w:340},{e:'💾',n:'Флешка-Хакер',r:'common',p:1600,w:270},
+{e:'🖥',n:'Монитор-Неон',r:'common',p:2000,w:190},{e:'🕶',n:'Очки-Кибер',r:'uncommon',p:4200,w:150},
+{e:'🔋',n:'Батарея-Вечность',r:'rare',p:9500,w:80},{e:'🦾',n:'Рука-Кибер',r:'rare',p:12000,w:60},
+{e:'🧠',n:'Мозг-Чип',r:'epic',p:28000,w:35},{e:'🛰',n:'Спутник-Слежка',r:'epic',p:36000,w:25},
+{e:'👾',n:'Вирус-Босс',r:'mythic',p:140000,w:10},{e:'🌐',n:'Сеть-Владыка',r:'legend',p:550000,w:3}
+]},
 {id:'animal',emoji:'🐱',name:'Звериный',price:2500,items:[
 {e:'🐱',n:'Кот-Свага',r:'common',p:1500,w:350},{e:'🐶',n:'Пёс-Краш',r:'common',p:1800,w:280},
 {e:'🐹',n:'Хомяк-Вайб',r:'common',p:2200,w:200},{e:'🐰',n:'Кролик-Изи',r:'uncommon',p:5000,w:150},
@@ -624,12 +699,26 @@ const CASES=[
 {e:'🦁',n:'Лев-Агонь',r:'epic',p:50000,w:35},{e:'🐯',n:'Тигр-Пушка',r:'epic',p:60000,w:25},
 {e:'🐉',n:'Дракон-Китаец',r:'mythic',p:250000,w:10},{e:'🦄',n:'Единорог-Блестящий',r:'legend',p:800000,w:3}
 ]},
+{id:'newyear',emoji:'🎄',name:'Новогодний',price:2600,items:[
+{e:'❄️',n:'Снежинка-Пушинка',r:'common',p:1600,w:340},{e:'🎊',n:'Хлопушка-Бум',r:'common',p:1900,w:270},
+{e:'🍬',n:'Мандарин-Счастье',r:'common',p:2300,w:190},{e:'🧦',n:'Носок-Подарок',r:'uncommon',p:5000,w:150},
+{e:'🕯',n:'Свеча-Тепло',r:'rare',p:11000,w:80},{e:'🔔',n:'Колокольчик-Звон',r:'rare',p:14000,w:60},
+{e:'🎁',n:'Подарок-Мечты',r:'epic',p:33000,w:35},{e:'⛄',n:'Снеговик-Босс',r:'epic',p:42000,w:25},
+{e:'🎅',n:'Дед-Мороз',r:'mythic',p:160000,w:10},{e:'🌟',n:'Вифлеемская-Звезда',r:'legend',p:650000,w:3}
+]},
 {id:'platinum',emoji:'💠',name:'Платиновый',price:3000,items:[
 {e:'👑',n:'Корона-Свага',r:'common',p:2000,w:350},{e:'💎',n:'Алмаз-Вайб',r:'common',p:2200,w:280},
 {e:'🏆',n:'Кубок-Топчик',r:'common',p:2500,w:200},{e:'📱',n:'Телефон-Пушка',r:'uncommon',p:5500,w:150},
 {e:'🎁',n:'Подарок-Агонь',r:'rare',p:12000,w:80},{e:'🦄',n:'Единорог-Улёт',r:'rare',p:16000,w:60},
 {e:'🐉',n:'Дракон-Тостер',r:'epic',p:35000,w:35},{e:'🚀',n:'Ракета-Блендер',r:'epic',p:42000,w:25},
 {e:'🌟',n:'Суперзвезда-Фен',r:'mythic',p:120000,w:10},{e:'🕳',n:'Чёрная дыра-Плита',r:'legend',p:500000,w:3}
+]},
+{id:'pirate',emoji:'🏴‍☠️',name:'Пиратский',price:3200,items:[
+{e:'⚓',n:'Якорь-Ржавый',r:'common',p:2000,w:340},{e:'🧭',n:'Компас-Врун',r:'common',p:2400,w:270},
+{e:'🪙',n:'Дублон-Старый',r:'common',p:2900,w:190},{e:'⚔️',n:'Сабля-Ржавая',r:'uncommon',p:6200,w:150},
+{e:'🗺',n:'Карта-Сокровищ',r:'rare',p:14000,w:80},{e:'🦜',n:'Попугай-Матюк',r:'rare',p:18000,w:60},
+{e:'🏴‍☠️',n:'Флаг-Череп',r:'epic',p:42000,w:35},{e:'🦑',n:'Кракен-Малыш',r:'epic',p:55000,w:25},
+{e:'⚱️',n:'Сундук-Золото',r:'mythic',p:190000,w:10},{e:'👑',n:'Корона-Морская',r:'legend',p:750000,w:3}
 ]},
 {id:'sport',emoji:'⚽',name:'Спортивный',price:3500,items:[
 {e:'⚽',n:'Мяч-Свага',r:'common',p:2200,w:350},{e:'🏀',n:'Баскет-Краш',r:'common',p:2500,w:280},
@@ -645,12 +734,26 @@ const CASES=[
 {e:'📷',n:'Фотик-Агонь',r:'epic',p:60000,w:35},{e:'🕹',n:'Джойстик-Улёт',r:'epic',p:70000,w:25},
 {e:'🖨',n:'Принтер-Пожиратель',r:'mythic',p:250000,w:10},{e:'📡',n:'Спутник-Шпион',r:'legend',p:800000,w:3}
 ]},
+{id:'robots',emoji:'🦾',name:'Роботы',price:4800,items:[
+{e:'🔩',n:'Болт-Ржавый',r:'common',p:3000,w:340},{e:'⚙️',n:'Шестерня-Стальная',r:'common',p:3500,w:270},
+{e:'🔋',n:'Батарея-Заряж',r:'common',p:4200,w:190},{e:'🤖',n:'Робот-Помощник',r:'uncommon',p:9500,w:150},
+{e:'🦿',n:'Нога-Мех',r:'rare',p:22000,w:80},{e:'🦾',n:'Рука-Стальная',r:'rare',p:28000,w:60},
+{e:'🛡',n:'Щит-Титан',r:'epic',p:70000,w:35},{e:'⚡',n:'Реактор-Плазма',r:'epic',p:90000,w:25},
+{e:'🚀',n:'Мех-Космос',r:'mythic',p:300000,w:10},{e:'🧠',n:'ИИ-Владыка',r:'legend',p:1200000,w:3}
+]},
 {id:'diamond',emoji:'💎',name:'Алмазный',price:5000,items:[
 {e:'💍',n:'Кольцо-Свага',r:'common',p:3200,w:350},{e:'💻',n:'Ноутбук-Краш',r:'common',p:3800,w:280},
 {e:'🎧',n:'Наушники-Вайб',r:'common',p:4500,w:200},{e:'📱',n:'Телефон-Топчик',r:'uncommon',p:10000,w:150},
 {e:'💎',n:'Алмаз-Пушка',r:'rare',p:25000,w:80},{e:'🏎',n:'Болид-Агонь',r:'rare',p:32000,w:60},
 {e:'👑',n:'Корона-Улёт',r:'epic',p:80000,w:35},{e:'🚀',n:'Ракета-Хайп',r:'epic',p:150000,w:25},
 {e:'🌟',n:'Суперзвезда-Легенда',r:'mythic',p:450000,w:10},{e:'🐲',n:'Древний дракон-Баня',r:'legend',p:1800000,w:3}
+]},
+{id:'fantasy',emoji:'🧝',name:'Фэнтези',price:6500,items:[
+{e:'🍄',n:'Гриб-Мухомор',r:'common',p:4000,w:340},{e:'🌿',n:'Трава-Целебная',r:'common',p:4800,w:270},
+{e:'🏹',n:'Лук-Эльфа',r:'common',p:5800,w:190},{e:'🗡',n:'Кинжал-Ассасин',r:'uncommon',p:13000,w:150},
+{e:'🛡',n:'Щит-Дракона',r:'rare',p:30000,w:80},{e:'⚗️',n:'Зелье-Силы',r:'rare',p:38000,w:60},
+{e:'🔮',n:'Шар-Провидца',r:'epic',p:95000,w:35},{e:'📜',n:'Свиток-Древний',r:'epic',p:120000,w:25},
+{e:'🐉',n:'Дракон-Владыка',r:'mythic',p:420000,w:10},{e:'🧚',n:'Фея-Хранитель',r:'legend',p:1600000,w:3}
 ]},
 {id:'grandma',emoji:'👵',name:'Бабушкин',price:7000,items:[
 {e:'🧦',n:'Носок-Свага',r:'common',p:4500,w:350},{e:'🍪',n:'Печенье-Краш',r:'common',p:5500,w:280},
@@ -666,12 +769,33 @@ const CASES=[
 {e:'🏹',n:'Лук-Улёт',r:'epic',p:150000,w:35},{e:'⚗️',n:'Котел-Хайп',r:'epic',p:190000,w:25},
 {e:'🪄',n:'Палочка-Волшебника',r:'mythic',p:600000,w:10},{e:'🧙',n:'Маг-Древний',r:'legend',p:2500000,w:3}
 ]},
+{id:'neon2',emoji:'🌈',name:'Неоновый',price:9000,items:[
+{e:'💡',n:'Лампа-Неон',r:'common',p:5800,w:340},{e:'🔮',n:'Шар-Света',r:'common',p:7000,w:270},
+{e:'🌈',n:'Радуга-Мини',r:'common',p:8500,w:190},{e:'✨',n:'Искра-Света',r:'uncommon',p:19000,w:150},
+{e:'🌟',n:'Звезда-Неон',r:'rare',p:48000,w:80},{e:'💫',n:'Комета-Свет',r:'rare',p:60000,w:60},
+{e:'🪩',n:'Диско-Шар',r:'epic',p:150000,w:35},{e:'🌌',n:'Галактика-Неон',r:'epic',p:190000,w:25},
+{e:'🌈',n:'Радуга-Полная',r:'mythic',p:650000,w:10},{e:'✨',n:'Сияние-Бесконечное',r:'legend',p:2500000,w:3}
+]},
 {id:'ruby',emoji:'❤️',name:'Рубиновый',price:10000,items:[
 {e:'💎',n:'Алмаз-Свага',r:'common',p:7000,w:350},{e:'📱',n:'Телефон-Краш',r:'common',p:8500,w:280},
 {e:'🏎',n:'Болид-Вайб',r:'common',p:10000,w:200},{e:'👑',n:'Корона-Топчик',r:'uncommon',p:28000,w:150},
 {e:'🚀',n:'Ракета-Пушка',r:'rare',p:70000,w:80},{e:'🌟',n:'Суперзвезда-Агонь',r:'rare',p:90000,w:60},
 {e:'👽',n:'Пришелец-Улёт',r:'epic',p:240000,w:35},{e:'🦄',n:'Единорог-Хайп',r:'epic',p:320000,w:25},
 {e:'🌌',n:'Галактика-Легенда',r:'mythic',p:900000,w:10},{e:'💫',n:'Комета-Скамейка',r:'legend',p:3500000,w:3}
+]},
+{id:'hacker',emoji:'💻',name:'Хакерский',price:12000,items:[
+{e:'💻',n:'Ноутбук-Взлом',r:'common',p:8000,w:340},{e:'🖱',n:'Мышь-Хакер',r:'common',p:9500,w:270},
+{e:'⌨️',n:'Клава-Код',r:'common',p:11000,w:190},{e:'🔌',n:'Кабель-Взлом',r:'uncommon',p:26000,w:150},
+{e:'💾',n:'Флешка-Вирус',r:'rare',p:65000,w:80},{e:'📡',n:'Антенна-Перехват',r:'rare',p:80000,w:60},
+{e:'🕶',n:'Очки-Матрица',r:'epic',p:210000,w:35},{e:'🧠',n:'Мозг-Хакера',r:'epic',p:270000,w:25},
+{e:'👾',n:'Вирус-Тостер',r:'mythic',p:900000,w:10},{e:'🌐',n:'Сеть-Владыка',r:'legend',p:3500000,w:3}
+]},
+{id:'dragon',emoji:'🐉',name:'Драконий',price:20000,items:[
+{e:'🥚',n:'Яйцо-Дракона',r:'common',p:13000,w:340},{e:'🔥',n:'Огонь-Дракона',r:'common',p:16000,w:270},
+{e:'🦎',n:'Ящер-Малыш',r:'common',p:19000,w:190},{e:'🐉',n:'Дракон-Юный',r:'uncommon',p:45000,w:150},
+{e:'⚡',n:'Молния-Дракона',r:'rare',p:110000,w:80},{e:'💎',n:'Чешуя-Дракона',r:'rare',p:140000,w:60},
+{e:'👑',n:'Корона-Дракона',r:'epic',p:360000,w:35},{e:'🏔',n:'Гора-Дракона',r:'epic',p:460000,w:25},
+{e:'🐲',n:'Древний-Дракон',r:'mythic',p:1500000,w:10},{e:'🌋',n:'Вулкан-Дракона',r:'legend',p:6000000,w:3}
 ]},
 {id:'emerald',emoji:'💚',name:'Изумрудный',price:25000,items:[
 {e:'🏎',n:'Болид-Свага',r:'common',p:18000,w:350},{e:'👑',n:'Корона-Краш',r:'common',p:22000,w:280},
@@ -715,95 +839,51 @@ const CASES=[
 {e:'🌈',n:'Радуга-Агонь',r:'epic',p:600000000,w:35},{e:'✨',n:'Сияние-Улёт',r:'epic',p:900000000,w:25},
 {e:'🌌',n:'Галактика-Хайп',r:'mythic',p:3000000000,w:10},{e:'🕳',n:'Чёрная дыра-Легенда',r:'legend',p:20000000000,w:3}
 ]},
-/* === НОВЫЕ КЕЙСЫ === */
-{id:'cyber',emoji:'🤖',name:'Киберпанк',price:2200,items:[
-{e:'🔌',n:'Провод-Неон',r:'common',p:1300,w:340},{e:'💾',n:'Флешка-Хакер',r:'common',p:1600,w:270},
-{e:'🖥',n:'Монитор-Неон',r:'common',p:2000,w:190},{e:'🕶',n:'Очки-Кибер',r:'uncommon',p:4200,w:150},
-{e:'🔋',n:'Батарея-Вечность',r:'rare',p:9500,w:80},{e:'🦾',n:'Рука-Кибер',r:'rare',p:12000,w:60},
-{e:'🧠',n:'Мозг-Чип',r:'epic',p:28000,w:35},{e:'🛰',n:'Спутник-Слежка',r:'epic',p:36000,w:25},
-{e:'👾',n:'Вирус-Босс',r:'mythic',p:140000,w:10},{e:'🌐',n:'Сеть-Владыка',r:'legend',p:550000,w:3}
-]},
-{id:'halloween',emoji:'🎃',name:'Хэллоуин',price:1800,items:[
-{e:'🍬',n:'Конфета-Тыква',r:'common',p:1100,w:340},{e:'🕸',n:'Паутина-Страх',r:'common',p:1300,w:270},
-{e:'🦇',n:'Летучая-Мышь',r:'common',p:1600,w:190},{e:'👻',n:'Призрак-Милый',r:'uncommon',p:3400,w:150},
-{e:'🧟',n:'Зомби-Сосед',r:'rare',p:8000,w:80},{e:'🧛',n:'Вампир-Стиль',r:'rare',p:10000,w:60},
-{e:'🕷',n:'Паук-Гигант',r:'epic',p:24000,w:35},{e:'⚰️',n:'Гроб-Дизайнер',r:'epic',p:30000,w:25},
-{e:'🎃',n:'Тыква-Король',r:'mythic',p:110000,w:10},{e:'💀',n:'Смерть-С косой',r:'legend',p:420000,w:3}
-]},
-{id:'newyear',emoji:'🎄',name:'Новогодний',price:2600,items:[
-{e:'❄️',n:'Снежинка-Пушинка',r:'common',p:1600,w:340},{e:'🎊',n:'Хлопушка-Бум',r:'common',p:1900,w:270},
-{e:'🍬',n:'Мандарин-Счастье',r:'common',p:2300,w:190},{e:'🧦',n:'Носок-Подарок',r:'uncommon',p:5000,w:150},
-{e:'🕯',n:'Свеча-Тепло',r:'rare',p:11000,w:80},{e:'🔔',n:'Колокольчик-Звон',r:'rare',p:14000,w:60},
-{e:'🎁',n:'Подарок-Мечты',r:'epic',p:33000,w:35},{e:'⛄',n:'Снеговик-Босс',r:'epic',p:42000,w:25},
-{e:'🎅',n:'Дед-Мороз',r:'mythic',p:160000,w:10},{e:'🌟',n:'Вифлеемская-Звезда',r:'legend',p:650000,w:3}
-]},
-{id:'summer',emoji:'🌴',name:'Летний',price:1400,items:[
-{e:'🩴',n:'Шлёпки-Пляж',r:'common',p:850,w:340},{e:'🧴',n:'Крем-Загар',r:'common',p:1000,w:270},
-{e:'🕶',n:'Очки-Солнце',r:'common',p:1300,w:190},{e:'🍹',n:'Коктейль-Чилл',r:'uncommon',p:2800,w:150},
-{e:'🏄',n:'Доска-Волна',r:'rare',p:6500,w:80},{e:'🐠',n:'Рыбка-Немо',r:'rare',p:8500,w:60},
-{e:'🌊',n:'Волна-Гигант',r:'epic',p:20000,w:35},{e:'🦈',n:'Акула-Улыбка',r:'epic',p:26000,w:25},
-{e:'🏝',n:'Остров-Мечта',r:'mythic',p:95000,w:10},{e:'🌞',n:'Солнце-Жара',r:'legend',p:380000,w:3}
-]},
-{id:'pirate',emoji:'🏴‍☠️',name:'Пиратский',price:3200,items:[
-{e:'⚓',n:'Якорь-Ржавый',r:'common',p:2000,w:340},{e:'🧭',n:'Компас-Врун',r:'common',p:2400,w:270},
-{e:'🪙',n:'Дублон-Старый',r:'common',p:2900,w:190},{e:'⚔️',n:'Сабля-Ржавая',r:'uncommon',p:6200,w:150},
-{e:'🗺',n:'Карта-Сокровищ',r:'rare',p:14000,w:80},{e:'🦜',n:'Попугай-Матюк',r:'rare',p:18000,w:60},
-{e:'🏴‍☠️',n:'Флаг-Череп',r:'epic',p:42000,w:35},{e:'🦑',n:'Кракен-Малыш',r:'epic',p:55000,w:25},
-{e:'⚱️',n:'Сундук-Золото',r:'mythic',p:190000,w:10},{e:'👑',n:'Корона-Морская',r:'legend',p:750000,w:3}
-]},
-{id:'robots',emoji:'🦾',name:'Роботы',price:4800,items:[
-{e:'🔩',n:'Болт-Ржавый',r:'common',p:3000,w:340},{e:'⚙️',n:'Шестерня-Стальная',r:'common',p:3500,w:270},
-{e:'🔋',n:'Батарея-Заряж',r:'common',p:4200,w:190},{e:'🤖',n:'Робот-Помощник',r:'uncommon',p:9500,w:150},
-{e:'🦿',n:'Нога-Мех',r:'rare',p:22000,w:80},{e:'🦾',n:'Рука-Стальная',r:'rare',p:28000,w:60},
-{e:'🛡',n:'Щит-Титан',r:'epic',p:70000,w:35},{e:'⚡',n:'Реактор-Плазма',r:'epic',p:90000,w:25},
-{e:'🚀',n:'Мех-Космос',r:'mythic',p:300000,w:10},{e:'🧠',n:'ИИ-Владыка',r:'legend',p:1200000,w:3}
-]},
-{id:'fantasy',emoji:'🧝',name:'Фэнтези',price:6500,items:[
-{e:'🍄',n:'Гриб-Мухомор',r:'common',p:4000,w:340},{e:'🌿',n:'Трава-Целебная',r:'common',p:4800,w:270},
-{e:'🏹',n:'Лук-Эльфа',r:'common',p:5800,w:190},{e:'🗡',n:'Кинжал-Ассасин',r:'uncommon',p:13000,w:150},
-{e:'🛡',n:'Щит-Дракона',r:'rare',p:30000,w:80},{e:'⚗️',n:'Зелье-Силы',r:'rare',p:38000,w:60},
-{e:'🔮',n:'Шар-Провидца',r:'epic',p:95000,w:35},{e:'📜',n:'Свиток-Древний',r:'epic',p:120000,w:25},
-{e:'🐉',n:'Дракон-Владыка',r:'mythic',p:420000,w:10},{e:'🧚',n:'Фея-Хранитель',r:'legend',p:1600000,w:3}
-]},
-{id:'neon2',emoji:'🌈',name:'Неоновый',price:9000,items:[
-{e:'💡',n:'Лампа-Неон',r:'common',p:5800,w:340},{e:'🔮',n:'Шар-Света',r:'common',p:7000,w:270},
-{e:'🌈',n:'Радуга-Мини',r:'common',p:8500,w:190},{e:'✨',n:'Искра-Света',r:'uncommon',p:19000,w:150},
-{e:'🌟',n:'Звезда-Неон',r:'rare',p:48000,w:80},{e:'💫',n:'Комета-Свет',r:'rare',p:60000,w:60},
-{e:'🪩',n:'Диско-Шар',r:'epic',p:150000,w:35},{e:'🌌',n:'Галактика-Неон',r:'epic',p:190000,w:25},
-{e:'🌈',n:'Радуга-Полная',r:'mythic',p:650000,w:10},{e:'✨',n:'Сияние-Бесконечное',r:'legend',p:2500000,w:3}
-]},
-{id:'hacker',emoji:'💻',name:'Хакерский',price:12000,items:[
-{e:'💻',n:'Ноутбук-Взлом',r:'common',p:8000,w:340},{e:'🖱',n:'Мышь-Хакер',r:'common',p:9500,w:270},
-{e:'⌨️',n:'Клава-Код',r:'common',p:11000,w:190},{e:'🔌',n:'Кабель-Взлом',r:'uncommon',p:26000,w:150},
-{e:'💾',n:'Флешка-Вирус',r:'rare',p:65000,w:80},{e:'📡',n:'Антенна-Перехват',r:'rare',p:80000,w:60},
-{e:'🕶',n:'Очки-Матрица',r:'epic',p:210000,w:35},{e:'🧠',n:'Мозг-Хакера',r:'epic',p:270000,w:25},
-{e:'👾',n:'Вирус-Тостер',r:'mythic',p:900000,w:10},{e:'🌐',n:'Сеть-Владыка',r:'legend',p:3500000,w:3}
-]},
-{id:'dragon',emoji:'🐉',name:'Драконий',price:20000,items:[
-{e:'🥚',n:'Яйцо-Дракона',r:'common',p:13000,w:340},{e:'🔥',n:'Огонь-Дракона',r:'common',p:16000,w:270},
-{e:'🦎',n:'Ящер-Малыш',r:'common',p:19000,w:190},{e:'🐉',n:'Дракон-Юный',r:'uncommon',p:45000,w:150},
-{e:'⚡',n:'Молния-Дракона',r:'rare',p:110000,w:80},{e:'💎',n:'Чешуя-Дракона',r:'rare',p:140000,w:60},
-{e:'👑',n:'Корона-Дракона',r:'epic',p:360000,w:35},{e:'🏔',n:'Гора-Дракона',r:'epic',p:460000,w:25},
-{e:'🐲',n:'Древний-Дракон',r:'mythic',p:1500000,w:10},{e:'🌋',n:'Вулкан-Дракона',r:'legend',p:6000000,w:3}
-]},
 {id:'billion',emoji:'💵',name:'Миллиардный',price:100000000,items:[
 {e:'💵',n:'Купюра-Миллион',r:'common',p:80000000,w:340},{e:'💎',n:'Алмаз-Миллиард',r:'common',p:100000000,w:270},
 {e:'🏆',n:'Кубок-Миллиард',r:'common',p:120000000,w:190},{e:'👑',n:'Корона-Миллиард',r:'uncommon',p:280000000,w:150},
 {e:'🚀',n:'Ракета-Миллиард',r:'rare',p:700000000,w:80},{e:'🌟',n:'Звезда-Миллиард',r:'rare',p:900000000,w:60},
 {e:'💫',n:'Комета-Миллиард',r:'epic',p:2500000000,w:35},{e:'🌈',n:'Радуга-Миллиард',r:'epic',p:4000000000,w:25},
 {e:'✨',n:'Сияние-Миллиард',r:'mythic',p:15000000000,w:10},{e:'🕳',n:'Чёрная дыра-Миллиард',r:'legend',p:100000000000,w:3}
+]},
+/* ===== НОВЫЕ ОЧЕНЬ ДОРОГИЕ КЕЙСЫ ===== */
+{id:'trillion',emoji:'🌠',name:'Триллионный',price:1000000000,items:[
+{e:'💎',n:'Алмаз-Гигант',r:'common',p:800000000,w:340},{e:'🏆',n:'Кубок-Триллион',r:'common',p:1200000000,w:270},
+{e:'👑',n:'Корона-Императора',r:'common',p:1600000000,w:190},{e:'🚀',n:'Ракета-Мечта',r:'uncommon',p:4000000000,w:150},
+{e:'🌟',n:'Звезда-Сверхновая',r:'rare',p:12000000000,w:80},{e:'💫',n:'Комета-Галактика',r:'rare',p:20000000000,w:60},
+{e:'🌈',n:'Радуга-Бесконечность',r:'epic',p:80000000000,w:35},{e:'✨',n:'Сияние-Триллион',r:'epic',p:150000000000,w:25},
+{e:'🌌',n:'Галактика-Империя',r:'mythic',p:500000000000,w:10},{e:'🕳',n:'Чёрная дыра-Триллион',r:'legend',p:5000000000000,w:3}
+]},
+{id:'quadrillion',emoji:'💫',name:'Квадриллионный',price:10000000000,items:[
+{e:'🏆',n:'Кубок-Квадриллион',r:'common',p:8000000000,w:340},{e:'👑',n:'Корона-Бога',r:'common',p:12000000000,w:270},
+{e:'🚀',n:'Ракета-Вселенная',r:'common',p:20000000000,w:190},{e:'🌟',n:'Звезда-Квадриллион',r:'uncommon',p:50000000000,w:150},
+{e:'💫',n:'Комета-Квадриллион',r:'rare',p:150000000000,w:80},{e:'🌈',n:'Радуга-Квадриллион',r:'rare',p:250000000000,w:60},
+{e:'✨',n:'Сияние-Квадриллион',r:'epic',p:1000000000000,w:35},{e:'🌌',n:'Галактика-Квадриллион',r:'epic',p:2000000000000,w:25},
+{e:'🕳',n:'Чёрная дыра-Квадриллион',r:'mythic',p:8000000000000,w:10},{e:'🌠',n:'Вселенная-Легенда',r:'legend',p:50000000000000,w:3}
+]},
+{id:'sextillion',emoji:'🔮',name:'Секстиллионный',price:100000000000,items:[
+{e:'👑',n:'Корона-Секстиллион',r:'common',p:80000000000,w:340},{e:'🚀',n:'Ракета-Секстиллион',r:'common',p:150000000000,w:270},
+{e:'🌟',n:'Звезда-Секстиллион',r:'common',p:250000000000,w:190},{e:'💫',n:'Комета-Секстиллион',r:'uncommon',p:600000000000,w:150},
+{e:'🌈',n:'Радуга-Секстиллион',r:'rare',p:2000000000000,w:80},{e:'✨',n:'Сияние-Секстиллион',r:'rare',p:3500000000000,w:60},
+{e:'🌌',n:'Галактика-Секстиллион',r:'epic',p:15000000000000,w:35},{e:'🕳',n:'Чёрная дыра-Секстиллион',r:'epic',p:30000000000000,w:25},
+{e:'🌠',n:'Вселенная-Секстиллион',r:'mythic',p:100000000000000,w:10},{e:'💎',n:'Абсолют-Легенда',r:'legend',p:800000000000000,w:3}
 ]}
 ];
+
+/* Сортировка кейсов по цене (от дешёвых к дорогим) */
+CASES.sort((a,b)=>a.price-b.price);
 
 /* ==================== STATE ==================== */
 let balance=START_BALANCE,isOpening=false,history=[],inventory=[],currentCaseId=CASES[0].id,pendingDrop=null,pendingMulti=null,selectedAmount=1;
 let upgradeBet=null,upgradeWant=null,upgradeWheelAngle=0,upgradeRolling=false;
-let leaderboardData=[],rewardTarget=null;
+let leaderboardData=[],rewardTarget=null,rewardRank=null;
+let fakePlayers=[];
+let isAdmin=false;
 
 /* ==================== SAVE / LOAD ==================== */
 function saveGame(){
   try{
-    const data={balance,history,inventory,currentCaseId,selectedAmount};
+    const data={balance,history,inventory,currentCaseId,selectedAmount,fakePlayers};
     localStorage.setItem(SAVE_KEY,JSON.stringify(data));
   }catch(e){}
 }
@@ -817,6 +897,7 @@ function loadGame(){
     if(Array.isArray(d.inventory))inventory=d.inventory;
     if(d.currentCaseId&&CASES.some(c=>c.id===d.currentCaseId))currentCaseId=d.currentCaseId;
     if([1,2,5,10].includes(d.selectedAmount))selectedAmount=d.selectedAmount;
+    if(Array.isArray(d.fakePlayers))fakePlayers=d.fakePlayers;
   }catch(e){}
 }
 function saveAndRefresh(){saveGame();}
@@ -830,6 +911,7 @@ function switchTab(v){
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
   const e=document.getElementById('view-'+v);if(e)e.classList.add('active');
   if(v==='leaderboard')refreshLeaderboard();
+  if(v==='admin'&&!isAdmin){switchTab('cases');}
 }
 function renderCasePicker(){
   const p=document.getElementById('casePicker');if(!p)return;
@@ -844,7 +926,7 @@ function resetRoulette(){
   for(let i=0;i<60;i++){const it=pickRandomItem(c);const el=document.createElement('div');el.className='item r-'+it.r;el.innerHTML=buildRouletteItem(it);r.appendChild(el);}
 }
 
-/* ==================== ROULETTE (исправлено: лента строится под победителя) ==================== */
+/* ==================== ROULETTE ==================== */
 function generateRouletteWithWinner(winItem){
   const r=document.getElementById('roulette');
   const c=getCurrentCase();
@@ -1217,15 +1299,16 @@ function showGamePopup(win,overrideTitle,sub){
 }
 function closeGamePopup(){const p=document.getElementById('gamePopup');if(p)p.classList.remove('show');}
 
-/* ==================== LEADERBOARD (симуляция «настоящих» игроков) ==================== */
-const FAKE_NAMES=['xX_NoScope_Xx','Лёха_Босс','Танкист2000','Мама_Разрешила','Крутой_Перец','Саня_Свэг','Валера_Пиво','Кибер_Кот','Путин_Наш','Сын_Маминой_Подруги','Тётя_Зина','Анка_Пулемётчица','Дед_Мороз','Иван_Дурак','Царь_Салтан','Снежная_Королева','Барс_Фиолетовый','Кибер_Дракон','Ниндзя_В_Тапках','Бабка_С_Клюшкой'];
+/* ==================== LEADERBOARD ==================== */
+function generateFakePlayers(){
+  if(fakePlayers.length>0)return fakePlayers;
+  const names=['xX_NoScope_Xx','Лёха_Босс','Танкист2000','Мама_Разрешила','Крутой_Перец','Саня_Свэг','Валера_Пиво','Кибер_Кот','Путин_Наш','Сын_Маминой_Подруги','Тётя_Зина','Анка_Пулемётчица','Дед_Мороз','Иван_Дурак','Царь_Салтан','Снежная_Королева','Барс_Фиолетовый','Кибер_Дракон','Ниндзя_В_Тапках','Бабка_С_Клюшкой'];
+  fakePlayers=names.map(n=>({name:n,balance:Math.floor(2000+Math.random()*90000000)}));
+  saveGame();
+  return fakePlayers;
+}
 function generateLeaderboard(){
-  const arr=[];
-  FAKE_NAMES.forEach(n=>{
-    const bal=Math.floor(2000+Math.random()*90000000);
-    arr.push({name:n,balance:bal});
-  });
-  // добавляем самого игрока
+  const arr=[...generateFakePlayers()];
   arr.push({name:'ТЫ',balance:balance,isMe:true});
   arr.sort((a,b)=>b.balance-a.balance);
   return arr;
@@ -1233,25 +1316,36 @@ function generateLeaderboard(){
 function refreshLeaderboard(){
   leaderboardData=generateLeaderboard();
   renderLeaderboard();
-  saveGame();
+}
+function canClaimReward(rank){
+  const key=REWARD_SAVE_KEY+'_'+rank;
+  const last=localStorage.getItem(key);
+  if(!last)return true;
+  const lastDate=new Date(parseInt(last)).toDateString();
+  const today=new Date().toDateString();
+  return lastDate!==today;
+}
+function markRewardClaimed(rank){
+  localStorage.setItem(REWARD_SAVE_KEY+'_'+rank,Date.now().toString());
 }
 function renderLeaderboard(){
   const el=document.getElementById('leaderboard');if(!el)return;
   if(!leaderboardData.length)leaderboardData=generateLeaderboard();
-  const top=leaderboardData[0];
   el.innerHTML=leaderboardData.map((p,i)=>{
     const rank=i+1;
     let reward='';
     if(rank===1)reward='1 место — 25% или подарок';
     else if(rank===2)reward='2 место — 12% или подарок';
     else if(rank===3)reward='3 место — 6% или подарок';
-    const canClaim=p.isMe&&rank<=3;
+    const canClaim=p.isMe&&rank<=3&&canClaimReward(rank);
+    const alreadyClaimed=p.isMe&&rank<=3&&!canClaimReward(rank);
     return `<div class="lead-item ${p.isMe?'me':''}">
       <div class="lead-rank">${rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank}</div>
       <div class="lead-info">
         <div class="lead-name">${p.name} ${p.isMe?'<span class="lead-tag">(ты)</span>':''}</div>
         <div class="lead-bal">${formatPrice(p.balance)} 🪙</div>
         ${reward?`<div class="lead-reward">${reward}</div>`:''}
+        ${alreadyClaimed?'<div class="lead-reward" style="color:var(--muted)">Награда уже получена сегодня</div>':''}
       </div>
       ${canClaim?`<div class="lead-actions">
         <button class="lead-btn cash" onclick="openRewardModal('cash',${rank})">💰 Деньги</button>
@@ -1260,7 +1354,6 @@ function renderLeaderboard(){
     </div>`;
   }).join('');
 }
-let rewardRank=null;
 function openRewardModal(type,rank){
   rewardTarget=type;rewardRank=rank;
   const m=document.getElementById('rewardModal');
@@ -1278,6 +1371,10 @@ function openRewardModal(type,rank){
 function closeRewardModal(){document.getElementById('rewardModal').classList.remove('show');rewardTarget=null;rewardRank=null;}
 function claimReward(type){
   if(!rewardRank)return;
+  if(!canClaimReward(rewardRank)){
+    showGamePopup(false,'УЖЕ ПОЛУЧЕНО','Ты уже забрал награду сегодня. Приходи завтра!');
+    closeRewardModal();return;
+  }
   const top=leaderboardData[0];
   const pct=rewardRank===1?25:rewardRank===2?12:6;
   if(type==='cash'){
@@ -1285,14 +1382,75 @@ function claimReward(type){
     balance+=amount;updateBalance('plus');
     showGamePopup(true,null,'Награда за '+rewardRank+' место: +'+formatPrice(amount));
   }else{
-    // подарок — случайный предмет из топ-кейсов
     const c=CASES[CASES.length-1];
     const it=pickRandomItem(c);
     inventory.push(it);renderInventory();
     showGamePopup(true,null,'Подарок: '+it.e+' '+it.n);
   }
+  markRewardClaimed(rewardRank);
   closeRewardModal();
+  refreshLeaderboard();
   saveGame();
+}
+
+/* ==================== ADMIN ==================== */
+function initAdmin(){
+  const tgId=prompt('Введите ваш Telegram ID для доступа к админ-панели:');
+  if(tgId===ADMIN_TG_ID){
+    isAdmin=true;
+    document.getElementById('adminTab').style.display='block';
+    loadGiftSelect();
+    console.log('✅ Админ-доступ разрешён');
+  }else{
+    isAdmin=false;
+    document.getElementById('adminTab').style.display='none';
+  }
+}
+function loadGiftSelect(){
+  const sel=document.getElementById('adminGiftItem');if(!sel)return;
+  const all=[],seen=new Set();
+  CASES.forEach(c=>c.items.forEach(it=>{const k=it.e+it.n+it.p;if(!seen.has(k)){seen.add(k);all.push(it);}}));
+  all.sort((a,b)=>a.p-b.p);
+  sel.innerHTML=all.map((it,i)=>`<option value="${i}">${it.e} ${it.n} — ${formatPrice(it.p)} 🪙 [${RARITY_LABELS[it.r]}]</option>`).join('');
+  window._allGiftItems=all;
+}
+function adminAddCoins(){
+  const tgId=document.getElementById('adminTgId').value.trim();
+  const amount=parseFloat(document.getElementById('adminAmount').value);
+  const res=document.getElementById('adminBalanceResult');
+  if(!tgId){res.textContent='Укажи Telegram ID';res.className='admin-result err';return;}
+  if(!amount||amount<=0){res.textContent='Укажи сумму';res.className='admin-result err';return;}
+  balance+=amount;updateBalance('plus');saveGame();
+  res.textContent=`✅ Добавлено ${formatPrice(amount)} 🪙 игроку ${tgId}`;res.className='admin-result ok';
+}
+function adminRemoveCoins(){
+  const tgId=document.getElementById('adminTgId').value.trim();
+  const amount=parseFloat(document.getElementById('adminAmount').value);
+  const res=document.getElementById('adminBalanceResult');
+  if(!tgId){res.textContent='Укажи Telegram ID';res.className='admin-result err';return;}
+  if(!amount||amount<=0){res.textContent='Укажи сумму';res.className='admin-result err';return;}
+  balance=Math.max(0,balance-amount);updateBalance();saveGame();
+  res.textContent=`✅ Убрано ${formatPrice(amount)} 🪙 у игрока ${tgId}`;res.className='admin-result ok';
+}
+function adminGiveGift(){
+  const tgId=document.getElementById('adminGiftTgId').value.trim();
+  const sel=document.getElementById('adminGiftItem');
+  const res=document.getElementById('adminGiftResult');
+  if(!tgId){res.textContent='Укажи Telegram ID';res.className='admin-result err';return;}
+  const idx=parseInt(sel.value);
+  const it=window._allGiftItems[idx];
+  if(!it){res.textContent='Выбери предмет';res.className='admin-result err';return;}
+  inventory.push(it);renderInventory();saveGame();
+  res.textContent=`✅ Выдан подарок: ${it.e} ${it.n} игроку ${tgId}`;res.className='admin-result ok';
+}
+function adminResetAll(){
+  if(!confirm('Ты уверен, что хочешь обнулить ВСЕ деньги и инвентарь?'))return;
+  const res=document.getElementById('adminResetResult');
+  balance=0;inventory=[];history=[];
+  updateBalance();renderInventory();renderHistory();
+  try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+  saveGame();
+  res.textContent='✅ Всё обнулено';res.className='admin-result ok';
 }
 
 /* ==================== INIT ==================== */
@@ -1305,13 +1463,13 @@ resetRoulette();
 renderUpgrader();
 updateAmountAvailability();
 renderLeaderboard();
+initAdmin();
 
 document.getElementById('dropModal').addEventListener('click',e=>{if(e.target.id==='dropModal')keepDrop();});
 document.getElementById('gamePopup').addEventListener('click',e=>{if(e.target.id==='gamePopup')closeGamePopup();});
 document.getElementById('rewardModal').addEventListener('click',e=>{if(e.target.id==='rewardModal')closeRewardModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeGamePopup();closeDrop();closeSlotPicker();closeRewardModal();}});
 
-// автосохранение при изменении баланса
 const _origUpdateBalance=updateBalance;
 updateBalance=function(t){_origUpdateBalance(t);saveGame();};
 </script>
