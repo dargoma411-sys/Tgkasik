@@ -58,7 +58,7 @@ export default async function handler(req, res) {
       lastClaimAt: 0,
       updatedAt: Date.now()
     });
-    await kv.zadd('leaderboard', { score: 1000, member: id });
+    // await kv.zadd('leaderboard', { score: 1000, member: id });
   } else {
     await kv.hset(key, { name, photo, updatedAt: Date.now() });
   }
