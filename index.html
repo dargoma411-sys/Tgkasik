@@ -38,11 +38,7 @@
       overflow-x: hidden;
     }
 
-    button, input, select {
-      font: inherit;
-      color: inherit;
-    }
-
+    button, input, select { font: inherit; color: inherit; }
     button { cursor: pointer; border: none; background: none; }
 
     #app {
@@ -51,7 +47,6 @@
       padding: 0 14px calc(88px + env(safe-area-inset-bottom));
     }
 
-    /* ==================== ЗАКРЕПЛЁННЫЙ ТОПБАР ==================== */
     .topbar {
       position: sticky;
       top: 0;
@@ -60,10 +55,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px 0 12px;
+      padding: 12px 14px;
       margin: 0 -14px;
-      padding-left: 14px;
-      padding-right: 14px;
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
       background: linear-gradient(180deg, rgba(4,8,20,.98) 0%, rgba(4,8,20,.92) 70%, rgba(4,8,20,.78) 100%);
@@ -157,26 +150,10 @@
       box-shadow: 0 12px 30px rgba(79,140,255,.22);
     }
 
-    .btn.success {
-      background: linear-gradient(135deg, #16a34a, #22c55e);
-      border-color: transparent;
-    }
-
-    .btn.danger {
-      background: linear-gradient(135deg, #dc2626, #ef4444);
-      border-color: transparent;
-    }
-
-    .btn.warning {
-      background: linear-gradient(135deg, #d97706, #f59e0b);
-      border-color: transparent;
-      color: #1b1205;
-    }
-
-    .btn.ghost {
-      background: rgba(255,255,255,.05);
-    }
-
+    .btn.success { background: linear-gradient(135deg, #16a34a, #22c55e); border-color: transparent; }
+    .btn.danger { background: linear-gradient(135deg, #dc2626, #ef4444); border-color: transparent; }
+    .btn.warning { background: linear-gradient(135deg, #d97706, #f59e0b); border-color: transparent; color: #1b1205; }
+    .btn.ghost { background: rgba(255,255,255,.05); }
     .small { min-height: 36px; padding: 8px 10px; border-radius: 12px; font-size: 13px; }
 
     .qty-row, .filters-row, .sort-row, .seg-row, .bet-row, .modal-actions {
@@ -235,12 +212,8 @@
       gap: 8px;
     }
 
-    @media (min-width: 560px) {
-      .cases-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    }
-    @media (min-width: 820px) {
-      .cases-grid { grid-template-columns: repeat(4, 1fr); }
-    }
+    @media (min-width: 560px) { .cases-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } }
+    @media (min-width: 820px) { .cases-grid { grid-template-columns: repeat(4, 1fr); } }
 
     .case-card {
       position: relative;
@@ -260,19 +233,12 @@
 
     .case-card:active { transform: scale(.98); }
 
-    .case-head {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+    .case-head { display: flex; gap: 8px; align-items: center; }
 
     .case-emoji {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      border-radius: 12px;
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      font-size: 22px; border-radius: 12px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.1);
       flex: 0 0 auto;
@@ -287,31 +253,16 @@
       overflow: hidden;
     }
 
-    .case-cost {
-      color: #bfd4ff;
-      font-weight: 800;
-      font-size: 12px;
-    }
+    .case-cost { color: #bfd4ff; font-weight: 800; font-size: 12px; }
 
-    .case-preview {
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding-bottom: 2px;
-    }
-
+    .case-preview { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
     .case-preview::-webkit-scrollbar { display: none; }
 
     .prev {
       flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      font-size: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 8px; font-size: 14px;
       background: rgba(0,0,0,.25);
       border: 1px solid var(--rar, rgba(255,255,255,.15));
       box-shadow: 0 0 10px var(--glow, transparent);
@@ -322,40 +273,28 @@
       min-height: 34px;
       padding: 7px 8px;
       border-radius: 12px;
-      font-weight: 900;
-      font-size: 12px;
+      font-weight: 900; font-size: 12px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border: none;
-      color: #fff;
+      border: none; color: #fff;
       box-shadow: 0 8px 20px rgba(79,140,255,.2);
       transition: .16s ease;
     }
     .case-open-btn:active { transform: scale(.97); }
 
-    .gift-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
+    .gift-list { display: grid; gap: 10px; margin-top: 12px; }
 
     .gift-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 18px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; border-radius: 18px;
       background: rgba(255,255,255,.05);
       border: 1px solid var(--rar, rgba(255,255,255,.1));
       box-shadow: 0 0 22px var(--glow, transparent);
     }
 
     .gift-emoji, .res-emoji, .coll-emoji {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      border-radius: 14px;
+      width: 46px; height: 46px;
+      display: grid; place-items: center;
+      font-size: 24px; border-radius: 14px;
       background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.09);
       flex: 0 0 auto;
@@ -370,20 +309,15 @@
     }
 
     .gift-meta, .res-value, .coll-meta {
-      margin-top: 3px;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
+      margin-top: 3px; font-size: 12px;
+      color: var(--muted); font-weight: 700;
     }
 
     .leaderboard { margin-top: 12px; display: grid; gap: 8px; }
 
     .lb-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 18px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; border-radius: 18px;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.08);
     }
@@ -393,22 +327,8 @@
       border-color: rgba(125,180,255,.28);
     }
 
-    .lb-rank {
-      width: 34px;
-      text-align: center;
-      font-weight: 900;
-      color: var(--muted);
-    }
-
-    .lb-name {
-      flex: 1;
-      min-width: 0;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
+    .lb-rank { width: 34px; text-align: center; font-weight: 900; color: var(--muted); }
+    .lb-name { flex: 1; min-width: 0; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lb-balance { font-weight: 900; color: #cfe0ff; white-space: nowrap; }
 
     .reward-card {
@@ -419,12 +339,7 @@
         var(--card);
     }
 
-    .game-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
+    .game-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
     .game-panel { display: none; }
     .game-panel.active { display: block; animation: fade .2s ease; }
 
@@ -441,8 +356,7 @@
       background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.1);
       font-size: 22px;
-      display: grid;
-      place-items: center;
+      display: grid; place-items: center;
       transition: .14s ease;
     }
 
@@ -452,25 +366,12 @@
     .mine-cell.bomb { background: rgba(239,68,68,.2); border-color: rgba(239,68,68,.4); }
 
     .mines-info {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-      font-weight: 900;
-      color: #d7e3ff;
+      display: flex; justify-content: space-between; gap: 10px;
+      margin-top: 12px; font-weight: 900; color: #d7e3ff;
     }
 
-    .range-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 8px 0 12px;
-    }
-
-    .range-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--accent);
-    }
+    .range-row { display: flex; align-items: center; gap: 12px; margin: 8px 0 12px; }
+    .range-row input[type="range"] { flex: 1; accent-color: var(--accent); }
 
     .target-list {
       display: grid;
@@ -496,25 +397,15 @@
 
     .target-emoji { font-size: 24px; }
     .target-name {
-      margin-top: 4px;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-top: 4px; font-weight: 900;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .target-meta { margin-top: 4px; font-size: 12px; color: var(--muted); font-weight: 800; }
 
-    .wheel-container {
-      position: relative;
-      width: 190px;
-      height: 190px;
-      margin: 18px auto 10px;
-    }
+    .wheel-container { position: relative; width: 190px; height: 190px; margin: 18px auto 10px; }
 
     .up-wheel {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
+      width: 100%; height: 100%; border-radius: 50%;
       background: conic-gradient(var(--green) 0deg 0deg, var(--red) 0deg 360deg);
       box-shadow:
         0 0 0 8px rgba(255,255,255,.12),
@@ -526,11 +417,9 @@
 
     .up-pointer {
       position: absolute;
-      top: -12px;
-      left: 50%;
+      top: -12px; left: 50%;
       transform: translateX(-50%);
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       border-left: 11px solid transparent;
       border-right: 11px solid transparent;
       border-top: 20px solid #fff;
@@ -538,16 +427,10 @@
       z-index: 2;
     }
 
-    .coin-stage {
-      perspective: 900px;
-      display: grid;
-      place-items: center;
-      margin: 18px 0 10px;
-    }
+    .coin-stage { perspective: 900px; display: grid; place-items: center; margin: 18px 0 10px; }
 
     .coin-flip {
-      width: 130px;
-      height: 130px;
+      width: 130px; height: 130px;
       position: relative;
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
@@ -555,11 +438,9 @@
     }
 
     .coin-face {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       border-radius: 50%;
-      display: grid;
-      place-items: center;
+      display: grid; place-items: center;
       font-size: 52px;
       background: linear-gradient(135deg, #fde68a, #f59e0b, #b45309);
       border: 4px solid rgba(255,255,255,.22);
@@ -573,8 +454,7 @@
     .collection-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
+      gap: 10px; margin-top: 10px;
     }
 
     .coll-item {
@@ -585,10 +465,8 @@
       box-shadow: 0 0 18px var(--glow, transparent);
       text-align: center;
       min-height: 112px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       gap: 6px;
     }
 
@@ -603,17 +481,14 @@
     .coll-group h3 {
       margin: 0 0 8px;
       font-size: 15px;
-      display: flex;
-      justify-content: space-between;
+      display: flex; justify-content: space-between;
       gap: 10px;
       color: var(--rar, #fff);
     }
 
     .bottom-nav {
       position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: 0; right: 0; bottom: 0;
       z-index: 60;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -625,16 +500,12 @@
     }
 
     .nav-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      min-height: 54px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; min-height: 54px;
       border-radius: 16px;
       color: var(--muted);
-      font-size: 10px;
-      font-weight: 800;
+      font-size: 10px; font-weight: 800;
       transition: .16s ease;
     }
 
@@ -646,12 +517,10 @@
     }
 
     .modal {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       z-index: 100;
       display: none;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       padding: 14px;
       background: rgba(0,0,0,.66);
       backdrop-filter: blur(10px);
@@ -660,8 +529,7 @@
     .modal.show { display: flex; }
 
     .modal-box {
-      width: 100%;
-      max-width: 580px;
+      width: 100%; max-width: 580px;
       max-height: 92vh;
       overflow: auto;
       border-radius: 26px;
@@ -672,22 +540,16 @@
     }
 
     .modal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-weight: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 12px; font-weight: 900;
     }
 
     .icon-btn {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 12px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.1);
-      display: grid;
-      place-items: center;
+      display: grid; place-items: center;
     }
 
     .wheel-viewport {
@@ -702,27 +564,17 @@
       box-shadow: inset 0 0 30px rgba(0,0,0,.35);
     }
 
-    .wheel-strip {
-      display: flex;
-      gap: 8px;
-      padding: 10px 0;
-      will-change: transform;
-    }
+    .wheel-strip { display: flex; gap: 8px; padding: 10px 0; will-change: transform; }
 
     .wheel-item {
-      width: 72px;
-      flex: 0 0 72px;
-      height: 92px;
+      width: 72px; flex: 0 0 72px; height: 92px;
       border-radius: 14px;
       background: rgba(255,255,255,.06);
       border: 1px solid var(--rar, rgba(255,255,255,.12));
       box-shadow: 0 0 18px var(--glow, transparent);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 6px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; padding: 6px;
       text-align: center;
     }
 
@@ -732,12 +584,8 @@
     }
 
     @keyframes winnerPulse {
-      from {
-        box-shadow: 0 0 18px var(--glow, transparent), 0 0 0 0 rgba(255,255,255,.0);
-      }
-      to {
-        box-shadow: 0 0 28px var(--glow, transparent), 0 0 22px 4px rgba(255,255,255,.35);
-      }
+      from { box-shadow: 0 0 18px var(--glow, transparent), 0 0 0 0 rgba(255,255,255,.0); }
+      to { box-shadow: 0 0 28px var(--glow, transparent), 0 0 22px 4px rgba(255,255,255,.35); }
     }
 
     .wi-emoji { font-size: 26px; }
@@ -752,9 +600,7 @@
 
     .pointer {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
+      top: 0; bottom: 0; left: 50%;
       width: 2px;
       transform: translateX(-50%);
       background: linear-gradient(180deg, transparent, #fff, transparent);
@@ -766,8 +612,7 @@
     .pointer::before {
       content: "";
       position: absolute;
-      top: -1px;
-      left: 50%;
+      top: -1px; left: 50%;
       transform: translateX(-50%);
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
@@ -778,8 +623,7 @@
     .result-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-      gap: 10px;
-      margin: 12px 0;
+      gap: 10px; margin: 12px 0;
     }
 
     .result-card {
@@ -796,34 +640,27 @@
 
     .result-card input {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 18px;
-      height: 18px;
+      top: 8px; right: 8px;
+      width: 18px; height: 18px;
       accent-color: var(--accent);
     }
 
     .res-rar {
       margin-top: 5px;
-      font-size: 10px;
-      font-weight: 900;
+      font-size: 10px; font-weight: 900;
       color: var(--rar);
       text-transform: uppercase;
       letter-spacing: .05em;
     }
 
     .preview-list {
-      display: grid;
-      gap: 6px;
-      margin-top: 12px;
-      padding-top: 10px;
+      display: grid; gap: 6px;
+      margin-top: 12px; padding-top: 10px;
       border-top: 1px dashed rgba(255,255,255,.12);
     }
 
     .preview-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       padding: 7px 10px;
       border-radius: 12px;
       background: rgba(0,0,0,.22);
@@ -838,15 +675,10 @@
     .preview-row .pr-rar { font-size: 10px; font-weight: 900; text-transform: uppercase; color: var(--rar); letter-spacing: .05em; }
     .preview-row .pr-chance { font-size: 10px; font-weight: 900; color: var(--muted); white-space: nowrap; }
 
-    .open-qty-row {
-      display: flex;
-      gap: 6px;
-      margin: 4px 0 12px;
-    }
+    .open-qty-row { display: flex; gap: 6px; margin: 4px 0 12px; }
 
     .open-qty-row button {
-      flex: 1;
-      min-height: 42px;
+      flex: 1; min-height: 42px;
       border-radius: 14px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.08);
@@ -860,25 +692,15 @@
       border-color: rgba(125,180,255,.35);
     }
 
-    .modal-total {
-      text-align: center;
-      font-weight: 900;
-      color: #cfe0ff;
-      margin-bottom: 10px;
-    }
+    .modal-total { text-align: center; font-weight: 900; color: #cfe0ff; margin-bottom: 10px; }
 
     .toast-wrap {
-      position: fixed;
-      top: 84px;
-      left: 0;
-      right: 0;
+      position: fixed; top: 84px;
+      left: 0; right: 0;
       z-index: 200;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      pointer-events: none;
-      padding: 0 14px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      pointer-events: none; padding: 0 14px;
     }
 
     .toast {
@@ -901,9 +723,7 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    @media (min-width: 700px) {
-      .target-list { grid-template-columns: repeat(3, 1fr); }
-    }
+    @media (min-width: 700px) { .target-list { grid-template-columns: repeat(3, 1fr); } }
   </style>
 </head>
 <body>
@@ -927,28 +747,24 @@
       <section id="view-inventory" class="view">
         <div class="card">
           <div class="row-title">Сортировка</div>
-
           <div class="sort-row" id="invSortRow">
             <button type="button" class="chip sort-chip active" data-sort="new">Сначала новые</button>
             <button type="button" class="chip sort-chip" data-sort="cheap">Сначала дешевые</button>
             <button type="button" class="chip sort-chip" data-sort="exp">Сначала дорогие</button>
             <button type="button" class="chip sort-chip" data-sort="rarity">По редкости</button>
           </div>
-
           <div class="row gap wrap" style="margin-top:12px;">
             <button id="sellFiltered" type="button" class="btn danger full">Продать всё</button>
           </div>
-
           <div id="invCount" class="muted" style="margin-top:10px;font-weight:800;"></div>
         </div>
-
         <div id="inventoryList" class="gift-list"></div>
         <button id="loadMoreInv" type="button" class="btn ghost full" style="margin-top:12px;">Показать ещё</button>
       </section>
 
       <section id="view-top" class="view">
         <div class="card">
-          <div class="row-title">Топ игроков</div>
+          <div class="row-title">Топ игроков <span id="topStatus" style="float:right;font-size:11px;color:#8fa0c5;font-weight:700;text-transform:none;letter-spacing:0;">обновление…</span></div>
           <div class="muted" style="font-weight:800;">Топ-3 получают награду раз в сутки: 25%, 12% и 6% от баланса.</div>
         </div>
         <div id="rewardCard"></div>
@@ -1000,11 +816,9 @@
               <button type="button" class="seg-btn active" data-upsource="gift">Подарок</button>
               <button type="button" class="seg-btn" data-upsource="coin">Баланс</button>
             </div>
-
             <div id="upGiftBlock" style="margin-top:12px;">
               <select id="upGiftSelect" class="select"></select>
             </div>
-
             <div id="upCoinBlock" style="display:none;margin-top:12px;">
               <div class="bet-row" data-game="up">
                 <button type="button" class="bet-btn" data-percent="25">25%</button>
@@ -1014,17 +828,13 @@
               </div>
               <div class="muted" style="margin-top:10px;font-weight:800;">Ставка: <span id="upBetDisplay">0🪙</span></div>
             </div>
-
             <div class="muted" style="margin-top:12px;font-weight:900;">Стоимость источника: <span id="upSourceValue">0🪙</span></div>
-
             <div class="row-title" style="margin-top:14px;">Цель апгрейда</div>
             <div id="upTargets" class="target-list"></div>
-
             <div class="wheel-container">
               <div class="up-pointer"></div>
               <div id="upWheel" class="up-wheel"></div>
             </div>
-
             <div class="center muted" style="font-weight:900;">Шанс: <span id="upChance">0%</span></div>
             <button id="upSpin" type="button" class="btn primary full" style="margin-top:12px;">Крутить</button>
             <div id="upStatus" class="muted center" style="margin-top:10px;font-weight:800;"></div>
@@ -1041,20 +851,17 @@
               <input class="bet-input" data-input="coin" placeholder="свое число" />
             </div>
             <div class="muted" style="margin-top:10px;font-weight:800;">Текущая ставка: <span id="coinBetDisplay">0🪙</span></div>
-
             <div class="row-title" style="margin-top:14px;">Выбор стороны</div>
             <div class="seg-row">
               <button type="button" class="coin-choice active" data-side="heads">Орёл</button>
               <button type="button" class="coin-choice" data-side="tails">Решка</button>
             </div>
-
             <div class="coin-stage">
               <div id="coin" class="coin-flip">
                 <div class="coin-face coin-heads">🦅</div>
                 <div class="coin-face coin-tails">🪙</div>
               </div>
             </div>
-
             <button id="coinFlip" type="button" class="btn primary full">Бросить</button>
             <div id="coinStatus" class="muted center" style="margin-top:10px;font-weight:800;"></div>
           </div>
@@ -1082,7 +889,6 @@
         <div id="caseModalTitle">Кейс</div>
         <button type="button" id="closeCaseModal" class="icon-btn">✕</button>
       </div>
-
       <div class="row-title">Сколько открывать за раз</div>
       <div class="open-qty-row" id="caseQtyRow">
         <button type="button" class="active" data-qty="1">1</button>
@@ -1091,11 +897,8 @@
         <button type="button" data-qty="10">10</button>
         <button type="button" data-qty="25">25</button>
       </div>
-
       <div id="caseModalTotal" class="modal-total"></div>
-
       <button type="button" id="caseModalOpen" class="btn primary full">Открыть</button>
-
       <div class="row-title" style="margin-top:14px;">Что может выпасть</div>
       <div id="caseModalPreview" class="preview-list"></div>
     </div>
@@ -1107,7 +910,6 @@
         <div id="openTitle">Открытие</div>
         <button type="button" id="closeOpen" class="icon-btn" style="visibility:hidden;">✕</button>
       </div>
-
       <div id="wheelSection">
         <div class="wheel-viewport" id="wheelViewport">
           <div class="pointer"></div>
@@ -1118,7 +920,6 @@
           <button type="button" id="openSkip" class="btn primary">Скип</button>
         </div>
       </div>
-
       <div id="resultSection" style="display:none;">
         <div class="row-title">Что выпало</div>
         <div id="resultGrid" class="result-grid"></div>
@@ -1149,14 +950,13 @@
       const $ = (sel, root = document) => root.querySelector(sel);
       const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-      const LS_KEY = 'casego_save_v6';
+      const LS_KEY = 'casego_save_v7';
       const ICON = '🪙';
       const START_BALANCE = 1000n;
       const CASE_COUNT = 120;
       const FIRST_CASE_COST = 50n;
       const LAST_CASE_COST = 10n ** 24n;
 
-      /* ===== РЕДКОСТИ: множители подняты, чтобы окупаемость была ближе к 100% ===== */
       const RARITIES = [
         { id: 'common',    name: 'Обычный',     color: '#94a3b8', glow: 'rgba(148,163,184,.18)', weight: 43.80, chance: 30,   min: 0.45, max: 0.85,  preview: 0.65 },
         { id: 'uncommon',  name: 'Необычный',   color: '#22c55e', glow: 'rgba(34,197,94,.20)',   weight: 29.20, chance: 20,   min: 0.85, max: 1.05,  preview: 0.95 },
@@ -1270,7 +1070,6 @@
 
         for (let i = 0; i < CASE_COUNT; i++) {
           let cost;
-
           if (i === 0) cost = FIRST_CASE_COST;
           else if (i === CASE_COUNT - 1) cost = LAST_CASE_COST;
           else {
@@ -1298,15 +1097,6 @@
       }
 
       const CASES = generateCases();
-
-      const BOT_NAMES = ['@pelmen_228','КирпичВРуке','@nosok_sudby','ГаражныйБарон','@ogurec_xaxa','ТапокМастер','@blin_2007','ЖелейныйДед','@shnurok_pro','ПельменьBoss','@kaktus_na_okne','СоседскийГвоздь','@kompot_228','УтюгСудьбы','@babayka_live','МятыйБатон','@pyureshka','ЧерствыйСухарь','@dachnyy_kot','@tapok_admin'];
-
-      const BOTS = BOT_NAMES.map((name, i) => ({
-        id: `bot_${i}`,
-        name,
-        balance: (10n ** 25n) / BigInt(i + 1) + BigInt(i * 1_000_000),
-        me: false
-      }));
 
       function defaultState() {
         return {
@@ -1358,12 +1148,13 @@
           base.casesShown = Math.max(10, Math.min(CASE_COUNT, Number(p.casesShown) || 30));
           base.invShown = Math.max(10, Number(p.invShown) || 50);
           return base;
-        } catch (_) {
-          return base;
-        }
+        } catch (_) { return base; }
       }
 
       let saveTimer = null;
+      let syncTimer = null;
+      let topInterval = null;
+      let topCache = [];
 
       function saveStateNow() {
         try {
@@ -1402,8 +1193,13 @@
       const mines = { active: false, finished: false, bet: 0n, count: 3, bombs: new Set(), revealed: Array(36).fill(false), picked: 0, mult: 1 };
       const up = { source: 'gift', giftUid: '', selected: null, offers: [], rotation: 0, spinning: false };
       const opening = { active: false, skip: false, case: null, results: [], finish: null };
-
       const caseModal = { case: null, qty: 1 };
+
+      const S = {
+        playerId: null,
+        playerName: 'Игрок',
+        serverOnline: false
+      };
 
       const userName = (() => {
         try {
@@ -1413,6 +1209,7 @@
         } catch (_) {}
         return 'Игрок';
       })();
+      S.playerName = userName;
 
       function uid() {
         return 'g_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
@@ -1420,7 +1217,6 @@
 
       const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qd'];
 
-      /* ==================== ОКРУГЛЕНИЕ ==================== */
       function roundNiceBig(n) {
         if (typeof n !== 'bigint') n = toBigInt(n);
         if (n < 0n) return -roundNiceBig(-n);
@@ -1428,7 +1224,6 @@
 
         const str = n.toString();
         const len = str.length;
-
         let step;
         if (len <= 3) step = 10n;
         else if (len <= 4) step = 100n;
@@ -1442,24 +1237,16 @@
       function formatBigInt(n) {
         if (typeof n !== 'bigint') n = toBigInt(n);
         if (n < 0n) return '-' + formatBigInt(-n);
-
         if (n < 1000n) return Number(n).toString();
 
         const str = n.toString();
         let units = Math.floor((str.length - 1) / 3);
-
-        if (units >= SUFFIXES.length) {
-          const mant = str.slice(0, 4);
-          return `${mant}e${str.length - 1}`;
-        }
+        if (units >= SUFFIXES.length) return `${str.slice(0, 4)}e${str.length - 1}`;
 
         const intDigits = str.length - units * 3;
         const intPart = str.slice(0, intDigits);
         let frac = str.slice(intDigits, intDigits + 2).padEnd(2, '0').replace(/0+$/, '');
-
-        let intNum = Number(intPart);
-        let fracNum = frac ? Number(frac) : 0;
-
+        const intNum = Number(intPart);
         return `${intNum}${frac ? '.' + frac : ''}${SUFFIXES[units]}`;
       }
 
@@ -1518,6 +1305,69 @@
           else if (kind === 'heavy') TG.HapticFeedback.impactOccurred('heavy');
           else TG.HapticFeedback.impactOccurred('light');
         } catch (_) {}
+      }
+
+      /* ==================== API ==================== */
+      const API = {
+        async register() {
+          try {
+            const initData = window.Telegram?.WebApp?.initData || '';
+            const r = await fetch('/api/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ initData, fallbackName: userName })
+            });
+            if (!r.ok) throw new Error('register ' + r.status);
+            return await r.json();
+          } catch (e) {
+            console.warn('register fail', e);
+            return null;
+          }
+        },
+        async sync() {
+          if (!S.playerId) return;
+          try {
+            await fetch('/api/sync', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: S.playerId,
+                balance: Number(state.balance),
+                inv: state.inventory.map(g => ({
+                  uid: g.uid, typeId: g.typeId, emoji: g.emoji, name: g.name,
+                  rarity: g.rarity, value: Number(g.value), ts: g.ts
+                }))
+              })
+            });
+          } catch (e) { console.warn('sync fail', e); }
+        },
+        async top() {
+          try {
+            const r = await fetch('/api/top');
+            if (!r.ok) throw new Error('top ' + r.status);
+            const d = await r.json();
+            return d.top || [];
+          } catch (e) {
+            console.warn('top fail', e);
+            return null;
+          }
+        },
+        async claim() {
+          try {
+            const r = await fetch('/api/claim', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: S.playerId })
+            });
+            return await r.json();
+          } catch (e) { return { error: 'network' }; }
+        }
+      };
+
+      function scheduleSync() {
+        if (!S.playerId) return;
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(() => API.sync(), 600);
       }
 
       function updateBalance() {
@@ -1601,7 +1451,6 @@
         const list = $('#casesList');
         list.innerHTML = '';
         list.appendChild(frag);
-
         $('#loadMoreCases').style.display = shown < CASES.length ? 'block' : 'none';
       }
 
@@ -1610,20 +1459,15 @@
         if (!c) return;
         caseModal.case = c;
         caseModal.qty = 1;
-
         $('#caseModalTitle').textContent = `${c.emoji} ${c.name}`;
         $$('#caseQtyRow button').forEach(b => b.classList.toggle('active', b.dataset.qty === '1'));
-
         renderCaseModalPreview();
         updateCaseModalTotal();
-
         $('#caseModal').classList.add('show');
         haptic('light');
       }
 
-      function closeCaseModal() {
-        $('#caseModal').classList.remove('show');
-      }
+      function closeCaseModal() { $('#caseModal').classList.remove('show'); }
 
       function updateCaseModalTotal() {
         const c = caseModal.case;
@@ -1654,7 +1498,6 @@
       function startOpenFromModal() {
         const c = caseModal.case;
         if (!c) return;
-
         const qty = caseModal.qty;
         const total = c.cost * BigInt(qty);
 
@@ -1662,7 +1505,6 @@
         if (state.balance < total) { toast('Недостаточно средств', 'error'); haptic('error'); return; }
 
         state.balance -= total;
-
         const results = [];
         for (let i = 0; i < qty; i++) {
           const gift = rollGiftForCase(c);
@@ -1672,6 +1514,7 @@
         }
 
         scheduleSave();
+        scheduleSync();
         updateBalance();
         closeCaseModal();
         runOpening(c, results);
@@ -1810,7 +1653,6 @@
 
       function getFilteredInventory() {
         let items = state.inventory.slice();
-
         if (invSort === 'new') items.sort((a, b) => (b.ts || 0) - (a.ts || 0));
         else if (invSort === 'exp') items.sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
         else if (invSort === 'cheap') items.sort((a, b) => (a.value < b.value ? -1 : a.value > b.value ? 1 : 0));
@@ -1822,14 +1664,12 @@
             return a.value < b.value ? 1 : a.value > b.value ? -1 : 0;
           });
         }
-
         return items;
       }
 
       function renderInventory() {
         const items = getFilteredInventory();
         const shown = Math.min(invShown, items.length);
-
         $('#invCount').textContent = `Найдено: ${items.length} · Показано: ${shown}`;
 
         $('#inventoryList').innerHTML = items.slice(0, shown).map(g => {
@@ -1856,12 +1696,10 @@
       function sellInventoryGift(giftUid) {
         const idx = state.inventory.findIndex(g => g.uid === giftUid);
         if (idx < 0) return;
-
         const gift = state.inventory[idx];
         state.inventory.splice(idx, 1);
         state.balance += gift.value;
-
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
         renderInventory();
         toast(`Продано за ${formatBigInt(gift.value)}${ICON}`, 'success');
@@ -1871,76 +1709,91 @@
       function sellFilteredInventory() {
         const items = getFilteredInventory();
         if (!items.length) { toast('Нечего продавать', 'error'); return; }
-
         const ids = new Set(items.map(g => g.uid));
         let sum = 0n;
         items.forEach(g => sum += g.value);
-
         state.inventory = state.inventory.filter(g => !ids.has(g.uid));
         state.balance += sum;
-
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
         renderInventory();
         toast(`Продано на ${formatBigInt(sum)}${ICON}`, 'success');
         haptic('win');
       }
 
-      function getLeaderboard() {
-        const me = { id: 'me', name: userName, balance: state.balance, me: true };
-        return [...BOTS, me].sort((a, b) => (a.balance < b.balance ? 1 : a.balance > b.balance ? -1 : 0));
+      /* ==================== ТОП ==================== */
+      async function refreshTop() {
+        const status = $('#topStatus');
+        status.textContent = 'обновление…';
+        const list = await API.top();
+
+        if (list === null) {
+          S.serverOnline = false;
+          status.textContent = 'нет связи';
+          renderTopOffline();
+          return;
+        }
+
+        S.serverOnline = true;
+        topCache = list;
+        status.textContent = list.length ? (list.length + ' игроков') : 'пока никого';
+        renderTop();
       }
 
-      function todayKey() { return new Date().toISOString().slice(0, 10); }
-
-      function chooseRewardRarity(value) {
-        if (value >= 10n ** 24n) return 'secret';
-        if (value >= 10n ** 18n) return 'legendary';
-        if (value >= 10n ** 12n) return 'mythic';
-        if (value >= 10n ** 6n) return 'rare';
-        if (value >= 1000n) return 'uncommon';
-        return 'common';
-      }
-
-      function createRewardGift(value) {
-        const rarity = chooseRewardRarity(value);
-        const types = TYPES_BY_RARITY[rarity];
-        const type = types[Math.floor(Math.random() * types.length)];
-        return makeGift(type, value, rarity);
+      function renderTopOffline() {
+        const lb = state.balance > 0n
+          ? [{ id: 'me', name: S.playerName, balance: Number(state.balance), online: true, me: true }]
+          : [];
+        $('#topList').innerHTML = lb.map((p, i) => `
+          <div class="lb-row me">
+            <div class="lb-rank">1</div>
+            <div class="lb-name">${p.name} <span style="font-size:10px;color:#f87171;">(офлайн)</span></div>
+            <div class="lb-balance">${formatBigInt(state.balance)}${ICON}</div>
+          </div>
+        `).join('') || '<div class="muted center" style="padding:20px;">Сервер недоступен</div>';
+        $('#rewardCard').innerHTML = '';
       }
 
       function renderTop() {
-        const lb = getLeaderboard();
-        const rank = lb.findIndex(x => x.me) + 1;
-        const top = lb.slice(0, 20);
+        const list = topCache;
+        const meIdx = list.findIndex(p => p.id === S.playerId);
 
-        let rows = top.map((p, i) => {
+        let arr = list.map(p => ({ ...p, me: p.id === S.playerId }));
+
+        if (meIdx < 0 && S.playerId) {
+          arr.push({
+            id: S.playerId,
+            name: S.playerName,
+            balance: Number(state.balance),
+            online: true,
+            me: true
+          });
+          arr.sort((a, b) => b.balance - a.balance);
+          arr = arr.slice(0, 20);
+        }
+
+        if (arr.length === 0) {
+          $('#topList').innerHTML = '<div class="inv-empty" style="text-align:center;padding:30px;color:#8fa0c5;">Пока никого нет. Ты первый!</div>';
+          $('#rewardCard').innerHTML = '';
+          return;
+        }
+
+        $('#topList').innerHTML = arr.map((p, i) => {
           const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
+          const dot = p.online ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;margin-right:5px;vertical-align:middle;"></span>' : '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#64748b;margin-right:5px;vertical-align:middle;"></span>';
           return `
             <div class="lb-row ${p.me ? 'me' : ''}">
               <div class="lb-rank">${medal}</div>
-              <div class="lb-name">${p.name}</div>
+              <div class="lb-name">${dot}${p.name}${p.me ? ' <span style="font-size:10px;background:rgba(79,140,255,.2);padding:2px 6px;border-radius:6px;">Ты</span>' : ''}</div>
               <div class="lb-balance">${formatBigInt(p.balance)}${ICON}</div>
             </div>
           `;
-        });
+        }).join('');
 
-        if (rank > 20) {
-          const me = lb.find(x => x.me);
-          rows.push(`
-            <div class="lb-row me">
-              <div class="lb-rank">#${rank}</div>
-              <div class="lb-name">${me.name}</div>
-              <div class="lb-balance">${formatBigInt(me.balance)}${ICON}</div>
-            </div>
-          `);
-        }
-
-        $('#topList').innerHTML = rows.join('');
-
-        const percent = rank <= 3 ? [0, 25, 12, 6][rank] : 0;
+        // Карточка награды
+        const rank = arr.findIndex(p => p.me) + 1;
+        const percent = rank >= 1 && rank <= 3 ? [0, 25, 12, 6][rank] : 0;
         const amount = state.balance * BigInt(percent) / 100n;
-        const claimedToday = state.lastClaimDay === todayKey();
 
         if (!percent) {
           $('#rewardCard').innerHTML = `
@@ -1957,47 +1810,33 @@
           <div class="card reward-card">
             <div class="row-title">Награда за место #${rank}</div>
             <div style="font-weight:900;font-size:18px;">${percent}% = ${formatBigInt(amount)}${ICON}</div>
-            ${claimedToday
-              ? `<div class="muted" style="margin-top:10px;font-weight:800;">Награда за сегодня уже получена. Возвращайся завтра.</div>`
-              : amount > 0n
-                ? `<div class="row gap wrap" style="margin-top:12px;">
-                    <button type="button" class="btn primary" data-claim="coins" style="flex:1 1 150px;">Забрать монетами</button>
-                    <button type="button" class="btn warning" data-claim="gift" style="flex:1 1 150px;">Забрать подарком</button>
-                  </div>`
-                : `<div class="muted" style="margin-top:10px;font-weight:800;">Слишком маленький баланс для награды.</div>`
+            ${amount > 0n
+              ? `<div class="row gap wrap" style="margin-top:12px;">
+                  <button type="button" class="btn primary" data-claim="coins" style="flex:1 1 150px;">Забрать монетами</button>
+                  <button type="button" class="btn warning" data-claim="gift" style="flex:1 1 150px;">Забрать подарком</button>
+                </div>`
+              : `<div class="muted" style="margin-top:10px;font-weight:800;">Слишком маленький баланс для награды.</div>`
             }
           </div>
         `;
       }
 
-      function claimTopReward(mode) {
-        const lb = getLeaderboard();
-        const rank = lb.findIndex(x => x.me) + 1;
-        if (rank > 3) return;
-
-        if (state.lastClaimDay === todayKey()) { toast('Уже получено сегодня', 'error'); return; }
-
-        const percent = [0, 25, 12, 6][rank];
-        const amount = state.balance * BigInt(percent) / 100n;
-
-        if (amount < 1n) { toast('Недостаточно баланса', 'error'); return; }
-
-        if (mode === 'coins') {
-          state.balance += amount;
-          toast(`Получено ${formatBigInt(amount)}${ICON}`, 'success');
-        } else {
-          const gift = createRewardGift(amount);
-          state.inventory.unshift(gift);
-          discover(gift.typeId);
-          toast(`Получен подарок: ${gift.name}`, 'success');
+      async function claimTopReward(mode) {
+        if (!S.playerId) { toast('Нет связи с сервером', 'error'); return; }
+        const r = await API.claim();
+        if (r.error) {
+          if (r.error === 'not in top-3') toast('Ты не в топ-3', 'error');
+          else if (r.error === 'already claimed') toast('Награда уже получена', 'error');
+          else toast('Ошибка: ' + r.error, 'error');
+          return;
         }
 
-        state.lastClaimDay = todayKey();
+        state.balance = toBigInt(r.newBalance);
         scheduleSave();
         updateBalance();
-        renderTop();
-        renderCollection();
+        toast(`Награда за ${r.rank + 1} место: ${formatBigInt(r.reward)}${ICON}`, 'success');
         haptic('win');
+        refreshTop();
       }
 
       function renderCollection() {
@@ -2013,7 +1852,6 @@
         $('#collectionList').innerHTML = RARITIES.map(r => {
           const types = TYPES_BY_RARITY[r.id];
           const groupFound = types.filter(t => state.discovered[t.id]).length;
-
           return `
             <div class="card coll-group" style="--rar:${r.color};--glow:${r.glow}">
               <h3>${r.name} <span>${groupFound}/${types.length}</span></h3>
@@ -2080,7 +1918,6 @@
         $('#mineStart').disabled = mines.active;
         $('#mineCount').disabled = mines.active;
         $('#mineCashout').disabled = !mines.active || mines.picked === 0;
-
         $$('#view-games .bet-row[data-game="mine"] .bet-btn, #view-games .bet-row[data-game="mine"] .bet-input')
           .forEach(el => el.disabled = mines.active);
       }
@@ -2090,12 +1927,11 @@
         if (mineBet < 1n || mineBet > state.balance) { toast('Некорректная ставка', 'error'); return; }
 
         state.balance -= mineBet;
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
 
         const count = Math.max(1, Math.min(24, Number($('#mineCount').value) || 3));
         const indices = Array.from({ length: 36 }, (_, i) => i);
-
         for (let i = indices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [indices[i], indices[j]] = [indices[j], indices[i]];
@@ -2121,7 +1957,7 @@
         mines.finished = true;
         for (let i = 0; i < 36; i++) mines.revealed[i] = true;
         if (winAmount > 0n) state.balance += winAmount;
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
         renderMinesGrid();
         updateMinesUI();
@@ -2130,7 +1966,6 @@
 
       function clickMine(index) {
         if (!mines.active || mines.revealed[index]) return;
-
         if (mines.bombs.has(index)) {
           mines.revealed[index] = true;
           endMines(0n, `Бум! Потеряно ${formatBigInt(mines.bet)}${ICON}`);
@@ -2138,12 +1973,10 @@
           toast('Мина! Поражение', 'error');
           return;
         }
-
         mines.revealed[index] = true;
         const remainingSafe = 36 - mines.count - mines.picked;
         if (remainingSafe > 0) mines.mult *= (36 - mines.picked) / remainingSafe;
         mines.picked++;
-
         renderMinesGrid();
         updateMinesUI();
         haptic('light');
@@ -2180,7 +2013,6 @@
         else if (chance >= 0.08) rarity = 'mythic';
         else if (chance >= 0.01) rarity = 'legendary';
         else rarity = 'secret';
-
         const types = TYPES_BY_RARITY[rarity];
         return types[Math.floor(Math.random() * types.length)];
       }
@@ -2190,7 +2022,6 @@
         const green = Math.max(0, Math.min(360, chance * 360));
         wheel.style.background = `conic-gradient(var(--green) 0deg ${green}deg, var(--red) ${green}deg 360deg)`;
         $('#upChance').textContent = (chance * 100).toFixed(chance < 0.1 ? 3 : 2) + '%';
-
         if (!up.spinning) {
           const target = (360 - green / 2) % 360;
           up.rotation = target;
@@ -2206,7 +2037,6 @@
           $('#upTargets').innerHTML = `<div class="muted" style="font-weight:800;">Нет доступных целей.</div>`;
           return;
         }
-
         $('#upTargets').innerHTML = up.offers.map(o => {
           const r = RARITY_MAP[o.type.rarity] || RARITIES[0];
           return `
@@ -2222,14 +2052,11 @@
       function generateUpTargets() {
         const src = getSourceValue();
         $('#upSourceValue').textContent = formatBigInt(src) + ICON;
-
         up.offers = [];
         up.selected = null;
-
         if (src <= 0n) { renderUpTargets(); updateUpWheel(0); return; }
 
         const multipliers = [1.2, 1.5, 2, 3, 5, 10, 25, 100, 1000];
-
         for (const m of multipliers) {
           let value = bigMulFloat(src, m);
           if (value <= src) value = src + 1n;
@@ -2238,7 +2065,6 @@
           const type = pickTypeForChance(chance);
           up.offers.push({ id: uid(), type, value, chance, mult: m });
         }
-
         renderUpTargets();
         updateUpWheel(0);
       }
@@ -2246,25 +2072,18 @@
       function renderUpSourceGifts() {
         const sel = $('#upGiftSelect');
         const prev = up.giftUid;
-
         if (!state.inventory.length) {
           sel.innerHTML = '<option value="">Нет подарков</option>';
           up.giftUid = '';
           return;
         }
-
         const limit = 500;
         const items = state.inventory.slice(0, limit);
-
         sel.innerHTML = '<option value="">Выбери подарок</option>' + items.map(g => {
           const r = RARITY_MAP[g.rarity] || RARITIES[0];
           return `<option value="${g.uid}">${g.emoji} ${g.name} · ${formatBigInt(g.value)}${ICON} · ${r.name}</option>`;
         }).join('');
-
-        if (state.inventory.length > limit) {
-          sel.innerHTML += `<option disabled>… и ещё ${state.inventory.length - limit}</option>`;
-        }
-
+        if (state.inventory.length > limit) sel.innerHTML += `<option disabled>… и ещё ${state.inventory.length - limit}</option>`;
         if (prev && state.inventory.some(g => g.uid === prev)) sel.value = prev;
         else { up.giftUid = ''; sel.value = ''; }
       }
@@ -2280,7 +2099,6 @@
         const red = 360 - green;
         const margin = Math.max(0.2, Math.min(2, green / 4, red / 4));
         let angle;
-
         if (success) angle = green <= 0 ? 0 : margin / 2 + Math.random() * Math.max(0, green - margin);
         else angle = red <= 0 ? green : green + margin / 2 + Math.random() * Math.max(0, red - margin);
 
@@ -2292,7 +2110,6 @@
 
         wheel.style.transition = 'transform 2.6s cubic-bezier(.15,.9,.1,1)';
         wheel.style.transform = `rotate(${up.rotation}deg)`;
-
         setTimeout(callback, 2750);
       }
 
@@ -2303,7 +2120,6 @@
         if (!up.selected) { toast('Выбери цель', 'error'); return; }
 
         let sourceGift = null;
-
         if (up.source === 'gift') {
           sourceGift = state.inventory.find(g => g.uid === up.giftUid);
           if (!sourceGift) { toast('Подарок не найден', 'error'); renderUpSource(); return; }
@@ -2313,7 +2129,7 @@
           state.balance -= upCoinBet;
         }
 
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
 
         up.spinning = true;
@@ -2336,11 +2152,9 @@
             toast('Апгрейд провален', 'error');
             haptic('error');
           }
-
           up.spinning = false;
           $('#upSpin').disabled = false;
-
-          scheduleSave();
+          scheduleSave(); scheduleSync();
           updateBalance();
           renderUpSource();
           refreshInventoryIfNeeded();
@@ -2353,7 +2167,7 @@
         if (coinBet < 1n || coinBet > state.balance) { toast('Некорректная ставка', 'error'); return; }
 
         state.balance -= coinBet;
-        scheduleSave();
+        scheduleSave(); scheduleSync();
         updateBalance();
 
         coinBusy = true;
@@ -2375,7 +2189,6 @@
 
         setTimeout(() => {
           const landedText = landed === 'heads' ? 'орёл' : 'решка';
-
           if (win) {
             const payout = bigMulFloat(coinBet, 1.5);
             state.balance += payout;
@@ -2388,11 +2201,9 @@
             toast('Поражение в монетке', 'error');
             haptic('error');
           }
-
           coinBusy = false;
           $('#coinFlip').disabled = false;
-
-          scheduleSave();
+          scheduleSave(); scheduleSync();
           updateBalance();
         }, 1900);
       }
@@ -2402,7 +2213,7 @@
         $$('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
 
         if (view === 'inventory') renderInventory();
-        if (view === 'top') renderTop();
+        if (view === 'top') refreshTop();
         if (view === 'collection') renderCollection();
         if (view === 'games') {
           renderUpSource();
@@ -2410,7 +2221,6 @@
           updateMinesUI();
           updateGameBets();
         }
-
         haptic('light');
       }
 
@@ -2421,9 +2231,7 @@
       }
 
       function bindEvents() {
-        $$('.nav-btn').forEach(btn => {
-          btn.addEventListener('click', () => switchView(btn.dataset.view));
-        });
+        $$('.nav-btn').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
 
         $('#loadMoreCases').addEventListener('click', () => {
           state.casesShown = Math.min(CASES.length, (state.casesShown || 30) + 30);
@@ -2469,23 +2277,19 @@
         $('#sellSelected').addEventListener('click', () => {
           const checks = $$('#resultGrid .res-check:checked');
           if (!checks.length) { toast('Ничего не выбрано', 'error'); return; }
-
           let sum = 0n;
           const ids = new Set(checks.map(ch => ch.value));
           checks.forEach(ch => {
             const gift = opening.results.find(g => g.uid === ch.value);
             if (gift) sum += gift.value;
           });
-
           state.inventory = state.inventory.filter(g => !ids.has(g.uid));
           state.balance += sum;
-
-          scheduleSave();
+          scheduleSave(); scheduleSync();
           updateBalance();
           closeOpening();
           refreshInventoryIfNeeded();
           renderCollection();
-
           toast(`Продано на ${formatBigInt(sum)}${ICON}`, 'success');
           haptic('win');
         });
@@ -2494,16 +2298,13 @@
           const ids = new Set(opening.results.map(g => g.uid));
           let sum = 0n;
           opening.results.forEach(g => sum += g.value);
-
           state.inventory = state.inventory.filter(g => !ids.has(g.uid));
           state.balance += sum;
-
-          scheduleSave();
+          scheduleSave(); scheduleSync();
           updateBalance();
           closeOpening();
           refreshInventoryIfNeeded();
           renderCollection();
-
           toast(`Продано все на ${formatBigInt(sum)}${ICON}`, 'success');
           haptic('win');
         });
@@ -2545,9 +2346,7 @@
           if (btn) claimTopReward(btn.dataset.claim);
         });
 
-        $$('.game-tab').forEach(btn => {
-          btn.addEventListener('click', () => switchGameTab(btn.dataset.gameTab));
-        });
+        $$('.game-tab').forEach(btn => btn.addEventListener('click', () => switchGameTab(btn.dataset.gameTab)));
 
         $$('.bet-btn').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -2617,11 +2416,10 @@
         $('#coinFlip').addEventListener('click', flipCoin);
       }
 
-      function init() {
+      async function init() {
         updateBalance();
         renderCases();
         renderInventory();
-        renderTop();
         renderCollection();
 
         $('#mineCountDisplay').textContent = $('#mineCount').value;
@@ -2631,7 +2429,47 @@
         updateUpWheel(0);
         updateGameBets();
 
+        // Регистрируемся на сервере
+        const reg = await API.register();
+        if (reg && reg.player) {
+          S.playerId = reg.player.id;
+          S.playerName = reg.player.name || S.playerName;
+          S.serverOnline = true;
+
+          const serverBalance = toBigInt(reg.player.balance ?? 1000);
+          // Если на сервере баланс больше нашего локального — берём серверный
+          if (serverBalance > state.balance || state.inventory.length === 0) {
+            state.balance = serverBalance;
+          }
+          if (Array.isArray(reg.player.inv) && reg.player.inv.length > 0) {
+            state.inventory = reg.player.inv.map(g => ({
+              uid: String(g.uid || uid()),
+              typeId: String(g.typeId || ''),
+              emoji: String(g.emoji || '❓'),
+              name: String(g.name || 'Подарок'),
+              rarity: RARITY_MAP[g.rarity] ? g.rarity : 'common',
+              value: toBigInt(g.value ?? 1),
+              ts: Number(g.ts) || Date.now()
+            }));
+          }
+          scheduleSave();
+          updateBalance();
+          renderInventory();
+        } else {
+          console.warn('offline mode');
+          toast('Сервер недоступен — офлайн режим', 'error');
+        }
+
         bindEvents();
+
+        // Периодический топ
+        topInterval = setInterval(() => {
+          const topPage = document.getElementById('view-top');
+          if (topPage.classList.contains('active')) refreshTop();
+        }, 5000);
+
+        // Периодический sync
+        setInterval(() => { if (S.playerId) API.sync(); }, 30000);
       }
 
       init();
