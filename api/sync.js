@@ -10,6 +10,13 @@ export default async function handler(req, res) {
   }
 
   const key = `player:${id}`;
+
+  // Проверка бана
+  const existing = await kv.hgetall(key);
+  if (existing && Number(existing.banned) === 1) {
+    return res.status(403).json({ error: 'banned' });
+  }
+
   const safeInv = Array.isArray(inv) ? inv.slice(0, 500) : [];
   const safeStats = caseStats && typeof caseStats === 'object' ? caseStats : {};
 
