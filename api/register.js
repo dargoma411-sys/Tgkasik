@@ -86,6 +86,14 @@ export default async function handler(req, res) {
   console.log('[register] user id:', id, 'name:', name);
 
   const key = `player:${id}`;
+
+  // Проверка бана
+  const existing = await kv.hgetall(key);
+  if (existing && Number(existing.banned) === 1) {
+    console.log('[register] banned user', id);
+    return res.status(403).json({ error: 'banned' });
+  }
+
   const exists = await kv.exists(key);
 
   if (!exists) {
@@ -97,6 +105,7 @@ export default async function handler(req, res) {
       inv: '[]',
       caseStats: '{}',
       lastClaimAt: 0,
+      banned: 0,
       updatedAt: Date.now()
     });
     console.log('[register] created new player', id);
